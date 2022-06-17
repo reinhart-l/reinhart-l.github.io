@@ -32,6 +32,6 @@ http://example.com/tags/%E6%95%99%E7%A8%8B/
 http://example.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/
 http://example.com/tags/%E4%B8%AA%E4%BA%BA/
 http://example.com/tags/IELTs/
-http://example.com/tags/hexo/
 http://example.com/tags/%E7%AE%97%E6%B3%95/
 http://example.com/tags/%E9%9D%A2%E8%AF%95/
+http://example.com/tags/hexo/
