@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="https:&#x2F;&#x2F;codeforces.com&#x2F;contest&#x2F;1569&#x2F;problem&#x2F;C 题意:n个数,每经过一个数它就-1,如果当所有数减完的时候没有一个数连续减了两次那这样一个序列就叫好序列,求所有好序列的数量,答案mod998244353 题解:我们可以发现不管n是多少,到最后我们都只用看只剩下最后两个数的情况,而剩下的两个数肯定是最大数和次大数. 所以我们可以分以下三种情况讨论: 1.最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)">
+<meta property="og:url" content="http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/index.html">
+<meta property="og:site_name" content="Across the Cosmos">
+<meta property="og:description" content="https:&#x2F;&#x2F;codeforces.com&#x2F;contest&#x2F;1569&#x2F;problem&#x2F;C 题意:n个数,每经过一个数它就-1,如果当所有数减完的时候没有一个数连续减了两次那这样一个序列就叫好序列,求所有好序列的数量,答案mod998244353 题解:我们可以发现不管n是多少,到最后我们都只用看只剩下最后两个数的情况,而剩下的两个数肯定是最大数和次大数. 所以我们可以分以下三种情况讨论: 1.最">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-09T10:29:27.000Z">
+<meta property="article:modified_time" content="2022-01-18T10:41:38.000Z">
+<meta property="article:author" content="Reinhart">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/09/12/AtCoder%20Beginner%20Contest%20218-ABCDEF%20%E9%A2%98%E8%A7%A3/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/09/06/JAVA%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%20_%20%E7%BB%A7%E6%89%BF%E4%B8%8E%E5%A4%9A%E6%80%81%20%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E5%92%8C%E5%AE%9E%E4%BE%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&text=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&is_video=false&description=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)&body=Check out this article: http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&name=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&t=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E6%84%8F"><span class="toc-number">1.</span> <span class="toc-text">题意:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">代码:</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-09-09T10:29:27.000Z" itemprop="datePublished">2021-09-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1569/problem/C">https://codeforces.com/contest/1569/problem/C</a></p>
+<h4 id="题意"><a href="#题意" class="headerlink" title="题意:"></a>题意:</h4><p>n个数,每经过一个数它就-1,如果当所有数减完的时候没有一个数连续减了两次那这样一个序列就叫好序列,求所有好序列的数量,答案mod998244353</p>
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解:"></a>题解:</h4><p>我们可以发现不管n是多少,到最后我们都只用看只剩下最后两个数的情况,而剩下的两个数肯定是最大数和次大数.</p>
+<p>所以我们可以分以下三种情况讨论:</p>
+<p><strong>1.最大数=次大数</strong></p>
+<p>和位置无关,所有排列的序列都是好序列,答案为n!</p>
+<p><strong>2.最大数&gt;=次大数+2</strong></p>
+<p>所有序列都不是好序列,答案为0</p>
+<p><strong>3.最大数只有一个,且次大数和最大数的差值为1</strong></p>
+<p>我们通过观察可以发现,至少有一个次大数要在最大数的右边才是好序列,那么答案可以为全排列减去次大数全都在最大数左边的情况.</p>
+<p>次大数圈都在最大数左边的方案数可以通过枚举最大数的位置来计算:</p>
+<p>我们设有cnt个次大数,那么最大数就可以放在n~cnt+1的位置上.设最大数的位置为i,最大数左边的空位就是i-1个,右边的空位就是n- i个,次大数只能放在左边的位置,所以有$\binom{cnt}{i-1}$种放法,现在已经放了cnt个次大数和一个最大数,所以还剩下n-cnt-1个数,剩下的数可以随意放所以就是$(n-cnt-1)!$放法.</p>
+<p>$(n-cnt-1)!*\binom{cnt}{i-1}$就是最大数放在第i个位置时不合法的方案数,枚举i从n~cnt+1,依次减掉即可.</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码:"></a>代码:</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> GCC optimize(2)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ll long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PII pair<span class="string">&lt;int,int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PLL pair<span class="string">&lt;ll,ll&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> fi first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> se second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> debug(a) cout &lt;&lt; #a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; a &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">2e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> M = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="type">const</span> ll LLINF = <span class="number">0x3f3f3f3f3f3f3f3f</span>;</span><br><span class="line"><span class="type">const</span> ll mod = <span class="number">998244353</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">read</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">qpow</span><span class="params">(ll a, ll b)</span> </span>&#123;</span><br><span class="line">    ll res = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (b) &#123;</span><br><span class="line">        <span class="keyword">if</span> (b &amp; <span class="number">1</span>)res = res * a % mod;</span><br><span class="line">        a = (a * a) % mod;</span><br><span class="line">        b &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, t;</span><br><span class="line">ll a[N];</span><br><span class="line">ll pre[N];<span class="comment">//pre[i]=1*2*...*i</span></span><br><span class="line"><span class="function">ll <span class="title">A</span><span class="params">(ll nn, ll mm)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> pre[nn] * <span class="built_in">qpow</span>(pre[nn - mm], mod - <span class="number">2</span>) % mod;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    ll maxx = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(a, a + n);</span><br><span class="line">    <span class="keyword">if</span> (a[n - <span class="number">1</span>] &gt;= a[n - <span class="number">2</span>] + <span class="number">2</span>)cout &lt;&lt; <span class="number">0</span> &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (a[n - <span class="number">1</span>] == a[n - <span class="number">2</span>])cout &lt;&lt; pre[n] &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="type">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (a[i] == a[n - <span class="number">2</span>])cnt++;<span class="comment">//最大值不能在所有次大值的最右边</span></span><br><span class="line">        &#125;</span><br><span class="line">        ll ans = pre[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = n; i &gt;= cnt + <span class="number">1</span>; i--) &#123; <span class="comment">//i是最大值的位置 枚举i所在位置不是好序列的方案数</span></span><br><span class="line">            ll res = (<span class="built_in">A</span>(i - <span class="number">1</span>, cnt) * pre[n - cnt - <span class="number">1</span>]) % mod;</span><br><span class="line">            <span class="comment">//cout&lt;&lt;res&lt;&lt;&#x27;\n&#x27;;</span></span><br><span class="line">            ans = (ans - res + mod) % mod;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; ans % mod &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//ios::sync_with_stdio(false);</span></span><br><span class="line">    t = <span class="built_in">read</span>();</span><br><span class="line">    pre[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">2e5</span>; i++) &#123;</span><br><span class="line">        pre[i] = (pre[i - <span class="number">1</span>] * i) % mod;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="built_in">solve</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ll <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">char</span> ch = <span class="built_in">getchar</span>();</span><br><span class="line">    ll p = <span class="number">1</span>, data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (ch &lt; <span class="string">&#x27;0&#x27;</span> || ch &gt; <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (ch == <span class="string">&#x27;-&#x27;</span>)p = <span class="number">-1</span>;</span><br><span class="line">        ch = <span class="built_in">getchar</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (ch &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; ch &lt;= <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">        data = data * <span class="number">10</span> + (ch ^ <span class="number">48</span>);</span><br><span class="line">        ch = <span class="built_in">getchar</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p * data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E6%84%8F"><span class="toc-number">1.</span> <span class="toc-text">题意:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">代码:</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&text=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&is_video=false&description=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)&body=Check out this article: http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&title=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&name=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2021/09/09/Educational%20Codeforces%20Round%20113%20C.%20Jury%20Meeting%20(%E6%80%9D%E7%BB%B4+%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6)/&t=Educational Codeforces Round 113 C. Jury Meeting (思维+组合数学)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2023
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

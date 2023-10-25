@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;problem&#x2F;U188446 题面题目背景德州扑克是目前世界上最流行的扑克游戏，全世界有众多相关的比赛，例如是 WSOP，WPT，EPT等，也让这款游戏的玩法变得层出不穷，丰富多变。   不要被简单的游戏规则而误导，复杂多变的比赛状况，让这款游戏在高水平的竞技中会变得非常复杂，这也让人们为德州扑克给出了这样一句评价“用一刻就能学会，但要用一生才能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021GDUFS新手赛F-Reinhart的德州扑克 题解">
+<meta property="og:url" content="http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Across the Cosmos">
+<meta property="og:description" content="https:&#x2F;&#x2F;www.luogu.com.cn&#x2F;problem&#x2F;U188446 题面题目背景德州扑克是目前世界上最流行的扑克游戏，全世界有众多相关的比赛，例如是 WSOP，WPT，EPT等，也让这款游戏的玩法变得层出不穷，丰富多变。   不要被简单的游戏规则而误导，复杂多变的比赛状况，让这款游戏在高水平的竞技中会变得非常复杂，这也让人们为德州扑克给出了这样一句评价“用一刻就能学会，但要用一生才能">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/20211109183539.png">
+<meta property="article:published_time" content="2022-01-18T11:07:59.000Z">
+<meta property="article:modified_time" content="2022-01-18T11:14:20.000Z">
+<meta property="article:author" content="Reinhart">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/20211109183539.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>2021GDUFS新手赛F-Reinhart的德州扑克 题解</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BD-DUNE%20%E9%A2%98%E8%A7%A3/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/01/14/%E4%BD%BF%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E9%97%AE%E9%A2%98%E6%97%A5%E5%BF%97/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&text=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&is_video=false&description=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2021GDUFS新手赛F-Reinhart的德州扑克 题解&body=Check out this article: http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&name=2021GDUFS新手赛F-Reinhart的德州扑克 题解&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&t=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">题面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">题目背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.2.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">输入格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">输出格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        2021GDUFS新手赛F-Reinhart的德州扑克 题解
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-18T11:07:59.000Z" itemprop="datePublished">2022-01-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/U188446">https://www.luogu.com.cn/problem/U188446</a></p>
+<h2 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h2><h3 id="题目背景"><a href="#题目背景" class="headerlink" title="题目背景"></a>题目背景</h3><p><em>德州扑克是目前世界上最流行的扑克游戏，全世界有众多相关的比赛，例如是 WSOP，WPT，EPT等，也让这款游戏的玩法变得层出不穷，丰富多变。</em> </p>
+<p> <em>不要被简单的游戏规则而误导，复杂多变的比赛状况，让这款游戏在高水平的竞技中会变得非常复杂，这也让人们为德州扑克给出了这样一句评价“用一刻就能学会，但要用一生才能掌握”。</em> </p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>现在我们并不在乎游戏规则是什么,因为Reinhart是一个德州扑克高手,他对于德州扑克的规则烂熟于心,不过他每次都记不得牌型的大小关系,他知道你是一个编程高手,所以他想让你帮他写一个程序:输入五张牌的大小和花色,输出这五张牌能组成的最大牌型.你能帮帮他吗?</p>
+<p>为了降低你的编程难度,我们规定:</p>
+<ol>
+<li><strong>输入的牌都是来源于同一副扑克牌.</strong></li>
+<li><strong>输入的牌的点数都是非递减的.</strong></li>
+<li><strong>所有花色没有大小之分.</strong></li>
+</ol>
+<p>下面给出各牌型,(从大到小)</p>
+<ol>
+<li><strong>皇家同花顺(ROYAL FLUSH)</strong>:五张顺连的牌(点数连续单调递增),<strong>且最大的一张牌是A(Ace)</strong>,并且五张牌的花色相同.</li>
+<li><strong>同花顺(STRAIGHT FLUSH)</strong>:五张顺连的牌(点数连续单调递增),<strong>不规定最大的一张牌是A(Ace)</strong>,并且五张牌的花色相同.</li>
+<li><strong>四条(FOUR OF A KIND)</strong>:至少四张牌的点数相同.</li>
+<li><strong>葫芦(FULL HOUSE)</strong>:至少三张牌的点数相同,并且除此之外还有两张牌的点数相同.</li>
+<li><strong>同花(FLUSH)</strong>:五张牌的花色都相同.</li>
+<li><strong>顺子(STRAIGHT)</strong>:五张顺连的牌(点数连续单调递增),不要求五张牌的花色相同.</li>
+<li><strong>特别注意</strong>:由于Reinhart是个谨慎的人,所以比<strong>三条(THREE OF A KIND)</strong>(包括三条)小的牌型Reinhart不在乎他们的大小关系,你只需要告诉Reinhart弃牌就行<br><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/20211109183539.png"></li>
+</ol>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>输入两行,每行五个数字,第一行的第$i$个字符表示第$i$张扑克的点数,<br>第二行的第$i$个数字表示第$i$张扑克花色.<strong>(保证输入的牌的点数是非递减的)</strong></p>
+<p>点数和对应输入的数字:</p>
+<ul>
+<li>2 - 10 对应 2 - 10</li>
+<li>J(Jack) 对应 11</li>
+<li>(Queen) 对应 12</li>
+<li>K(King) 对应 13</li>
+<li>A(Ace) 对应 14</li>
+</ul>
+<p>花色和对应输入的数字:</p>
+<ul>
+<li>黑桃(Spades) 对应 1</li>
+<li>方片(Diamonds) 对应 2</li>
+<li>红桃(Hearts) 对应 3</li>
+<li>梅花(Clubs) 对应 4</li>
+</ul>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>输出这五张牌能组成的最大牌型.</p>
+<ul>
+<li>如果最大是皇家同花顺输出”ROYAL FLUSH”</li>
+<li>如果最大是同花顺输出”STRAIGHT FLUSH”</li>
+<li>如果最大是四条输出”FOUR OF A KIND”</li>
+<li>如果最大是葫芦输出”FULL HOUSE”</li>
+<li>如果最大是同花输出”FLUSH”</li>
+<li>如果最大是顺子输出”STRAIGHT”</li>
+<li>如果最大的牌型小于等于三条输出”FOLD”,劝Reinhart弃牌.</li>
+<li>输出不包括引号</li>
+</ul>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><ul>
+<li>按照题意模拟即可，虽然题目规定输入一定是非递减输入，但要仍然要注意一些顺序问题，具体见代码。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">int</span> a[<span class="number">15</span>], b[<span class="number">15</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">        cin &gt;&gt; a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">        <span class="type">int</span> x;</span><br><span class="line">        cin &gt;&gt; x;</span><br><span class="line">        b[x]++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ma = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        ma = <span class="built_in">max</span>(ma, b[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((a[<span class="number">0</span>] + <span class="number">1</span> == a[<span class="number">1</span>] &amp;&amp; a[<span class="number">1</span>] + <span class="number">1</span> == a[<span class="number">2</span>] &amp;&amp; a[<span class="number">2</span>] + <span class="number">1</span> == a[<span class="number">3</span>] &amp;&amp; a[<span class="number">3</span>] + <span class="number">1</span> == a[<span class="number">4</span>]) &amp;&amp; ma == <span class="number">5</span> &amp;&amp; a[<span class="number">4</span>] == <span class="number">14</span>) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;ROYAL FLUSH&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((a[<span class="number">0</span>] + <span class="number">1</span> == a[<span class="number">1</span>] &amp;&amp; a[<span class="number">1</span>] + <span class="number">1</span> == a[<span class="number">2</span>] &amp;&amp; a[<span class="number">2</span>] + <span class="number">1</span> == a[<span class="number">3</span>] &amp;&amp; a[<span class="number">3</span>] + <span class="number">1</span> == a[<span class="number">4</span>]) &amp;&amp; ma == <span class="number">5</span>) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;STRAIGHT FLUSH&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((a[<span class="number">0</span>] == a[<span class="number">1</span>] &amp;&amp; a[<span class="number">0</span>] == a[<span class="number">2</span>] &amp;&amp; a[<span class="number">0</span>] == a[<span class="number">3</span>]) || (a[<span class="number">1</span>] == a[<span class="number">2</span>] &amp;&amp; a[<span class="number">1</span>] == a[<span class="number">3</span>] &amp;&amp; a[<span class="number">1</span>] == a[<span class="number">4</span>])) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;FOUR OF A KIND&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ((a[<span class="number">0</span>] == a[<span class="number">1</span>] &amp;&amp; a[<span class="number">0</span>] == a[<span class="number">2</span>] &amp;&amp; a[<span class="number">3</span>] == a[<span class="number">4</span>]) || (a[<span class="number">2</span>] == a[<span class="number">3</span>] &amp;&amp; a[<span class="number">2</span>] == a[<span class="number">4</span>] &amp;&amp; a[<span class="number">0</span>] == a[<span class="number">1</span>])) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;FULL HOUSE&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ma == <span class="number">5</span>) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;FLUSH&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a[<span class="number">0</span>] + <span class="number">1</span> == a[<span class="number">1</span>] &amp;&amp; a[<span class="number">1</span>] + <span class="number">1</span> == a[<span class="number">2</span>] &amp;&amp; a[<span class="number">2</span>] + <span class="number">1</span> == a[<span class="number">3</span>] &amp;&amp; a[<span class="number">3</span>] + <span class="number">1</span> == a[<span class="number">4</span>]) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;STRAIGHT&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;FOLD&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">题面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">题目背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.2.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">输入格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">输出格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">题解</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&text=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&is_video=false&description=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2021GDUFS新手赛F-Reinhart的德州扑克 题解&body=Check out this article: http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&title=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&name=2021GDUFS新手赛F-Reinhart的德州扑克 题解&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2022/01/18/2021GDUFS%E6%96%B0%E6%89%8B%E8%B5%9BF-Reinhart%E7%9A%84%E5%BE%B7%E5%B7%9E%E6%89%91%E5%85%8B%20%E9%A2%98%E8%A7%A3/&t=2021GDUFS新手赛F-Reinhart的德州扑克 题解"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2023
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
