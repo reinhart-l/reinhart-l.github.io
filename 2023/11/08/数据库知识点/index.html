@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="数据库面试事务事务的概念 事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction 开始，以 rollback&#x2F;commit 结束。  Rollback在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚rollback后，自增id依然自增，因为innodb的auto_inc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库知识点">
+<meta property="og:url" content="http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Across the Cosmos">
+<meta property="og:description" content="数据库面试事务事务的概念 事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction 开始，以 rollback&#x2F;commit 结束。  Rollback在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚rollback后，自增id依然自增，因为innodb的auto_inc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051431216.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051624136.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202052232643.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051958770.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202052110054.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061447738.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061622257.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061622766.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061506221.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061513430.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061550202.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061546347.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202052325855.png">
+<meta property="article:published_time" content="2023-11-08T06:47:10.000Z">
+<meta property="article:modified_time" content="2023-11-08T07:29:11.957Z">
+<meta property="article:author" content="Reinhart">
+<meta property="article:tag" content="个人">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051431216.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>数据库知识点</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/02/25/LEETCODE%E9%97%AE%E9%A2%98%E9%9B%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&text=数据库知识点"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&is_video=false&description=数据库知识点"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据库知识点&body=Check out this article: http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&name=数据库知识点&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&t=数据库知识点"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">数据库面试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">事务的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7%EF%BC%88ACID%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">事务的四个特性（ACID）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">并发一致性的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据库的四种隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">乐观锁和悲观锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%82%B2%E8%A7%82%E9%94%81"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">悲观锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%82%B2%E8%A7%82%E9%94%81%E7%9A%84%E6%8B%93%E5%B1%95%E5%86%85%E5%AE%B9"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">悲观锁的拓展内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%82%B2%E8%A7%82%E9%94%81%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">常见的悲观锁类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">乐观锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">三级封锁协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVCC%EF%BC%88%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%EF%BC%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">MVCC（多版本并发控制）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AE%B5%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.5.</span> <span class="toc-text">两段锁协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">数据库三大范式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F%EF%BC%881NF%EF%BC%8CNormal-Form%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一范式（1NF，Normal Form）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F%EF%BC%882NF%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二范式（2NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F%EF%BC%883NF%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">第三范式（3NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E8%8C%83%E5%BC%8F%E5%8C%96"><span class="toc-number">1.3.4.</span> <span class="toc-text">反范式化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UNION%E5%92%8CUNION-ALL"><span class="toc-number">1.4.</span> <span class="toc-text">UNION和UNION ALL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%EF%BC%88procedure%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">存储过程（procedure）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.1.</span> <span class="toc-text">存储过程和函数的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg"><span class="toc-number">1.5.2.</span> <span class="toc-text">eg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#in%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">in参数例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#out%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">out参数例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#INOUT%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">INOUT参数例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.5.3.</span> <span class="toc-text">存储过程的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#like%EF%BC%9A%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.6.</span> <span class="toc-text">like：模糊查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">1.7.</span> <span class="toc-text">触发器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">索引失效的情况？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%93%AA%E4%BA%9B%E5%9C%B0%E6%96%B9%E9%80%82%E5%90%88%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%EF%BC%9F"><span class="toc-number">1.9.</span> <span class="toc-text">在哪些地方适合创建索引？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.10.</span> <span class="toc-text">创建索引时需要注意什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.11.</span> <span class="toc-text">索引的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E6%AF%94%E8%B5%B7%E9%9D%9E%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.1.</span> <span class="toc-text">⚠️聚集索引比起非聚集索引的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">1.11.1.1.</span> <span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%A0%E5%AF%86%E7%B4%A2%E5%BC%95%E5%92%8C%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.2.</span> <span class="toc-text">稠密索引和稀疏索引</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%A0%E5%AF%86%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">稠密索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">稀疏索引</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BB%84%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.3.</span> <span class="toc-text">关于组合索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95"><span class="toc-number">1.12.</span> <span class="toc-text">索引的优缺点，什么时候使用索引，什么时候不能使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.13.</span> <span class="toc-text">索引的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%88B-%E6%A0%91%EF%BC%89"><span class="toc-number">1.14.</span> <span class="toc-text">数据库索引的实现原理（B+树）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E4%B8%BE%E5%87%A0%E7%A7%8D%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">1.15.</span> <span class="toc-text">列举几种表连接方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A7%86%E5%9B%BE%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E6%B8%B8%E6%A0%87%EF%BC%9F"><span class="toc-number">1.16.</span> <span class="toc-text">什么是视图？什么是游标？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Ehaving"><span class="toc-number">1.17.</span> <span class="toc-text">关于having</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-%EF%BC%9A"><span class="toc-number">1.17.1.</span> <span class="toc-text">注意事项 ：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.18.</span> <span class="toc-text">SQL执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-InnoDB-%E5%92%8C-MyISAM-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.19.</span> <span class="toc-text">MySQL 的两种存储引擎 InnoDB 和 MyISAM 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.19.1.</span> <span class="toc-text">索引的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM"><span class="toc-number">1.19.1.1.</span> <span class="toc-text">MyISAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB"><span class="toc-number">1.19.1.2.</span> <span class="toc-text">InnoDB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E5%A4%87%E4%BB%BD%E5%92%8C%E5%86%B7%E5%A4%87%E4%BB%BD"><span class="toc-number">1.19.2.</span> <span class="toc-text">热备份和冷备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.19.3.</span> <span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7"><span class="toc-number">1.20.</span> <span class="toc-text">奇技淫巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ifnull%E5%87%BD%E6%95%B0"><span class="toc-number">1.20.1.</span> <span class="toc-text">ifnull函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LIMIT-%E5%92%8COFFSET"><span class="toc-number">1.20.2.</span> <span class="toc-text">LIMIT 和OFFSET</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        数据库知识点
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-08T06:47:10.000Z" itemprop="datePublished">2023-11-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="数据库面试"><a href="#数据库面试" class="headerlink" title="数据库面试"></a>数据库面试</h1><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="事务的概念"><a href="#事务的概念" class="headerlink" title="事务的概念"></a>事务的概念</h3><ul>
+<li><p>事务（Transaction）是一个操作序列，不可分割的工作单位，以begin/start transaction</p>
+<p>开始，以 rollback/commit 结束。</p>
+</li>
+<li><p><strong>Rollback</strong>在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚<strong>rollback</strong>后，自增id依然自增，因为innodb的auto_increament的计数器记录的当前值是保存在内存中的，并不是存在于磁盘上，当mysql server处于运行的时候，这个计数值只会随着insert增长，不会随着delete而减少。而当mysql server启动时，当我们需要去查询auto_increment计数值时，mysql便会自动执行：SELECT MAX(id) FROM 表名 FOR UPDATE;语句来获得当前auto_increment列的最大值，然后将这个值放到auto_increment计数器中。所以就算Rollback MySQL的auto_increament计数器也不会作负运算。</p>
+</li>
+<li><p>commit会修改数据库内容。</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># <span class="number">1.</span> 事务的隐式定义</span><br><span class="line"><span class="keyword">UPDATE</span> student</span><br><span class="line"><span class="keyword">SET</span></span><br><span class="line">    name <span class="operator">=</span> <span class="string">&#x27;lily_1&#x27;</span></span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">    ID <span class="operator">=</span> <span class="string">&#x27;00121&#x27;</span></span><br><span class="line">;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># <span class="number">2.</span> 事务的显式定义</span><br><span class="line"><span class="keyword">START</span> TRANSACTION;</span><br><span class="line"><span class="keyword">UPDATE</span> student</span><br><span class="line"><span class="keyword">SET</span></span><br><span class="line">    name <span class="operator">=</span> <span class="string">&#x27;lily_1&#x27;</span></span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">    ID <span class="operator">=</span> <span class="string">&#x27;00123&#x27;</span>;</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br><span class="line"># 提交事务或者撤销事务</span><br><span class="line"></span><br><span class="line"># <span class="number">3.</span> 也可以使用<span class="keyword">set</span>命令</span><br><span class="line"># 禁止自动提交</span><br><span class="line"><span class="keyword">SET</span> AUTOCOMMIT <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"># 允许自动提交</span><br><span class="line"><span class="keyword">SET</span> AUTOCOMMIT <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">SELECT</span> @<span class="variable">@autocommit</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="事务的四个特性（ACID）"><a href="#事务的四个特性（ACID）" class="headerlink" title="事务的四个特性（ACID）"></a>事务的四个特性（ACID）</h3><ul>
+<li><p><strong>A原子性</strong>：事务在逻辑上是不可分割的操作单元。要么所有操作提交成功，要么全部失败回滚。</p>
+</li>
+<li><p><strong>C一致性</strong>：所有的事务对一个数据的读取结果都是相同的。</p>
+</li>
+<li><p><strong>I隔离性</strong>：事务所做的修改在提交前，对其他事务是不可见的。(并发执行的事务之间不能相互影响)</p>
+</li>
+<li><p><strong>D持久性</strong>：一旦事务提交成功，对数据的修改是永久性的。</p>
+</li>
+</ul>
+<h2 id="并发一致性的问题"><a href="#并发一致性的问题" class="headerlink" title="并发一致性的问题"></a>并发一致性的问题</h2><ul>
+<li><p><strong>丢失修改（脏写）：</strong>一个事务对数据进行了修改，在事务提交之前，另一个事务对同一个数据进行了修改，覆盖了之前的修改。</p>
+</li>
+<li><p><strong>脏读：</strong>多个事务操作时。一个事务A读取了被另一个事务B修改、但未提交的数据，然后用这个数据做了业务处理后B突然回滚了这个数据。</p>
+</li>
+<li><p><strong>不可重复读：</strong>在同一个事务中（还没提交），某查询操作在一个时间读取一行数据和之后一个时间读取该行数据，发现数据已经发生修改。</p>
+</li>
+<li><p><strong>幻读：</strong>当事务在查询多次执行时，由于其他事务在这个数据范围内执行了插入操作，会导致每次返回不同的结果集。（数据条数不同）</p>
+</li>
+<li><p><strong>产生并发不一致问题的主要原因是破坏了事务的隔离性，解决方法是通过并发控制（事务隔离机制、MVCC 多版本隔离机制、锁机制）来保证隔离性。</strong></p>
+</li>
+</ul>
+<h3 id="数据库的四种隔离级别"><a href="#数据库的四种隔离级别" class="headerlink" title="数据库的四种隔离级别"></a>数据库的四种隔离级别</h3><ul>
+<li>未提交读：事务中的修改，即使没有提交，对其它事务也是可见的。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051431216.png" alt="image-20220205143158952"></p>
+<p>Serializable（序列化）</p>
+<p><strong>Oracle</strong> 默认的事务隔离级别是<strong>提交读</strong>,在此级别下，通过多版本的控制<strong>解决了幻读和不可</strong></p>
+<p><strong>重复读</strong>。<strong>Mysql</strong> 显然没有，但可以通过在数据库中设置<strong>乐观锁</strong>字段或使用<strong>悲观锁</strong>来控制数</p>
+<p>据一致性。</p>
+<h3 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h3><h4 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a><strong>悲观锁</strong></h4><p>认为数据随时会被修改，因此每次读取数据之前都会上锁，防止其它事务读取或修</p>
+<p>改数据；应用于数据更新比较频繁的场景。</p>
+<p><strong>悲观锁的实现方式：</strong>select … for update</p>
+<h4 id="悲观锁的拓展内容"><a href="#悲观锁的拓展内容" class="headerlink" title="悲观锁的拓展内容"></a>悲观锁的拓展内容</h4><ul>
+<li>需要注意的是，在事务中，只有SELECT … FOR UPDATE 或LOCK IN SHARE MODE 同一笔数据时会等待其它事务结束后才执行，一般SELECT … 则不受此影响。拿上面的实例来说，当我执行select status from t_goods where id=1 for update;后。我在另外的事务中如果再次执行select status from t_goods where id=1 for  update;则第二个事务会一直等待第一个事务的提交，此时第二个查询处于阻塞的状态，但是如果我是在第二个事务中执行select status  from t_goods where id=1;则能正常查询出数据，不会受第一个事务的影响。</li>
+</ul>
+<ul>
+<li><p><strong>MySQL select…for update的Row Lock与Table Lock</strong></p>
+<p>上面我们提到，使用select…for  update会把数据给锁住，不过我们需要注意一些锁的级别，MySQL InnoDB默认Row-Level  Lock，所以只有「明确」地指定主键，MySQL 才会执行Row lock (只锁住被选取的数据) ，否则MySQL 将会执行Table  Lock (将整个数据表单给锁住)。</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wxgblogs/p/6849064.html">https://www.cnblogs.com/wxgblogs/p/6849064.html</a></p>
+<h4 id="常见的悲观锁类型"><a href="#常见的悲观锁类型" class="headerlink" title="常见的悲观锁类型"></a>常见的悲观锁类型</h4><p><strong>排它锁 / X 锁：</strong>事务对数据加上 X 锁时，只允许此事务读取和修改此数据，其他事务不能对该数据加任何锁（select…for update）</p>
+<p><strong>共享锁 / S 锁：</strong>加了 S 锁后，该事务只能对数据进行读取而不能修改，其他事务只能加 S 锁，不能加 X 锁（select…lock in share mode）</p>
+<p><strong>意向锁：（表级锁）</strong></p>
+<p>一个事务在获得某个数据行对象的 S 锁之前，必须先获得整个表的 IS 锁或更强的锁；</p>
+<p>一个事务在获得某个数据行对象的 X 锁之前，必须先获得整个表的 IX 锁；</p>
+<p><strong>IS/IX 锁之间都是兼容的</strong></p>
+<p><strong>好处：</strong>如果一个事务想要对整个表加 X 锁，就需要先检测是否有其它事务对该表或者该表中的某一行加了锁，这种检测非常耗时。有了意向锁之后，只需要检测整个表是否存在 IX/IS/X/S锁就行了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051624136.png" alt="image-20220205162448077"></p>
+<h4 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h4><p>操作数据时不会上锁，但是更新时会判断在此期间有没有别的事务更新这个数据，若被更新过，则失败重试；适用于读多写少的场景。</p>
+<p><strong>乐观锁的实现方式：</strong>加一个版本号或者时间戳字段，每次数据更新时同时更新这个字段；先读取想要更新的字段或者所有字段，更新的时候比较一下，只有字段没有变化才进行更新。</p>
+<h3 id="三级封锁协议"><a href="#三级封锁协议" class="headerlink" title="三级封锁协议"></a>三级封锁协议</h3><p><strong>一级封锁协议：</strong>事务在修改数据之前必须先对其加 X 锁，直到<strong>事务结束</strong>才释放。可以解决<strong>丢失修改</strong>问题（两个事务不能同时对一个数据加 X 锁，避免了修改被覆盖）；</p>
+<p><strong>二级封锁协议：</strong>在一级的基础上，事务在读取数据之前必须先加 S 锁，<strong>读完后释放</strong>。可以</p>
+<p>解决<strong>脏读</strong>问题（如果已经有事务在修改数据，就意味着已经加了 X 锁，此时想要读取数据的</p>
+<p>事务并不能加 S 锁，也就无法进行读取，避免了读取脏数据）；</p>
+<p><strong>三级封锁协议：</strong>在二级的基础上，事务在读取数据之前必须先加 S 锁，直到<strong>事务结束</strong>才能</p>
+<p>释放。可以解决<strong>不可重复读</strong>问题（避免了在事务结束前其它事务对数据加 X 锁进行修改，保</p>
+<p>证了事务期间数据不会被其它事务更新）</p>
+<h3 id="MVCC（多版本并发控制）"><a href="#MVCC（多版本并发控制）" class="headerlink" title="MVCC（多版本并发控制）"></a>MVCC（多版本并发控制）</h3><p>MVCC 在每行记录后面都保存有两个隐藏的列，用来存储创建版本号和删除版本号。</p>
+<p><strong>创建版本号：</strong>创建一个数据行时的事务版本号（<strong>事务版本号：</strong>事务开始时的系统版本号；</p>
+<p><strong>系统版本号：</strong>每开始一个新的事务，系统版本号就会自动递增）；<strong>删除版本号：</strong>删除操作时</p>
+<p>的事务版本号；</p>
+<p>各种操作：</p>
+<p><strong>插入</strong>操作时，记录创建版本号；</p>
+<p><strong>删除</strong>操作时，记录删除版本号；</p>
+<p><strong>更新</strong>操作时，先记录删除版本号，再新增一行记录创建版本号；</p>
+<p><strong>查询</strong>操作时，要符合以下条件才能被查询出来：删除版本号未定义或大于当前事务版本号（删除操作是在当前事务启动之后做的）；创建版本号小于或等于当前事务版本号（创建操作是事务完成或者在事务启动之前完成）通过版本号减少了锁的争用，提高了系统性能；可以实现提交读和可重复读两种隔离级别，</p>
+<p>未提交读无需使用 MVCC</p>
+<h3 id="两段锁协议"><a href="#两段锁协议" class="headerlink" title="两段锁协议"></a>两段锁协议</h3><p>是指所有的事务必须分两个阶段对数据项加锁和解锁。即<code>事务分两个阶段</code>，第一个阶段是<code>获得封锁</code>。事务可以获得任何数据项上的任何类型的锁，但是不能释放；第二阶段是<code>释放封锁</code>，事务可以释放任何数据项上的任何类型的锁，但不能申请。</p>
+<p>第一阶段是获得封锁的阶段，称为<code>扩展阶段</code>：其实也就是该阶段可以进入加锁操作，<code>在对任何数据进行读操作之前要申请获得S锁</code>，<code>在进行写操作之前要申请并获得X锁</code>，<code>加锁不成功，则事务进入等待状态</code>，直到加锁成功才继续执行。就是<code>加锁后就不能解锁</code>了。</p>
+<p>第二阶段是释放封锁的阶段，称为<code>收缩阶段</code>：当事务释放一个封锁后，事务进入封锁阶段，在该阶段<code>只能进行解锁而不能再进行加锁操作</code>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202052232643.png" alt="image-20220205223230545"></p>
+<h2 id="数据库三大范式"><a href="#数据库三大范式" class="headerlink" title="数据库三大范式"></a>数据库三大范式</h2><h3 id="第一范式（1NF，Normal-Form）"><a href="#第一范式（1NF，Normal-Form）" class="headerlink" title="第一范式（1NF，Normal Form）"></a><strong>第一范式（1NF，Normal Form）</strong></h3><p><strong>属性不应该是可分的。</strong></p>
+<p>如果数据库表中的所有字段值都是不可分解的原子值，就说明该数据库表满足了第一范式。第一范式的合理遵循需要根据系统的实际需求来定。</p>
+<p>eg：学生（学号，姓名，性别，出生年月日），如果业务需要最后一列再分成（出生年，出生月，出生日），它就不是一范式了。</p>
+<h3 id="第二范式（2NF）"><a href="#第二范式（2NF）" class="headerlink" title="第二范式（2NF）"></a><strong>第二范式（2NF）</strong></h3><p>每个非主属性完全依赖于主属性集（候选键集）</p>
+<p>对记录的**<code>唯一性</code><strong>，要求记录有唯一标识，即实体的唯一性，即</strong>不存在部分依赖**；</p>
+<p><strong>B 完全依赖于 A，就是说 A 中的所有属性唯一决定 B，属性少了就不能唯一决定，属性多了</strong></p>
+<p><strong>则有冗余（叫部分依赖不叫完全依赖）。</strong></p>
+<p>第二范式需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主</p>
+<p>要针对联合主键而言）。也就是说在一个数据库表中，一个表中只能保存一种数据，不可以</p>
+<p>把多种数据保存在同一张数据库表中。</p>
+<p><strong>主属性集/候选码集：</strong>某一组属性能够唯一确定其它的属性（主键就是从候选键集中选</p>
+<p>的一个键），而其子集不能，这样的属性组中的属性就是主属性；不在候选码集中的属</p>
+<p>性成为非主属性；</p>
+<p>eg：</p>
+<blockquote>
+<p>表：学号、课程号、姓名、学分;</p>
+</blockquote>
+<p>这个表明显说明了两个事务:学生信息, 课程信息;由于非主键字段必须依赖主键，这里<strong>学分依赖课程号</strong>，<strong>姓名依赖与学号</strong>，所以不符合二范式。</p>
+<p><strong>正确做法:</strong><br>学生：<code>Student</code>(学号, 姓名)；<br>课程：<code>Course</code>(课程号, 学分)；<br>选课关系：<code>StudentCourse</code>(学号, 课程号, 成绩)。</p>
+<h3 id="第三范式（3NF）"><a href="#第三范式（3NF）" class="headerlink" title="第三范式（3NF）"></a><strong>第三范式（3NF）</strong></h3><p><strong>在 2NF 的基础上，非主属性不传递依赖于主属性。</strong></p>
+<p>第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关。</p>
+<p><strong>传递依赖：如果 C 依赖于 B，B 依赖于 A，那么 C 传递依赖于 A；</strong></p>
+<p>eg：</p>
+<blockquote>
+<p>表: 学号, 姓名, 年龄, 学院名称, 学院电话</p>
+</blockquote>
+<p>因为存在<strong>依赖传递</strong>: (学号) → (学生)→(所在学院) → (学院电话) 。这样学院电话可能就会成为重复的冗余信息。</p>
+<p><strong>正确做法：</strong></p>
+<p>学生：(学号, 姓名, 年龄, 所在学院)； </p>
+<p>学院：(学院, 电话)。</p>
+<h3 id="反范式化"><a href="#反范式化" class="headerlink" title="反范式化"></a>反范式化</h3><p><strong>一般说来，数据库只需满足第三范式（<code>3NF</code>）就行了。</strong></p>
+<p>没有冗余的数据库设计可以做到。但是，没有冗余的数据库未必是最好的数据库，有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据。具体做法是：在概念数据模型设计时遵守第三范式，降低范式标准的工作放到物理数据模型设计时考虑。降低范式就是增加字段，允许冗余，**<code>达到以空间换时间的目的</code>**。</p>
+<p>〖例〗：如订单表，“金额”这个字段的存在，表明该表的设计不满足第三范式，因为“金额”可以由“单价”乘以“数量”得到，说明“金额”是冗余字段。但是，增加“金额”这个冗余字段，可以提高查询统计的速度，这就是以空间换时间的作法。</p>
+<h2 id="UNION和UNION-ALL"><a href="#UNION和UNION-ALL" class="headerlink" title="UNION和UNION ALL"></a>UNION和UNION ALL</h2><p>Union：对两个结果集进行并集操作，不包括重复行，同时进行默认规则的排序；</p>
+<p>Union All：对两个结果集进行并集操作，包括重复行，不进行排序；</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/canger/p/9760217.html%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%A6%E7%BB%86%E6%93%8D%E4%BD%9C">https://www.cnblogs.com/canger/p/9760217.html数据库详细操作</a></p>
+<h2 id="存储过程（procedure）"><a href="#存储过程（procedure）" class="headerlink" title="存储过程（procedure）"></a>存储过程（procedure）</h2><p>存储过程是事先经过编译并存储在数据库中的一段 SQL 语句的集合。想要实现相应的功能时，只需要调用这个存储过程就行了（类似于函数，输入具有输出参数）。</p>
+<h3 id="存储过程和函数的区别"><a href="#存储过程和函数的区别" class="headerlink" title="存储过程和函数的区别"></a>存储过程和函数的区别</h3><ul>
+<li>函数有1个返回值,而存储过程是通过参数返回的,可以有多个或者没有</li>
+<li>函数一般情况下是用来计算并返回一个计算结果；存储过程一般是用来完成特定的数据操作（比如修改、插入数据库表或执行某些DDL语句等等)</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051958770.png" alt="image-20220205195856716"></p>
+<h3 id="eg"><a href="#eg" class="headerlink" title="eg"></a>eg</h3><h4 id="in参数例子"><a href="#in参数例子" class="headerlink" title="in参数例子"></a>in参数例子</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //  # 声明//为分割符</span><br><span class="line">CREATE PROCEDURE demo_in_parameter(IN p_in int)  </span><br><span class="line">    BEGIN   </span><br><span class="line">    SELECT p_in;   </span><br><span class="line">    SET p_in=2;   </span><br><span class="line">    SELECT p_in;   </span><br><span class="line">    END//  </span><br><span class="line">DELIMITER ;  #结束声明//为分割符</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.  mysql &gt; <span class="variable constant_">SET</span> <span class="variable">@p_in</span>=<span class="number">1</span>;  </span><br><span class="line"><span class="number">2</span>.  mysql &gt; <span class="variable constant_">CALL</span> demo_in_parameter(<span class="variable">@p_in</span>);  </span><br><span class="line"><span class="number">3</span>.  +------+  </span><br><span class="line"><span class="number">4</span>.  |<span class="params"> p_in </span>|  </span><br><span class="line"><span class="number">5</span>.  +------+  </span><br><span class="line"><span class="number">6</span>.  |<span class="params">   1  </span>|   </span><br><span class="line"><span class="number">7</span>.  +------+  </span><br><span class="line"><span class="number">8</span>.   </span><br><span class="line"><span class="number">9</span>.  +------+  </span><br><span class="line"><span class="number">10</span>. |<span class="params"> p_in </span>|  </span><br><span class="line"><span class="number">11</span>. +------+  </span><br><span class="line"><span class="number">12</span>. |<span class="params">   2  </span>|   </span><br><span class="line"><span class="number">13</span>. +------+  </span><br><span class="line"><span class="number">14</span>. </span><br><span class="line"><span class="number">15</span>.mysql&gt; <span class="variable constant_">SELECT</span> <span class="variable">@p_in</span>;  </span><br><span class="line"><span class="number">16</span>.+-------+  </span><br><span class="line"><span class="number">17</span>.|<span class="params"> @p_in </span>|  </span><br><span class="line"><span class="number">18</span>.+-------+  </span><br><span class="line"><span class="number">19</span>.|<span class="params">  1    </span>|  </span><br><span class="line"><span class="number">20</span>.+-------+  </span><br></pre></td></tr></table></figure>
+
+<p>以上可以看出，<code>p_in</code>虽然在存储过程中被修改，但并不影响<code>@p_in</code>的值</p>
+<h4 id="out参数例子"><a href="#out参数例子" class="headerlink" title="out参数例子"></a>out参数例子</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //  </span><br><span class="line">CREATE PROCEDURE demo_out_parameter(OUT p_out int)  </span><br><span class="line">    BEGIN </span><br><span class="line">    SELECT p_out;  </span><br><span class="line">    SET p_out=</span><br><span class="line">    SELECT p_out;  </span><br><span class="line">    END //  </span><br><span class="line">DELIMITER ; </span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.  mysql &gt; <span class="variable constant_">SET</span> <span class="variable">@p_out</span>=<span class="number">1</span>;  </span><br><span class="line"><span class="number">2</span>.  mysql &gt; <span class="variable constant_">CALL</span> sp_demo_out_parameter(<span class="variable">@p_out</span>);  </span><br><span class="line"><span class="number">3</span>.  +-------+  </span><br><span class="line"><span class="number">4</span>.  |<span class="params"> p_out </span>|   </span><br><span class="line"><span class="number">5</span>.  +-------+  </span><br><span class="line"><span class="number">6</span>.  |<span class="params"> NULL  </span>|   </span><br><span class="line"><span class="number">7</span>.  +-------+  </span><br><span class="line"><span class="number">8</span>.   </span><br><span class="line"><span class="number">9</span>.  +-------+  </span><br><span class="line"><span class="number">10</span>. |<span class="params"> p_out </span>|  </span><br><span class="line"><span class="number">11</span>. +-------+  </span><br><span class="line"><span class="number">12</span>. |<span class="params">   2   </span>|   </span><br><span class="line"><span class="number">13</span>. +-------+  </span><br><span class="line"><span class="number">14</span>. </span><br><span class="line"><span class="number">15</span>.mysql&gt; <span class="variable constant_">SELECT</span> <span class="variable">@p_out</span>;  </span><br><span class="line"><span class="number">16</span>.+-------+  </span><br><span class="line"><span class="number">17</span>.|<span class="params"> p_out </span>|  </span><br><span class="line"><span class="number">18</span>.+-------+  </span><br><span class="line"><span class="number">19</span>.|<span class="params">   2   </span>|  </span><br><span class="line"><span class="number">20</span>.+-------+  </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="INOUT参数例子"><a href="#INOUT参数例子" class="headerlink" title="INOUT参数例子"></a>INOUT参数例子</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //   </span><br><span class="line">CREATE PROCEDURE demo_inout_parameter(INOUT p_inout int)   </span><br><span class="line">BEGIN </span><br><span class="line">    SELECT p_inout;  </span><br><span class="line">    SET p_inout=2;  </span><br><span class="line">    SELECT p_inout;   </span><br><span class="line"> END //   </span><br><span class="line">DELIMITER ; </span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.  mysql &gt; <span class="variable constant_">SET</span> <span class="variable">@p_inout</span>=<span class="number">1</span>;  </span><br><span class="line"><span class="number">2</span>.  mysql &gt; <span class="variable constant_">CALL</span> demo_inout_parameter(<span class="variable">@p_inout</span>) ;  </span><br><span class="line"><span class="number">3</span>.  +---------+  </span><br><span class="line"><span class="number">4</span>.  |<span class="params"> p_inout </span>|  </span><br><span class="line"><span class="number">5</span>.  +---------+  </span><br><span class="line"><span class="number">6</span>.  |<span class="params">    1    </span>|  </span><br><span class="line"><span class="number">7</span>.  +---------+  </span><br><span class="line"><span class="number">8</span>.   </span><br><span class="line"><span class="number">9</span>.  +---------+  </span><br><span class="line"><span class="number">10</span>. |<span class="params"> p_inout </span>|   </span><br><span class="line"><span class="number">11</span>. +---------+  </span><br><span class="line"><span class="number">12</span>. |<span class="params">    2    </span>|  </span><br><span class="line"><span class="number">13</span>. +---------+  </span><br><span class="line"><span class="number">14</span>. </span><br><span class="line"><span class="number">15</span>.mysql &gt; <span class="variable constant_">SELECT</span> <span class="variable">@p_inout</span>;  </span><br><span class="line"><span class="number">16</span>.+----------+  </span><br><span class="line"><span class="number">17</span>.|<span class="params"> @p_inout </span>|   </span><br><span class="line"><span class="number">18</span>.+----------+  </span><br><span class="line"><span class="number">19</span>.|<span class="params">    2     </span>|  </span><br><span class="line"><span class="number">20</span>.+----------+ </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="存储过程的优缺点"><a href="#存储过程的优缺点" class="headerlink" title="存储过程的优缺点"></a>存储过程的优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a><strong>优点</strong></h4><ul>
+<li><strong>预先编译，</strong>而不需要每次运行时编译，<strong>提高了数据库执行效率；</strong></li>
+</ul>
+<p>封装了一系列操作，对于一些数据交互比较多的操作，相比于单独执行 SQL 语句，可以<strong>减少网络通信量；</strong></p>
+<ul>
+<li><p><strong>具有可复用性，</strong>减少了数据库开发的工作量；</p>
+</li>
+<li><p><strong>安全性高，</strong>可以让没有权限的用户通过存储过程间接操作数据库；</p>
+</li>
+<li><p><strong>更易于维护</strong></p>
+</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a><strong>缺点</strong></h4><p><strong>可移植性差，</strong>存储过程将应用程序绑定到了数据库上；（本来应该由程序做的事情交给数据库去做）</p>
+<p><strong>开发调试复杂，</strong>没有好的 IDE；</p>
+<p><strong>修改复杂，</strong>需要重新编译，有时还需要更新程序中的代码以更新调用</p>
+<p>小型程序完全无用。对于小型web应用来说，它的使用价值就更小了，反而会拖累开发进度。</p>
+<h2 id="like：模糊查询"><a href="#like：模糊查询" class="headerlink" title="like：模糊查询"></a>like：模糊查询</h2><ul>
+<li><p>%：表示任意 0 个或多个字符</p>
+</li>
+<li><p>like：模糊查询</p>
+</li>
+<li><p>_：代表单个字符</p>
+</li>
+<li><p>like不区分大小写，如果需要区分加入BINARY</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202052110054.png" alt="image-20220205210921307"></p>
+</li>
+<li><p>‘%’通配符可以到匹配任意字符，但是不能匹配 NULL。也就是说 “%”匹配不到 tb_students_info 数据表中值为 NULL 的记录。</p>
+</li>
+<li><p>如果查询内容中包含通配符，可以使用“\”转义符</p>
+</li>
+</ul>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><p>触发器（TRIGGER）是由事件（比如INSERT/UPDATE/DELETE）来触发运行的操作（不能被直接调用，不能接收参数）。在数据库里以独立的对象存储，用于<strong>保证数据完整性</strong>（比如可以检验或转换数据）。</p>
+<h2 id="索引失效的情况？"><a href="#索引失效的情况？" class="headerlink" title="索引失效的情况？"></a>索引失效的情况？</h2><ul>
+<li><p>以“%”开头的 LIKE 语句； </p>
+</li>
+<li><p>OR 语句前后没有同时使用索引；</p>
+</li>
+<li><p>数据类型出现隐式转化（如 varchar 不加单引号的话可能会自动转换为 int 型）；</p>
+</li>
+<li><p>对于组合索引，必须满足 最左匹配原则/最左前缀原则 (最左优先，eg：多列索引 col1、col2 和 col3，则 索引生效的情形包括 col1 或 col1，col2 或 col1，col2，col3)；</p>
+</li>
+<li><p>如果 MySQL 估计全表扫描比索引快，则不使用索引（比如非常小的表）</p>
+</li>
+<li><p>在索引字段上使用not，&lt;&gt;，!=。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</p>
+</li>
+</ul>
+<h2 id="在哪些地方适合创建索引？"><a href="#在哪些地方适合创建索引？" class="headerlink" title="在哪些地方适合创建索引？"></a>在哪些地方适合创建索引？</h2><ul>
+<li><p>主键和外键（连接两张表的列）上</p>
+</li>
+<li><p>某列经常作为最大最小值；</p>
+</li>
+<li><p>经常被查询的字段；</p>
+</li>
+<li><p>经常出现在 ORDER BY/GROUP BY/DISDINCT 后面的字段</p>
+</li>
+</ul>
+<h2 id="创建索引时需要注意什么？"><a href="#创建索引时需要注意什么？" class="headerlink" title="创建索引时需要注意什么？"></a>创建索引时需要注意什么？</h2><ul>
+<li><p>只应建立在小字段上，而不要对大文本或图片建立索引（一页存储的数据越多一次 IO 操作获取的数据越大效率越高）；</p>
+</li>
+<li><p>建立索引的字段应该非空，在 MySQL 中，含有空值的列很难进行查询优化，因为它们使得索引、索引的统计信息以及比较运算更加复杂。应该用 0、一个特殊的值或者一个空串代替 NULL；</p>
+</li>
+<li><p>选择数据密度大（唯一值占总数的百分比很大）的字段作索引</p>
+</li>
+</ul>
+<h2 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h2><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061447738.png" alt="image-20220206144712368"></p>
+<p>一般mysql主键上的就是聚集索引</p>
+<h3 id="⚠️聚集索引比起非聚集索引的优缺点"><a href="#⚠️聚集索引比起非聚集索引的优缺点" class="headerlink" title="⚠️聚集索引比起非聚集索引的优缺点"></a>⚠️聚集索引比起非聚集索引的优缺点</h3><h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><ul>
+<li>聚集索引一个表只能有一个，而非聚集索引一个表可以存在多个</li>
+<li>聚集索引存储记录是物理上连续存在，而非聚集索引是逻辑上的连续，物理存储并不连续</li>
+<li>聚集索引:物理存储按照索引排序；聚集索引是一种索引组织形式，索引的键值逻辑顺序决定了表数据行的物理存储顺序。</li>
+<li>非聚集索引:物理存储不按照索引排序；非聚集索引就是普通索引了，仅仅只是对数据列创建相应的索引，不影响整个表的物理存储顺序。</li>
+<li>索引是通过二叉树的数据结构来描述的，我们可以这么理解聚集索引：索引的叶节点就是数据节点。而非聚集索引的叶节点仍然是索引节点，只不过有一个指针指向对应的数据块。</li>
+<li>聚集索引插入数据时速度要慢（时间花费在“物理存储的排序”上，也就是首先要找到位置然后插入），查询数据比非聚集数据的速度快。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>动作描述</th>
+<th>使用聚集索引</th>
+<th>使用非聚集索引</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>列经常被分组排序</td>
+<td>应</td>
+<td>应</td>
+</tr>
+<tr>
+<td>返回某范围内的数据</td>
+<td>应</td>
+<td>不应</td>
+</tr>
+<tr>
+<td>一个或极少不同值</td>
+<td>不应</td>
+<td>不应</td>
+</tr>
+<tr>
+<td>小数目的不同值</td>
+<td>应</td>
+<td>不应</td>
+</tr>
+<tr>
+<td>大数目的不同值</td>
+<td>不应</td>
+<td>应</td>
+</tr>
+<tr>
+<td>频繁更新的列</td>
+<td>不应</td>
+<td>应</td>
+</tr>
+<tr>
+<td>外键列</td>
+<td>应</td>
+<td>应</td>
+</tr>
+<tr>
+<td>主键列</td>
+<td>应</td>
+<td>应</td>
+</tr>
+<tr>
+<td>频繁修改索引列</td>
+<td>不应</td>
+<td>应</td>
+</tr>
+</tbody></table>
+<h3 id="稠密索引和稀疏索引"><a href="#稠密索引和稀疏索引" class="headerlink" title="稠密索引和稀疏索引"></a>稠密索引和稀疏索引</h3><h4 id="稠密索引"><a href="#稠密索引" class="headerlink" title="稠密索引"></a><strong>稠密索引</strong></h4><p>数据库中的每个搜索键值都有一个索引记录。这样可以加快搜索速度，但需要更多空间来存储索引记录本身。索引记录包含搜索键值和指向磁盘上实际记录的指针。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061622257.png" alt="image-20220206162245117"></p>
+<h4 id="稀疏索引"><a href="#稀疏索引" class="headerlink" title="稀疏索引"></a><strong>稀疏索引</strong></h4><p>  在稀疏索引中，不会为每个搜索关键字创建索引记录。要搜索记录，我们首先按索引记录进行操作，然后到达数据的实际位置。如果索引里没有，那么系统将开始顺序搜索，直到找到所需的数据为止。</p>
+<ul>
+<li>只有当关系按搜索码排列顺序存储时才能使用稀疏索引，换句话说也就是只有索引是聚集索引时才能使用稀疏索引。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061622766.png" alt="image-20220206162257646"></p>
+<h3 id="关于组合索引"><a href="#关于组合索引" class="headerlink" title="关于组合索引"></a>关于组合索引</h3><p>索引的底层是一颗 B+树，那么组合索引当然还是一颗 B+树，只不过组合索引的健值数量不是一个，而是多个。构建一颗 B+树只能根据一个值来构建，因此数据库依据联合索引最左的字段来构建 B+树。</p>
+<h2 id="索引的优缺点，什么时候使用索引，什么时候不能使用索引"><a href="#索引的优缺点，什么时候使用索引，什么时候不能使用索引" class="headerlink" title="索引的优缺点，什么时候使用索引，什么时候不能使用索引"></a>索引的优缺点，什么时候使用索引，什么时候不能使用索引</h2><p>索引最大的好处是提高查询速度，缺点是更新数据时效率低，因为要同时更新索引。</p>
+<p>对数据进行频繁查询进建立索引，如果要频繁更改数据不建议使用索引。</p>
+<h2 id="索引的原理"><a href="#索引的原理" class="headerlink" title="索引的原理"></a>索引的原理</h2><ul>
+<li><p>二叉查找树：左节点的值小于根节点，右节点的值大于根节点。但有可能形成一条链。</p>
+</li>
+<li><p>红黑树：特殊的二叉查找树，每个节点有红黑两种颜色，根节点和叶子结点都是黑色。如果一个节点是红色的，则它的子节点必须是黑色的。从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
+</li>
+<li><p>平衡二叉树（AVL-tree）：所有子树高度之差的绝对值不超过1的二叉查找树，有效避免了成链的问题。</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061506221.png" alt="image-20220206150600066"></p>
+<ul>
+<li>B树：多叉的平衡树，节点大小也是左小右大，并且从左到右递增。假设$$N$$($N&gt;=2$)叉的B树，非叶子结点的字节点数$&gt;1且&lt;=N$ 枝节点的关键字数量大于等于$ceil(m/2)-1$个且小于等于$M-1$个</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061513430.png" alt="image-20220206151309322"></p>
+<h2 id="数据库索引的实现原理（B-树）"><a href="#数据库索引的实现原理（B-树）" class="headerlink" title="数据库索引的实现原理（B+树）"></a>数据库索引的实现原理（B+树）</h2><ul>
+<li><p>B+树：B+树是B树的一个升级版，相对于B树来说B+树更充分的利用了节点的空间，让查询速度更加稳定，其速度完全接近于二分法查找。<strong>B+树的非叶子节点只存索引</strong>，所以同样大小的磁盘页可以容纳更多的节点元素，所以数据量相同的情况下，<strong>B+树更矮胖，所以IO次数更少</strong>。</p>
+<p><strong>B+树只有叶子节点才会存真正的数据</strong>，所以每次查找一定会找到叶子节点，但B树有可能只要找到中间节点就结束了，所以<strong>B+树的查找性能比B树更加稳定</strong>。</p>
+<p>B树的范围查询需要繁琐的中序遍历，但B+树的叶子节点是用链表相连的，所以只需要遍历链表即可。<strong>B+树自带排序功能，范围查询简单。</strong></p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061550202.png" alt="image-20220206155018079"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061546347.png" alt="image-20220206154659245"></p>
+<h2 id="列举几种表连接方式"><a href="#列举几种表连接方式" class="headerlink" title="列举几种表连接方式"></a>列举几种表连接方式</h2><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202052325855.png" alt="image-20220205232521723"></p>
+<ul>
+<li>内连接（Inner Join）：仅将两个表中满足连接条件的行组合起来作为结果集<ul>
+<li>自然连接：显示属性相同的列，去除重复的属性</li>
+<li>等值连接：所有属性相同的列都显示，包括重复的</li>
+</ul>
+</li>
+<li>外连接（Outer Join）<ul>
+<li>左连接：左边表的所有数据（整个表）都有显示出来，右边的表数据只显示共同有的那部分，没有对应的部分补NULL；</li>
+<li>右连接：和左连接相反；</li>
+<li>全外连接（Full Outer Join）：查询出左表和右表所有数据，但是去除两表的重复数据</li>
+</ul>
+</li>
+<li>交叉连接（Cross Join）：返回两表的笛卡尔积（对于所含数据分别为m、n的表，返回m*n的结果）</li>
+</ul>
+<h2 id="什么是视图？什么是游标？"><a href="#什么是视图？什么是游标？" class="headerlink" title="什么是视图？什么是游标？"></a>什么是视图？什么是游标？</h2><ul>
+<li><p>视图：从数据库的基本表中通过查询选取出来的数据组成的</p>
+<p>虚拟表</p>
+<p>（数据库中存放视图的定义）。可以对其进行增/删/改/查等操作。视图是对若干张基本表的引用，一张虚表，查询语句执行的结果，不存储具体的数据（基本表数据发生了改变，视图也会跟着改变）；可以跟基本表一样，进行增删改查操作(ps:增删改操作有条件限制)；如连表查询产生的视图无法进行，对视图的增删改会影响原表的数据。好处：</p>
+<ul>
+<li>通过只给用户访问视图的权限，保证数据的<strong>安全性</strong>；</li>
+<li><strong>简化</strong>复杂的SQL操作，隐藏数据的复杂性（比如复杂的连接）；</li>
+</ul>
+</li>
+<li><p>游标（Cursor）：用于定位在查询返回的<strong>结果集的特定行</strong>，以对特定行进行操作。使用游标可以方便地对结果集进行移动遍历，根据需要滚动或对浏览/修改任意行中的数据。主要用于交互式应用。</p>
+</li>
+</ul>
+<h2 id="关于having"><a href="#关于having" class="headerlink" title="关于having"></a>关于having</h2><p>where、聚合函数、having 在from后面的执行顺序：where&gt;聚合函数(sum,min,max,avg,count)&gt;having</p>
+<p>若须引入聚合函数来对group by 结果进行过滤 则只能用having。（ 是先执行聚合函数还是先过滤 然后比对我上面列出的执行顺序 一看便知）<br>HAVING语句通常与GROUP BY语句联合使用，用来过滤由GROUP BY语句返回的记录集。<br>HAVING语句的存在弥补了WHERE关键字不能与聚合函数联合使用的不足。<br>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT column1, column2, … column_n, aggregate_function (expression)</span><br><span class="line">FROM tables</span><br><span class="line">WHERE predicates</span><br><span class="line">GROUP BY column1, column2, … column_n</span><br><span class="line">HAVING condition1 … condition_n;</span><br></pre></td></tr></table></figure>
+
+<p>如果想查询平均分高于80分的学生记录可以这样写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT id, COUNT(course) as numcourse, AVG(score) as avgscore</span><br><span class="line">FROM student</span><br><span class="line">GROUP BY id</span><br><span class="line">HAVING AVG(score)&gt;=80;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，如果用WHERE代替HAVING就会出错。</p>
+<h3 id="注意事项-："><a href="#注意事项-：" class="headerlink" title="注意事项 ："></a>注意事项 ：</h3><p>1、where 后不能跟聚合函数，因为where执行顺序大于聚合函数。<br>2、where 子句的作用是在对查询结果进行分组前，将不符合where条件的行去掉，即在分组之前过滤数据，条件中不能包含聚组函数，使用where条件显示特定的行。<br>3、having 子句的作用是筛选满足条件的组，即在分组之后过滤数据，条件中经常包含聚组函数，使用having 条件显示特定的组，也可以使用多个分组标准进行分组。</p>
+<h2 id="SQL执行顺序"><a href="#SQL执行顺序" class="headerlink" title="SQL执行顺序"></a>SQL执行顺序</h2><p><strong>(1)from</strong> </p>
+<p><strong>(2) join</strong></p>
+<p><strong>(3) on</strong> </p>
+<p><strong>(4) where</strong> </p>
+<p><strong>(5)group by</strong></p>
+<p><strong>(6) avg,sum…. （组函数）</strong></p>
+<p><strong>(7)with rollup/cube</strong>（rollup和cube的区别：若group by x,y，rollup会算每个x的total和总的total，cube则会算出每个x的total，每个y的total和总的total，如果group by中有n列，rollup会计算n种组合，那cube就会计算$2^{n}-1$种组合。<a target="_blank" rel="noopener" href="https://blog.csdn.net/shenqingkeji/article/details/52860843">详细说明</a>）</p>
+<p><strong>(8)having</strong> </p>
+<p><strong>(9) select</strong> </p>
+<p><strong>(10) distinct</strong> </p>
+<p><strong>(11) order by</strong></p>
+<p><strong>(12) LIMIT/OFFSET</strong> </p>
+<p>每一步生成一个虚拟表然后将这个虚拟表交给下一步去操作。（order by生成的是游标，所以order by子句的查询不能用于表达式）</p>
+<h2 id="MySQL-的两种存储引擎-InnoDB-和-MyISAM-的区别"><a href="#MySQL-的两种存储引擎-InnoDB-和-MyISAM-的区别" class="headerlink" title="MySQL 的两种存储引擎 InnoDB 和 MyISAM 的区别"></a>MySQL 的两种存储引擎 InnoDB 和 MyISAM 的区别</h2><ul>
+<li><p>InnoDB 支持事务，可以进行 Commit 和 Rollback；</p>
+</li>
+<li><p>MyISAM 只支持<strong>表级锁</strong>，而 InnoDB 还支持<strong>行级锁</strong>，提高了并发操作的性能；</p>
+</li>
+<li><p>InnoDB 支持<strong>外键</strong>；</p>
+</li>
+<li><p>MyISAM 崩溃后发生损坏的概率比 InnoDB 高很多，而且恢复的速度也更慢；</p>
+</li>
+<li><p>MyISAM 支持压缩表和空间数据索引，InnoDB <strong>需要更多的内存和存储</strong>；</p>
+</li>
+<li><p>InnoDB 支持<strong>热备份</strong></p>
+</li>
+</ul>
+<h3 id="索引的区别"><a href="#索引的区别" class="headerlink" title="索引的区别"></a>索引的区别</h3><h4 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h4><ul>
+<li>不管是主键索引、唯一键索引或者普通索引，其索引都属于稀疏索引</li>
+</ul>
+<h4 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h4><ul>
+<li>若一个主键被定义，该主键则作为密集索引</li>
+<li>若没有主键被定义，该表的第一个唯一非空索引则作为密集索引</li>
+<li>若不满足以上条件，innodb内部会生成一个隐藏主键（密集索引）</li>
+<li>非主键索引（稀疏索引）存储相关键位和它对应的主键值，包含两次查找</li>
+</ul>
+<h3 id="热备份和冷备份"><a href="#热备份和冷备份" class="headerlink" title="热备份和冷备份"></a>热备份和冷备份</h3><p><strong>热备份：</strong>在数据库运行的情况下备份的方法。优点：可按表或用户备份，备份时数据库仍可使用，可恢复至任一时间点。但是不能出错</p>
+<p><strong>冷备份：</strong>数据库正常关闭后，将关键性文件复制到另一位置的备份方式。优点：操作简单快速，恢复简单</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>MyISAM 管理非事务表。它提供高速存储和检索（MyISAM 强调的是性能，每次查询具有原子性，其执行速度比 InnoDB 更快），以及全文搜索能力。如果表比较小，或者是只读数据（有大量的 SELECT），还是可以使用 MyISAM；</li>
+<li>InnoDB 支持事务，并发情况下有很好的性能，基本可以替代 MyISAM</li>
+</ul>
+<h2 id="奇技淫巧"><a href="#奇技淫巧" class="headerlink" title="奇技淫巧"></a>奇技淫巧</h2><h3 id="ifnull函数"><a href="#ifnull函数" class="headerlink" title="ifnull函数"></a>ifnull函数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IFNULL(expression, alt_value)</span><br></pre></td></tr></table></figure>
+
+<p>如果第一个参数的表达式 expression 为 NULL，则返回第二个参数的备用值。</p>
+<h3 id="LIMIT-和OFFSET"><a href="#LIMIT-和OFFSET" class="headerlink" title="LIMIT 和OFFSET"></a>LIMIT 和OFFSET</h3><blockquote>
+<p>使用limit 可以实现分页比如</p>
+<p>limit 0,5 是从1到5条，</p>
+<p>limit 5，3 是从,6到8条，</p>
+<p>使用limit offset 时</p>
+<p>limit 5 offset 0 从 1 到5 条</p>
+<p>limit 5 offset 5 从 6 到10 条</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9D%A2%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">数据库面试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">事务的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7%EF%BC%88ACID%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">事务的四个特性（ACID）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">并发一致性的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据库的四种隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81"><span class="toc-number">1.2.2.</span> <span class="toc-text">乐观锁和悲观锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%82%B2%E8%A7%82%E9%94%81"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">悲观锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%82%B2%E8%A7%82%E9%94%81%E7%9A%84%E6%8B%93%E5%B1%95%E5%86%85%E5%AE%B9"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">悲观锁的拓展内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%82%B2%E8%A7%82%E9%94%81%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">常见的悲观锁类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">乐观锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BA%A7%E5%B0%81%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">三级封锁协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVCC%EF%BC%88%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%EF%BC%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">MVCC（多版本并发控制）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E6%AE%B5%E9%94%81%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.2.5.</span> <span class="toc-text">两段锁协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">数据库三大范式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%8C%83%E5%BC%8F%EF%BC%881NF%EF%BC%8CNormal-Form%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">第一范式（1NF，Normal Form）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%8C%83%E5%BC%8F%EF%BC%882NF%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">第二范式（2NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E8%8C%83%E5%BC%8F%EF%BC%883NF%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">第三范式（3NF）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E8%8C%83%E5%BC%8F%E5%8C%96"><span class="toc-number">1.3.4.</span> <span class="toc-text">反范式化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UNION%E5%92%8CUNION-ALL"><span class="toc-number">1.4.</span> <span class="toc-text">UNION和UNION ALL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%EF%BC%88procedure%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">存储过程（procedure）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.1.</span> <span class="toc-text">存储过程和函数的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg"><span class="toc-number">1.5.2.</span> <span class="toc-text">eg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#in%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">in参数例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#out%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">out参数例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#INOUT%E5%8F%82%E6%95%B0%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">INOUT参数例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.5.3.</span> <span class="toc-text">存储过程的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#like%EF%BC%9A%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.6.</span> <span class="toc-text">like：模糊查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="toc-number">1.7.</span> <span class="toc-text">触发器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">索引失效的情况？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%93%AA%E4%BA%9B%E5%9C%B0%E6%96%B9%E9%80%82%E5%90%88%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%EF%BC%9F"><span class="toc-number">1.9.</span> <span class="toc-text">在哪些地方适合创建索引？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.10.</span> <span class="toc-text">创建索引时需要注意什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.11.</span> <span class="toc-text">索引的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E6%AF%94%E8%B5%B7%E9%9D%9E%E8%81%9A%E9%9B%86%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.1.</span> <span class="toc-text">⚠️聚集索引比起非聚集索引的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-number">1.11.1.1.</span> <span class="toc-text">区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%A0%E5%AF%86%E7%B4%A2%E5%BC%95%E5%92%8C%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.2.</span> <span class="toc-text">稠密索引和稀疏索引</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%A0%E5%AF%86%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">稠密索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">稀疏索引</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BB%84%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.3.</span> <span class="toc-text">关于组合索引</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95"><span class="toc-number">1.12.</span> <span class="toc-text">索引的优缺点，什么时候使用索引，什么时候不能使用索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.13.</span> <span class="toc-text">索引的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%88B-%E6%A0%91%EF%BC%89"><span class="toc-number">1.14.</span> <span class="toc-text">数据库索引的实现原理（B+树）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E4%B8%BE%E5%87%A0%E7%A7%8D%E8%A1%A8%E8%BF%9E%E6%8E%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">1.15.</span> <span class="toc-text">列举几种表连接方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A7%86%E5%9B%BE%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E6%B8%B8%E6%A0%87%EF%BC%9F"><span class="toc-number">1.16.</span> <span class="toc-text">什么是视图？什么是游标？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Ehaving"><span class="toc-number">1.17.</span> <span class="toc-text">关于having</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-%EF%BC%9A"><span class="toc-number">1.17.1.</span> <span class="toc-text">注意事项 ：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.18.</span> <span class="toc-text">SQL执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-InnoDB-%E5%92%8C-MyISAM-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.19.</span> <span class="toc-text">MySQL 的两种存储引擎 InnoDB 和 MyISAM 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.19.1.</span> <span class="toc-text">索引的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MyISAM"><span class="toc-number">1.19.1.1.</span> <span class="toc-text">MyISAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#InnoDB"><span class="toc-number">1.19.1.2.</span> <span class="toc-text">InnoDB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E5%A4%87%E4%BB%BD%E5%92%8C%E5%86%B7%E5%A4%87%E4%BB%BD"><span class="toc-number">1.19.2.</span> <span class="toc-text">热备份和冷备份</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.19.3.</span> <span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7"><span class="toc-number">1.20.</span> <span class="toc-text">奇技淫巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ifnull%E5%87%BD%E6%95%B0"><span class="toc-number">1.20.1.</span> <span class="toc-text">ifnull函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LIMIT-%E5%92%8COFFSET"><span class="toc-number">1.20.2.</span> <span class="toc-text">LIMIT 和OFFSET</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&text=数据库知识点"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&is_video=false&description=数据库知识点"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=数据库知识点&body=Check out this article: http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&title=数据库知识点"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&name=数据库知识点&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/&t=数据库知识点"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2023
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

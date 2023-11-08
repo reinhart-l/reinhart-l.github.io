@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="战争迷雾 大量移动单位和大视野不动单位  这个用个循环暴力计算显然不现实, 除非你地图很小. 所以, 优化思路就是针对移动的单位重新计算, 针对不动的单位只算一次首先, 我们可以用坐标(X,Y)和视野半径(R)三个值确定出一个唯一值K代表一个提供视野的单位U对于每帧新加入(K当前不存在)的U, 定义其生命周期L&#x3D;MAX. 其余的就对U的L进行递减移除L&lt;&#x3D;0的U. 针对于L&#x3D;MAX的, 计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏研发场景题">
+<meta property="og:url" content="http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/index.html">
+<meta property="og:site_name" content="Across the Cosmos">
+<meta property="og:description" content="战争迷雾 大量移动单位和大视野不动单位  这个用个循环暴力计算显然不现实, 除非你地图很小. 所以, 优化思路就是针对移动的单位重新计算, 针对不动的单位只算一次首先, 我们可以用坐标(X,Y)和视野半径(R)三个值确定出一个唯一值K代表一个提供视野的单位U对于每帧新加入(K当前不存在)的U, 定义其生命周期L&#x3D;MAX. 其余的就对U的L进行递减移除L&lt;&#x3D;0的U. 针对于L&#x3D;MAX的, 计算">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051130785.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051130975.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051059254.jpg">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2Nsb3VkZ3Jhc3NsYW5kLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxNi8wOC8lRTYlOUQlQkUlRTYlOTUlQTMlRTUlODUlQUIlRTUlOEYlODklRTYlQTAlOTEucG5n?x-oss-process=image/format,png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051134766.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051432867.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/reinhart-l/FigureBed2/master/image-20231108150014134.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051516000.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051921843.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803627.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803906.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803089.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803944.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205140104571.jpg">
+<meta property="article:published_time" content="2023-11-08T06:47:39.000Z">
+<meta property="article:modified_time" content="2023-11-08T07:29:47.514Z">
+<meta property="article:author" content="Reinhart">
+<meta property="article:tag" content="个人">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051130785.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>游戏研发场景题</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/08/c++%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&text=游戏研发场景题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&is_video=false&description=游戏研发场景题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=游戏研发场景题&body=Check out this article: http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&name=游戏研发场景题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&t=游戏研发场景题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%98%E4%BA%89%E8%BF%B7%E9%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">战争迷雾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">热更新的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E8%A1%8C%E6%A6%9C"><span class="toc-number">3.</span> <span class="toc-text">排行榜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">网格法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%8F%89%E6%A0%91"><span class="toc-number">5.</span> <span class="toc-text">八叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%BD%93%E4%B8%80%E4%B8%AA%E7%89%A9%E4%BD%93%E8%B6%85%E5%87%BA%E5%88%92%E5%88%86%E8%8C%83%E5%9B%B4-%E6%AD%A3%E5%A5%BD%E5%9C%A8%E8%BE%B9%E7%95%8C%E4%B8%8A%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">问题：当一个物体超出划分范围&#x2F;正好在边界上：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E5%9C%A8%E4%BA%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0%E3%80%82"><span class="toc-number">5.2.</span> <span class="toc-text">另一个问题在于动态更新。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%9D%BE%E6%95%A3%E5%9B%9B-%E5%85%AB%E5%8F%89%E6%A0%91%EF%BC%88%E7%A8%8D%E5%BE%AE%E6%89%A9%E5%A4%A7%E6%AD%A3%E6%96%B9%E4%BD%93%EF%BC%88%E5%8C%85%E5%9B%B4%E7%9B%92%EF%BC%89%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">解决：松散四&#x2F;八叉树（稍微扩大正方体（包围盒））</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%BE%E6%95%A3%E5%9B%9B%E5%8F%89%E6%A0%91%E7%BB%93%E5%90%88%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">松散四叉树结合网格法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%9C%B0%E5%BD%A2%E7%94%9F%E6%88%90"><span class="toc-number">5.5.</span> <span class="toc-text">游戏地形生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.6.</span> <span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Minecraft%E7%94%9F%E6%88%90"><span class="toc-number">5.6.1.</span> <span class="toc-text">Minecraft生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AAchunk%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.6.2.</span> <span class="toc-text">生成一个chunk的步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chunk%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9E%E6%8E%A5%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E9%A1%BA%E6%BB%91%E7%9A%84%E4%B8%96%E7%95%8C%E7%9A%84%EF%BC%9F"><span class="toc-number">5.6.3.</span> <span class="toc-text">chunk是怎么连接成为一个顺滑的世界的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chunk%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">chunk的加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E7%AD%89%E7%BA%A7"><span class="toc-number">6.0.1.</span> <span class="toc-text">加载等级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E7%BA%A7%E4%BC%A0%E6%92%AD"><span class="toc-number">6.0.2.</span> <span class="toc-text">等级传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.0.3.</span> <span class="toc-text">标签类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8E%A9%E5%AE%B6"><span class="toc-number">6.0.3.1.</span> <span class="toc-text">玩家</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">寻路算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A7%E5%90%8C%E6%AD%A5%E4%B8%8E%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="toc-number">8.</span> <span class="toc-text">帧同步与状态同步</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        游戏研发场景题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-08T06:47:39.000Z" itemprop="datePublished">2023-11-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="战争迷雾"><a href="#战争迷雾" class="headerlink" title="战争迷雾"></a>战争迷雾</h2><ul>
+<li>大量移动单位和大视野不动单位</li>
+</ul>
+<p>这个用个循环暴力计算显然不现实, 除非你地图很小. 所以, 优化思路就是针对移动的单位重新计算, 针对不动的单位只算一次<br>首先, 我们可以用坐标(X,Y)和视野半径(R)三个值确定出一个唯一值K代表一个提供视野的单位U<br>对于每帧新加入(K当前不存在)的U, 定义其生命周期L=MAX. 其余的就对U的L进行递减<br>移除L&lt;=0的U. 针对于L=MAX的, 计算其可见的格子, 如果可见, 则格子的计数C加1<br>每个格子的可见计数C&gt;0的表示可见, 否则就是不可见, 然后更新到纹理上<br>对于0&lt;L&lt;MAX的单位U全部不用计算, 所以不动的单位就不用更新</p>
+<ul>
+<li>预计算FOV</li>
+</ul>
+<p>如果视野阻挡不会变化的话, 可以针对每个点计算其最大视野范围的可见性信息, 缓存起来<br>如果用1bit表示每个格子, 最大视野范围20, 地图大小256x256个格子的话, 所需要的内存空间为41x41x256x256bit=13.13MB, 如果再剔除掉视野阻挡内的点, 应该更小</p>
+<ul>
+<li>平滑</li>
+</ul>
+<p>加了一个速度适中的<strong>渐变动画效果</strong>而已。需要消除/添加阴影时，不去瞬间切换遮罩物透明度，而是触发一个渐变过程，使玩家产生错觉。</p>
+<h2 id="热更新的方式"><a href="#热更新的方式" class="headerlink" title="热更新的方式"></a>热更新的方式</h2><p>1.使用基于lua的ulua技术，让游戏部分ui或者部分逻辑模块使用lua脚本编写，这样可维护性强，易于扩展。（准则：动态特性适合用来做游戏UI）</p>
+<p>2.使用C#Assembly 的反射技术（ class.GetType.Assembly &amp; calss.GetType），正如前面所说，安卓适合，苹果不适合，这样就满足不了发布双版本的需求。</p>
+<p>3.最后一种就是C#中的light技术。</p>
+<h2 id="排行榜"><a href="#排行榜" class="headerlink" title="排行榜"></a>排行榜</h2><p>redis有序集合-&gt;字典+<a target="_blank" rel="noopener" href="https://www.cnblogs.com/WJ5888/p/4516782.html">跳表</a></p>
+<p>如果人还是太多-&gt;分桶</p>
+<h2 id="网格法"><a href="#网格法" class="headerlink" title="网格法"></a>网格法</h2><p>网格，顾名思义就是把游戏场景划分为一个个格子，如图所示，2D的情况下使用的是一个二维数组，图中的白块处于第6行第6列（左下作为起点），那么它应该存入[5,5]的索引中。<br><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051130785.png" alt="在这里插入图片描述"><br>如果物体跟网格线交叉了，如下图，物体没有完全处于网格内，那么它应该存储在和它交叉的所有网格：[4,4]，[4,5]，[5,4]，[5,5]。<br><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051130975.png"><br>当查询时，只要找到物体所在的网格，拿出网格内的所有其他物体挨个遍历即可。<br>到这里，我们可以总结出网格法的优缺点：</p>
+<ul>
+<li>物体插入时很快，只有O(1)复杂度</li>
+<li>物体可以很方便地动态更新自己在网格中的位置</li>
+<li>对于跨多个网格的物体，需要占用更多的空间来存储</li>
+</ul>
+<h2 id="八叉树"><a href="#八叉树" class="headerlink" title="八叉树"></a>八叉树</h2><p>八叉树（octree）是三维空间划分的数据结构之一，它用于加速空间查询，例如在游戏中</p>
+<ul>
+<li><p>邻近查询（proximity query），如查询玩家角色某半径范围内的敌方NPC。</p>
+</li>
+<li><p>碰撞检测的粗略阶段（broad phase），找出潜在可能碰撞的物体对。</p>
+</li>
+</ul>
+<p>简单来说，八叉树的空间划分方式是，把一个立方体分割为八个小立法体，然后递归地分割小立方体。</p>
+<p>四／八叉树有多种变种，先谈一个简化的情况，就是假设所有物体是一个点，这样比较容易理解。把每点放到正方形空间里，若该正方形含有超过一个点，就把该正方式分割，直至每个小正方形（叶节点）仅含有一个点，就可以得出以下的分割结果：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051059254.jpg" alt="img"></p>
+<h3 id="问题：当一个物体超出划分范围-正好在边界上："><a href="#问题：当一个物体超出划分范围-正好在边界上：" class="headerlink" title="问题：当一个物体超出划分范围/正好在边界上："></a>问题：当一个物体超出划分范围/正好在边界上：</h3><p>1.所有与物体相交的子节点都引用这个物体</p>
+<p>2.令非叶子结点也能放置物体（小正方体装不下就用它的上一级较大的那个正方体来装）</p>
+<p>第一种方法的范围比较精确，但如果物体的大小相差很大，大体积的物体便需要被大量小范围的叶节点引用，而且管理上也会很麻烦。第二种做法是较常用的方法。然而，第二种方法的范围可能非常大，例如物体刚好在场景的中心，即使是一个体积很小的物体，都只能放于根节点里。</p>
+<h3 id="另一个问题在于动态更新。"><a href="#另一个问题在于动态更新。" class="headerlink" title="另一个问题在于动态更新。"></a>另一个问题在于动态更新。</h3><p>想想看，如果四叉树内的物体每帧位置都在变化，四叉树应该如何更新？每帧都重建四叉树？那肯定不行，太费时间了。 首先需要找对旧位置所在的节点 ，把节点里存的物体列表中删掉当前这个在移动的物体，删掉后还要考虑已经分裂的子四叉树是不是需要删除，然后对于新位置的处理，这个就比较好办，按照插入时的逻辑就可以了。</p>
+<h3 id="解决：松散四-八叉树（稍微扩大正方体（包围盒））"><a href="#解决：松散四-八叉树（稍微扩大正方体（包围盒））" class="headerlink" title="解决：松散四/八叉树（稍微扩大正方体（包围盒））"></a>解决：松散四/八叉树（稍微扩大正方体（包围盒））</h3><p>松散八叉树的“松散”是指调整节点的包围体大小，“放松”包围立方体，但是同时节点的层次和节点的中心不变。在松散八叉树中，包围立方体边长的计算公式修改为：</p>
+<p>松散四叉树/八叉树中，出口边界比入口边界要宽些（虽然各节点的出口边界也会发生部分重叠），从而使节点不容易越过出口边界，减少了物体切换节点的次数。</p>
+<p>问题在于如何定义出口边界的长度。因为太短会退化成正常四叉树/八叉树，太长又可能会导致节点存储冗余的物体。经过前人的实验表明出口边界长度为入口边界2倍最佳。</p>
+<p>当出口范围是入口范围2倍的时候，松散四叉树会多一个神奇的特性：<br>如果一个AABB大小小于一个四叉树节点的入口范围，那么只要这个AABB的中心点在入口范围内，那么这个AABB一定包含在出口范围内</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2Nsb3VkZ3Jhc3NsYW5kLmNvbS93cC1jb250ZW50L3VwbG9hZHMvMjAxNi8wOC8lRTYlOUQlQkUlRTYlOTUlQTMlRTUlODUlQUIlRTUlOEYlODklRTYlQTAlOTEucG5n?x-oss-process=image/format,png" alt="松散八叉树"></p>
+<h3 id="松散四叉树结合网格法"><a href="#松散四叉树结合网格法" class="headerlink" title="松散四叉树结合网格法"></a>松散四叉树结合网格法</h3><p>我们都知道，当四叉树节点里的物体数量到达一个阈值时，我们会分裂四叉树，如果要支持动态更新，分裂后的四叉树可能还要删除。那么如果我们一上来就把四叉树全部分裂完呢？不管节点里有没有物体都不删除四叉树节点呢？这样的话这个四叉树就会跟网格很像。</p>
+<p>有了松散四叉树配合网格法，我们能够快速找到一个物体应该插入的位置。<br><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051134766.png" alt="在这里插入图片描述"></p>
+<p>如图，我们把一个区域分成了三层的网格，图中黄色线代表第一层的网格，绿色线代表第二层的网格，白色线代表第三层的网格。我们可以发现，蓝色方块的大小大于第三层的网格（只有宽、高其中之一比网格大就算），小于第二层的网格，所以它最终应该放在第二层的四叉树上。</p>
+<p>接着我们来看它的中心点的位置，我们使用的是2倍的松散四叉树，所以中心点在哪个节点，物体就在哪个节点。通过观察我们可以发现，蓝色方块的位置在第一层四叉树的左下节点，第二层四叉树的左上节点。</p>
+<p>我们用一个2x2的2维数组来表示四叉树的四个子节点，用行和列表示索引，左下是[0,0]，左上[1,0]，右下是[0,1]，右上是[1,1]。蓝色方块的位置就是根节点的[0,0]子节点的[1,0]子节点。</p>
+<p>发现没有，使用松散四叉树结合网格法，可以快速得出一个物体要插入的位置，从原来的O(logn)复杂度变成O(1)复杂度。（可能有人会疑惑为何原先是logn复杂度，因为传统四叉树的插入是一种二分查找算法。二分查找的复杂度就是logn。二分查找是两半取其一不断循环，四叉树插入是四半取其一不断循环，本质一样。）</p>
+<h3 id="游戏地形生成"><a href="#游戏地形生成" class="headerlink" title="游戏地形生成"></a>游戏地形生成</h3><p><strong>噪声（Noise）</strong>实际上就是一个随机数生成器，当然，这是一种伪随机（现实世界中的真随机在计算机中不存在）。我们所看到的那些黑白噪声图，实际上是随机数映射到0和1之间产生的灰度图。随机本身就是不同，那为什么还需要不同的随机？</p>
+<p>普通噪声（随机数生成器）的问题在于，它实在太过于随机，毫无规律可言（如图1所示）。（太突兀、嘈杂、刺眼）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051432867.jpg" alt="img"></p>
+<p><strong>柏林噪声</strong>：平滑的、均匀性的噪声、随机值一部分取决于周边元素</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/206271895">https://zhuanlan.zhihu.com/p/206271895</a></p>
+<p>林噪声基于随机，并在此基础上利用缓动曲线进行平滑插值，使得最终得到噪声效果更加趋于自然。基于不同的采样空间，柏林噪声可以分为一维、二维和三维。维度不同，但其基本原理是相同，都主要经过以下三个步骤：</p>
+<ol>
+<li>初始化相关数据，包括<strong>排列表（Permutation Table）</strong>和<strong>梯度表（Gradient Table）</strong>等。</li>
+<li>建立采样空间。对于一维柏林噪声，采样空间为一个一维的坐标轴，轴上整数坐标位置均有一个点。而对应二维柏林噪声，采样空间为一个二维坐标系，坐标系中横纵坐标为整数的地方均有一点。三维柏林噪声同理。</li>
+<li>对于不同类型的噪声，对采样点在不同空间中，根据最近的参考点的梯度和缓动曲线进行插值计算。</li>
+</ol>
+<ul>
+<li><p>噪声细节函数</p>
+<ul>
+<li>多少层柏林噪声</li>
+<li>这些柏林噪声怎么结合在一起</li>
+</ul>
+</li>
+<li><p>same seed-&gt;same result</p>
+</li>
+<li><p>高度图：2D的只有高度的图用来表示3D</p>
+</li>
+<li><p>三角形网格</p>
+</li>
+<li><p>如果对整张图使用二维柏林噪声，那整张图的地形都差不多，如何形成又有山坡又有平原的地形？对地形再加一维柏林噪声。（甚至可以给湿度，温度加柏林噪声）</p>
+</li>
+</ul>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>在初始化排列表和梯度表之前，我们先了解一下它们的作用。排列表是一个<strong>乱序</strong>存放一系列索引值的表，而梯度表是一个存放了一系列随机梯度值的表，两者都具有很强的随机性。在决定一个点的梯度时，需要结合哈希函数，以点的坐标为参数，利用所得的值作为索引，去排列表中取对应的值。所取得的排列表中的值，就是该点在梯度表中对应梯度值的索引。这样解释可能会有些让人摸不着头脑，我们来看一段伪代码。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 排列表</span></span><br><span class="line"><span class="built_in">int</span>[] perm = &#123;...&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 梯度表</span></span><br><span class="line"><span class="built_in">float</span>[] grad = &#123;...&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只有整数点才需要随机指定梯度，以计算非整数点的插值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Hash</span>(<span class="params"><span class="keyword">ref</span> <span class="built_in">int</span>[] gradient, <span class="built_in">int</span> x, <span class="built_in">int</span> y</span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 通过哈希函数找到排列表的索引</span></span><br><span class="line">    <span class="built_in">int</span> permIdx[] = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];</span><br><span class="line">    permIdx[<span class="number">0</span>] = FindIndex(x);</span><br><span class="line">    permIdx[<span class="number">1</span>] = FindIndex(y);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过排列表索引找到梯度表的索引</span></span><br><span class="line">    <span class="built_in">int</span> gradIdx[] = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];</span><br><span class="line">    gradIdx[<span class="number">0</span>] = perm[permIdx[<span class="number">0</span>]];</span><br><span class="line">    gradIdx[<span class="number">1</span>] = perm[permIdx[<span class="number">1</span>]];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在梯度表中找到梯度值</span></span><br><span class="line">    gradient[<span class="number">0</span>] = grad[gradIdx[<span class="number">0</span>]];</span><br><span class="line">    gradient[<span class="number">1</span>] = grad[gradIdx[<span class="number">1</span>]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在一维柏林噪声中，各个整点的梯度就是斜率，所以我们可以不依赖梯度表，将排列表中所取到值直接作为梯度即可。因为排列表中的值是乱序的，所以有良好的随机性，且对于同样的输入，它的输出都相同，伪随机性也得以保留。在***Ken Perlin***的经典噪声算法中，使用的排列表是由数字0到255散列组成的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Language: Processing</span></span><br><span class="line"><span class="comment">// Permutation table</span></span><br><span class="line"><span class="keyword">static</span> <span class="type">int</span>[] perm = &#123;<span class="number">151</span>,<span class="number">160</span>,<span class="number">137</span>,<span class="number">91</span>,<span class="number">90</span>,<span class="number">15</span>,</span><br><span class="line"> <span class="number">131</span>,<span class="number">13</span>,<span class="number">201</span>,<span class="number">95</span>,<span class="number">96</span>,<span class="number">53</span>,<span class="number">194</span>,<span class="number">233</span>,<span class="number">7</span>,<span class="number">225</span>,<span class="number">140</span>,<span class="number">36</span>,<span class="number">103</span>,<span class="number">30</span>,<span class="number">69</span>,<span class="number">142</span>,<span class="number">8</span>,<span class="number">99</span>,<span class="number">37</span>,<span class="number">240</span>,<span class="number">21</span>,<span class="number">10</span>,<span class="number">23</span>,</span><br><span class="line"> <span class="number">190</span>, <span class="number">6</span>,<span class="number">148</span>,<span class="number">247</span>,<span class="number">120</span>,<span class="number">234</span>,<span class="number">75</span>,<span class="number">0</span>,<span class="number">26</span>,<span class="number">197</span>,<span class="number">62</span>,<span class="number">94</span>,<span class="number">252</span>,<span class="number">219</span>,<span class="number">203</span>,<span class="number">117</span>,<span class="number">35</span>,<span class="number">11</span>,<span class="number">32</span>,<span class="number">57</span>,<span class="number">177</span>,<span class="number">33</span>,</span><br><span class="line"> <span class="number">88</span>,<span class="number">237</span>,<span class="number">149</span>,<span class="number">56</span>,<span class="number">87</span>,<span class="number">174</span>,<span class="number">20</span>,<span class="number">125</span>,<span class="number">136</span>,<span class="number">171</span>,<span class="number">168</span>, <span class="number">68</span>,<span class="number">175</span>,<span class="number">74</span>,<span class="number">165</span>,<span class="number">71</span>,<span class="number">134</span>,<span class="number">139</span>,<span class="number">48</span>,<span class="number">27</span>,<span class="number">166</span>,</span><br><span class="line"> <span class="number">77</span>,<span class="number">146</span>,<span class="number">158</span>,<span class="number">231</span>,<span class="number">83</span>,<span class="number">111</span>,<span class="number">229</span>,<span class="number">122</span>,<span class="number">60</span>,<span class="number">211</span>,<span class="number">133</span>,<span class="number">230</span>,<span class="number">220</span>,<span class="number">105</span>,<span class="number">92</span>,<span class="number">41</span>,<span class="number">55</span>,<span class="number">46</span>,<span class="number">245</span>,<span class="number">40</span>,<span class="number">244</span>,</span><br><span class="line"> <span class="number">102</span>,<span class="number">143</span>,<span class="number">54</span>, <span class="number">65</span>,<span class="number">25</span>,<span class="number">63</span>,<span class="number">161</span>, <span class="number">1</span>,<span class="number">216</span>,<span class="number">80</span>,<span class="number">73</span>,<span class="number">209</span>,<span class="number">76</span>,<span class="number">132</span>,<span class="number">187</span>,<span class="number">208</span>, <span class="number">89</span>,<span class="number">18</span>,<span class="number">169</span>,<span class="number">200</span>,<span class="number">196</span>,</span><br><span class="line"> <span class="number">135</span>,<span class="number">130</span>,<span class="number">116</span>,<span class="number">188</span>,<span class="number">159</span>,<span class="number">86</span>,<span class="number">164</span>,<span class="number">100</span>,<span class="number">109</span>,<span class="number">198</span>,<span class="number">173</span>,<span class="number">186</span>, <span class="number">3</span>,<span class="number">64</span>,<span class="number">52</span>,<span class="number">217</span>,<span class="number">226</span>,<span class="number">250</span>,<span class="number">124</span>,<span class="number">123</span>,</span><br><span class="line"> <span class="number">5</span>,<span class="number">202</span>,<span class="number">38</span>,<span class="number">147</span>,<span class="number">118</span>,<span class="number">126</span>,<span class="number">255</span>,<span class="number">82</span>,<span class="number">85</span>,<span class="number">212</span>,<span class="number">207</span>,<span class="number">206</span>,<span class="number">59</span>,<span class="number">227</span>,<span class="number">47</span>,<span class="number">16</span>,<span class="number">58</span>,<span class="number">17</span>,<span class="number">182</span>,<span class="number">189</span>,<span class="number">28</span>,<span class="number">42</span>,</span><br><span class="line"> <span class="number">223</span>,<span class="number">183</span>,<span class="number">170</span>,<span class="number">213</span>,<span class="number">119</span>,<span class="number">248</span>,<span class="number">152</span>, <span class="number">2</span>,<span class="number">44</span>,<span class="number">154</span>,<span class="number">163</span>, <span class="number">70</span>,<span class="number">221</span>,<span class="number">153</span>,<span class="number">101</span>,<span class="number">155</span>,<span class="number">167</span>, <span class="number">43</span>,<span class="number">172</span>,<span class="number">9</span>,</span><br><span class="line"> <span class="number">129</span>,<span class="number">22</span>,<span class="number">39</span>,<span class="number">253</span>, <span class="number">19</span>,<span class="number">98</span>,<span class="number">108</span>,<span class="number">110</span>,<span class="number">79</span>,<span class="number">113</span>,<span class="number">224</span>,<span class="number">232</span>,<span class="number">178</span>,<span class="number">185</span>, <span class="number">112</span>,<span class="number">104</span>,<span class="number">218</span>,<span class="number">246</span>,<span class="number">97</span>,<span class="number">228</span>,</span><br><span class="line"> <span class="number">251</span>,<span class="number">34</span>,<span class="number">242</span>,<span class="number">193</span>,<span class="number">238</span>,<span class="number">210</span>,<span class="number">144</span>,<span class="number">12</span>,<span class="number">191</span>,<span class="number">179</span>,<span class="number">162</span>,<span class="number">241</span>, <span class="number">81</span>,<span class="number">51</span>,<span class="number">145</span>,<span class="number">235</span>,<span class="number">249</span>,<span class="number">14</span>,<span class="number">239</span>,<span class="number">107</span>,</span><br><span class="line"> <span class="number">49</span>,<span class="number">192</span>,<span class="number">214</span>, <span class="number">31</span>,<span class="number">181</span>,<span class="number">199</span>,<span class="number">106</span>,<span class="number">157</span>,<span class="number">184</span>, <span class="number">84</span>,<span class="number">204</span>,<span class="number">176</span>,<span class="number">115</span>,<span class="number">121</span>,<span class="number">50</span>,<span class="number">45</span>,<span class="number">127</span>, <span class="number">4</span>,<span class="number">150</span>,<span class="number">254</span>,</span><br><span class="line"> <span class="number">138</span>,<span class="number">236</span>,<span class="number">205</span>,<span class="number">93</span>,<span class="number">222</span>,<span class="number">114</span>,<span class="number">67</span>,<span class="number">29</span>,<span class="number">24</span>,<span class="number">72</span>,<span class="number">243</span>,<span class="number">141</span>,<span class="number">128</span>,<span class="number">195</span>,<span class="number">78</span>,<span class="number">66</span>,<span class="number">215</span>,<span class="number">61</span>,<span class="number">156</span>,<span class="number">180</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/reinhart-l/FigureBed2/master/image-20231108150014134.png" alt="image-20231108150014134"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051516000.png" alt="image-20220405151507917"></p>
+<p>柏林噪声的生成算法其实并没有那么难，主要经历以下三个步骤：</p>
+<ol>
+<li>对排列表和梯度表进行初始化，梯度表可以不必随机生成，选择单位圆（球）上的对称的梯度向量也可。一维向量可以不用梯度表，直接用排列表中的值进行映射也能达到效果。</li>
+<li>对于噪声图上的像素，找到它在晶格上对应的一点，并求出它的参考点的坐标。在一维情况下，参考点为两侧最近的整数点；二维情况下，参考点为组成包围该点的单位正方体的四个点；三维情况下，参考点为组成包围该点的单位立方体的八个点。需要注意的一点是，晶格必须与图片对齐且完全覆盖，否则坐标映射会很麻烦。</li>
+<li>根据参考点的方向向量和梯度向量，并结合缓动曲线，求解最终的灰度值。一维噪声只需一次插值，二维需要三次插值，三维需要七次插值，呈指数增长，所以算法的时间复杂度是 $O(2^n)$</li>
+</ol>
+<p>不是存储世界，而是存储建造世界的方式 </p>
+<h4 id="Minecraft生成"><a href="#Minecraft生成" class="headerlink" title="Minecraft生成"></a>Minecraft生成</h4><p>individual chunk：16x16x256</p>
+<p>indvidual chunk整合在一起-&gt;the whole world</p>
+<p>一开始生成的：spawn chunk</p>
+<h4 id="生成一个chunk的步骤"><a href="#生成一个chunk的步骤" class="headerlink" title="生成一个chunk的步骤"></a>生成一个chunk的步骤</h4><p>1.生成高度图（height map generation）仅由石头 水 和空气构成</p>
+<p>2.矿物层(ore stage)</p>
+<p>3.表层被替换成泥土或者沙</p>
+<p>3.雕刻层，山洞  cave ravines canyons</p>
+<p>4.生成结构（树，村庄）还有生物</p>
+<h4 id="chunk是怎么连接成为一个顺滑的世界的？"><a href="#chunk是怎么连接成为一个顺滑的世界的？" class="headerlink" title="chunk是怎么连接成为一个顺滑的世界的？"></a>chunk是怎么连接成为一个顺滑的世界的？</h4><p>约40层噪声实现：不同生物群落以及在什么地形下该生成怎样的雕刻层，表层 </p>
+<p>每一个世界都是从整片海洋开始的</p>
+<p>每一个群落都有一个编号，而海洋是0</p>
+<p>第一层噪音层是海洋 </p>
+<p>不同的噪声层叠加，陆地面积越来越多</p>
+<p>每个群落都有一个温度值，温度值随着海拔升高会降低</p>
+<p>温度取决于生物群落</p>
+<p> 温度相近的生物群落常常聚集在一起</p>
+<p>边缘层</p>
+<p>气候过渡</p>
+<p>有一层是专门用来生成蘑菇岛的</p>
+<p>生物群落变种</p>
+<p>河流</p>
+<p>海岸线</p>
+<h2 id="chunk的加载"><a href="#chunk的加载" class="headerlink" title="chunk的加载"></a>chunk的加载</h2><p>每个区块的加载都来源于一个“加载标签”。</p>
+<p>每个加载标签具有3个属性：加载等级，标签类型和存活时间（可选属性）。</p>
+<h4 id="加载等级"><a href="#加载等级" class="headerlink" title="加载等级"></a>加载等级</h4><p><strong>加载等级</strong>用于决定了这个区块中哪些游戏内容能够被运算。</p>
+<p>加载等级的范围是0-45。只会在0-33的范围里有常规的游戏运算。加载等级45以上是不可能的。</p>
+<p>一个区块如果获得多个加载等级，只有最小的加载等级是有效的。加载等级越小，游戏会运算更多内容。</p>
+<p>加载等级可以分为以下有四种加载等级类型：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>等级</th>
+<th>属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>强加载</td>
+<td>31及以下</td>
+<td>所有游戏内容都能够被运算。</td>
+</tr>
+<tr>
+<td>弱加载</td>
+<td>32</td>
+<td>除了区块<a target="_blank" rel="noopener" href="https://minecraft.fandom.com/zh/wiki/%E5%88%BB">刻</a>以及实体不会运算（例如不会移动），所有的游戏内容都正常运行。</td>
+</tr>
+<tr>
+<td>加载边界</td>
+<td>33</td>
+<td>只有少部分游戏内容会正常运行（红石元件和命令方块等都不能运行）。</td>
+</tr>
+<tr>
+<td>不可访问</td>
+<td>34及以上</td>
+<td>各种游戏内容都不会运算，但<a target="_blank" rel="noopener" href="https://minecraft.fandom.com/zh/wiki/%E4%B8%96%E7%95%8C%E7%94%9F%E6%88%90">世界生成</a>会在这些区块中运行。</td>
+</tr>
+</tbody></table>
+<h4 id="等级传播"><a href="#等级传播" class="headerlink" title="等级传播"></a>等级传播</h4><p>带有加载标签的区块，会相邻（8个）的区块传播加载等级。对于每张“标签”使用“flood fills”算法从“标签”的位置传播，每向外传播一次就加载等级增加1，直到达到上限45。</p>
+<table>
+<thead>
+<tr>
+<th>34</th>
+<th>34</th>
+<th>34</th>
+<th>34</th>
+<th>34</th>
+<th>34</th>
+<th>34</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>34</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>34</td>
+</tr>
+<tr>
+<td>34</td>
+<td>33</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td>33</td>
+<td>34</td>
+</tr>
+<tr>
+<td>34</td>
+<td>33</td>
+<td>32</td>
+<td>31</td>
+<td>32</td>
+<td>33</td>
+<td>34</td>
+</tr>
+<tr>
+<td>34</td>
+<td>33</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td>33</td>
+<td>34</td>
+</tr>
+<tr>
+<td>34</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>33</td>
+<td>34</td>
+</tr>
+<tr>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+<td>34</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>IN</th>
+<th>IN</th>
+<th>IN</th>
+<th>IN</th>
+<th>IN</th>
+<th>IN</th>
+<th>IN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IN</td>
+<td>BO</td>
+<td>BO</td>
+<td>BO</td>
+<td>BO</td>
+<td>BO</td>
+<td>IN</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>BO</td>
+<td>TI</td>
+<td>TI</td>
+<td>TI</td>
+<td>BO</td>
+<td>IN</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>BO</td>
+<td>TI</td>
+<td>ET</td>
+<td>TI</td>
+<td>BO</td>
+<td>IN</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>BO</td>
+<td>TI</td>
+<td>TI</td>
+<td>TI</td>
+<td>BO</td>
+<td>IN</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>BO</td>
+<td>BO</td>
+<td>BO</td>
+<td>BO</td>
+<td>BO</td>
+<td>IN</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>IN</td>
+<td>IN</td>
+<td>IN</td>
+<td>IN</td>
+<td>IN</td>
+<td>IN</td>
+</tr>
+</tbody></table>
+<h4 id="标签类型"><a href="#标签类型" class="headerlink" title="标签类型"></a>标签类型</h4><p>不同来源的标签有不同的类型，用于确定不同加载等级。</p>
+<h5 id="玩家"><a href="#玩家" class="headerlink" title="玩家"></a>玩家</h5><p>由<a target="_blank" rel="noopener" href="https://minecraft.fandom.com/zh/wiki/%E7%8E%A9%E5%AE%B6">玩家</a>加载的标签。“玩家”标签的加载等级为31。玩家的加载范围内的区块都会获得“玩家”标签。</p>
+<p>玩家的模拟距离会生成模拟标签，模拟标签与玩家标签不同，独立计算。</p>
+<h2 id="寻路算法"><a href="#寻路算法" class="headerlink" title="寻路算法"></a>寻路算法</h2><p>估价函数可以贪心的搜索更像答案的状态，减少搜索的状态数</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051921843.png" alt="image-20220405174823540"></p>
+<p>启发函数h(n)的选取</p>
+<p>1.曼哈顿距离（城市街区距离）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D*(Math.<span class="built_in">abs</span>(startX-endsX)+Math.<span class="built_in">abs</span>(startY-endsY));</span><br></pre></td></tr></table></figure>
+
+<p>D为每走一步需要消耗的代价。</p>
+<p>如果是只能四个方向走的时候，此时应该是较好的一种方案。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803627.png" alt="image-20220405180327453"></p>
+<p>2.欧几里得距离</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a=Math.<span class="built_in">abs</span>(startX-endsX);</span><br><span class="line">var b=Math.<span class="built_in">abs</span>(startY-endsY);</span><br><span class="line"><span class="keyword">return</span> D*Math.<span class="built_in">sqrt</span>((a*a+b*b));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803906.png" alt="image-20220405180335845"></p>
+<p>3.平方后的欧几里得距离</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a=Math.<span class="built_in">abs</span>(startX-endsX);</span><br><span class="line">var b=Math.<span class="built_in">abs</span>(startY-endsY);</span><br><span class="line"><span class="keyword">return</span> D*(a*a+b*b);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803089.png" alt="image-20220405180348018"></p>
+<p>4.对角线距离</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D*Math.<span class="built_in">max</span>(Math.<span class="built_in">abs</span>(startX-endsX),Math.<span class="built_in">abs</span>(startY-endsY));</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051803944.png" alt="image-20220405180352851"></p>
+<h2 id="帧同步与状态同步"><a href="#帧同步与状态同步" class="headerlink" title="帧同步与状态同步"></a>帧同步与状态同步</h2><p>一、同步</p>
+<p>所谓同步，就是要多个客户端表现效果是一致的，例如我们玩王者荣耀的时候，需要十个玩家的屏幕显示的英雄位置完全相同、技能释放角度、释放时间完全相同，这个就是同步。就好像很多个人一起跳街舞齐舞，每个人的动作都要保持一致。而对于大多数游戏，不仅客户端的表现要一致，而且需要客户端和服务端的数据是一致的。所以，同步是一个网络游戏概念，只有网络游戏才需要同步，而单机游戏是不需要同步的。</p>
+<p>二、状态同步和帧同步的区别</p>
+<p>最大的区别就是战斗核心逻辑写在哪，状态同步的战斗逻辑在服务端，帧同步的战斗逻辑在客户端。战斗逻辑是包括技能逻辑、普攻、属性、伤害、移动、AI、检测、碰撞等等的一系列内容，这常常也被视为游戏开发过程中最难的部分。由于核心逻辑必须知道一个场景中的所有实体情况，所以MMO游戏（例如魔兽世界）就必须把战斗逻辑写在服务端，所以MMO游戏必须是状态同步的，因为MMO游戏的客户端承载有限，并不能把整张地图的实体全部展现出来（例如100米以外的NPC和玩家就不显示了），所以客户端没有足够的信息计算全图的人的所有行为。</p>
+<p>具体到客户端和服务端通信上，在状态同步下，客户端更像是一个服务端数据的表现层，举个例子，一个英雄的几乎所有属性（例如血量、攻击、防御、攻速、魔法值等等）都是服务端传给客户端的，而且在属性发生改变的时候，服务端需要实时告诉客户端哪些属性改变了，客户端并不能改变这些属性，而是服务端传来多少属性就显示多少属性（虽然可以改变客户端数值达到表现上的效果，例如无限血量，但是服务端那边的血量属性为0时，一样要死）。再举个例子，一个英雄要释放一个非指向性技能（例如伊泽瑞尔的Q），具体的过程就是，客户端通知服务端“我要释放一个技能”-》服务端通知客户端“在某地以什么方向释放某技能”-》客户端根据这些信息创建一个特效放在某地，然后以某个方向飞行-》服务端根据碰撞检测逻辑判断到某个时刻，这个技能碰到了敌方英雄，通知客户端-》客户端根据服务端信息，删除特效，被打的英雄减血同时播放受击特效。</p>
+<p>而在帧同步下，通信就比较简单了，服务端只转发操作，不做任何逻辑处理。以下图为例：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205140104571.jpg" alt="img"></p>
+<p>现在同一局里有4个玩家，也就是4个客户端，这时客户端A释放了一个技能x，此时将操作传递给服务端，服务端不做任何判断，直接把A的操作全部分发给ABCD，则ABCD同时让客户端A控制的英雄释放技能x。</p>
+<p>三、流量</p>
+<p>状态同步比帧同步流量消耗大，例如一个复杂游戏的英雄属性可能有100多条，每次改变都要同步一次属性，这个消耗是巨大的，而帧同步不需要同步属性；例如释放一个技能，服务端需要通知客户端很多条消息（必须是分步的，不然功能做不了），而帧同步就只需要转发一次操作就行了。</p>
+<p>四、回放&amp;观战</p>
+<p>帧同步的回放&amp;观战比状态同步好做得多，因为只需要保存每局所有人的操作就好了，而状态同步的回放&amp;观战，需要有一个回放&amp;观战服务器，当一局战斗打响，战斗服务器在给客户端发送消息的同时，还需要把这些消息发给放&amp;观战服务器，回放&amp;观战服务器做储存，如果有其他客户端请求回放或者观战，则回放&amp;观战服务器把储存起来的消息按时间发给客户端。</p>
+<p>五、安全性</p>
+<p>状态同步的安全性比帧同步高很多，因为状态同步的所有逻辑和数值都是在服务端的，如果想作弊，就必须攻击服务器，而攻击服务器的难度比更改自己客户端数据的难度高得多，而且更容易被追踪，被追踪到了还会有极高的法律风险。而帧同步因为所有数据全部在客户端，所以解析客户端的数据之后，就可以轻松达到自己想要的效果，例如moba类游戏的全图挂，吃鸡游戏的透视挂，都是没办法防止的，而更改数据达到胜利的作弊方式（例如更改自己的英雄攻击力）可以通过服务器比对同局其他人的战斗结果来预防。</p>
+<p>六、服务器压力</p>
+<p>状态同步服务器压力比较大，因为要做更多运算。</p>
+<p>七、开发效率</p>
+<p>首先要说，状态同步的游戏占主流，其次就是状态同步开发起来比较难。而帧同步服务器开发难度低，同一套方案可以给很多不同类型的游戏使用，反正都是转发操作；减少了服务端客户端沟通，老实说，没有扯皮的时间，开发效率最起码提高20%，状态同步的方案下，同一个功能至少需要一个客户端和服务端共同完成；PVP和PVE基本用的是同一套代码，做完PVP很容易就可以做单机的PVE。</p>
+<p>八、使用帧同步的知名游戏</p>
+<p>王者荣耀、魔兽争霸3、所有格斗类游戏</p>
+<p>九、断线重连</p>
+<p>状态同步的断线重连很好做，无非就是把整个场景和人物全部重新生成一遍，各种数值根据服务端提供加到人物身上而已。帧同步的断线重连就比较麻烦了，例如客户端在战场开始的第10秒短线了，第15秒连回来了，就需要服务端把第10秒到第15秒之间5秒内的所有消息一次性发给客户端，然后客户端加速整个游戏的核心逻辑运行速度（例如加速成10倍），直到追上现有进度。</p>
+<p>帧同步：</p>
+<ul>
+<li>客户端按照一定的帧速率（理解为逻辑帧，而不是客户端的渲染帧）去上传当前的<strong>操作指令</strong>，服务端将操作指令广播给所有客户端，当客户端收到指令后执行本地代码。</li>
+</ul>
+<p>状态同步：</p>
+<ul>
+<li>客户端给服务端直接传递数据和属性，由服务端进行计算。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%98%E4%BA%89%E8%BF%B7%E9%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">战争迷雾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">热更新的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E8%A1%8C%E6%A6%9C"><span class="toc-number">3.</span> <span class="toc-text">排行榜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">网格法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%8F%89%E6%A0%91"><span class="toc-number">5.</span> <span class="toc-text">八叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%BD%93%E4%B8%80%E4%B8%AA%E7%89%A9%E4%BD%93%E8%B6%85%E5%87%BA%E5%88%92%E5%88%86%E8%8C%83%E5%9B%B4-%E6%AD%A3%E5%A5%BD%E5%9C%A8%E8%BE%B9%E7%95%8C%E4%B8%8A%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">问题：当一个物体超出划分范围&#x2F;正好在边界上：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E5%9C%A8%E4%BA%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0%E3%80%82"><span class="toc-number">5.2.</span> <span class="toc-text">另一个问题在于动态更新。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%9D%BE%E6%95%A3%E5%9B%9B-%E5%85%AB%E5%8F%89%E6%A0%91%EF%BC%88%E7%A8%8D%E5%BE%AE%E6%89%A9%E5%A4%A7%E6%AD%A3%E6%96%B9%E4%BD%93%EF%BC%88%E5%8C%85%E5%9B%B4%E7%9B%92%EF%BC%89%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">解决：松散四&#x2F;八叉树（稍微扩大正方体（包围盒））</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%BE%E6%95%A3%E5%9B%9B%E5%8F%89%E6%A0%91%E7%BB%93%E5%90%88%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">松散四叉树结合网格法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%9C%B0%E5%BD%A2%E7%94%9F%E6%88%90"><span class="toc-number">5.5.</span> <span class="toc-text">游戏地形生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.6.</span> <span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Minecraft%E7%94%9F%E6%88%90"><span class="toc-number">5.6.1.</span> <span class="toc-text">Minecraft生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AAchunk%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.6.2.</span> <span class="toc-text">生成一个chunk的步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chunk%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9E%E6%8E%A5%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E9%A1%BA%E6%BB%91%E7%9A%84%E4%B8%96%E7%95%8C%E7%9A%84%EF%BC%9F"><span class="toc-number">5.6.3.</span> <span class="toc-text">chunk是怎么连接成为一个顺滑的世界的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chunk%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">chunk的加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E7%AD%89%E7%BA%A7"><span class="toc-number">6.0.1.</span> <span class="toc-text">加载等级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E7%BA%A7%E4%BC%A0%E6%92%AD"><span class="toc-number">6.0.2.</span> <span class="toc-text">等级传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.0.3.</span> <span class="toc-text">标签类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8E%A9%E5%AE%B6"><span class="toc-number">6.0.3.1.</span> <span class="toc-text">玩家</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">寻路算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A7%E5%90%8C%E6%AD%A5%E4%B8%8E%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="toc-number">8.</span> <span class="toc-text">帧同步与状态同步</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&text=游戏研发场景题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&is_video=false&description=游戏研发场景题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=游戏研发场景题&body=Check out this article: http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&name=游戏研发场景题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&t=游戏研发场景题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2023
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

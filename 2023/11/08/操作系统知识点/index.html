@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="操作系统面试进程和线程有什么区别？ 进程（Process）是系统进行资源分配和调度的基本单位，线程（Thread）是CPU调度的最小单位； 线程依赖于进程而存在，一个进程至少有一个线程； 进程有自己的&#x3D;&#x3D;独立地址空间&#x3D;&#x3D;，线程&#x3D;&#x3D;共享所属进程的地址空间&#x3D;&#x3D;； 进程是拥有系统资源的一个独立单位，而线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器s,一组寄存器和栈)，和其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统知识点">
+<meta property="og:url" content="http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Across the Cosmos">
+<meta property="og:description" content="操作系统面试进程和线程有什么区别？ 进程（Process）是系统进行资源分配和调度的基本单位，线程（Thread）是CPU调度的最小单位； 线程依赖于进程而存在，一个进程至少有一个线程； 进程有自己的&#x3D;&#x3D;独立地址空间&#x3D;&#x3D;，线程&#x3D;&#x3D;共享所属进程的地址空间&#x3D;&#x3D;； 进程是拥有系统资源的一个独立单位，而线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器s,一组寄存器和栈)，和其他">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203151051218">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203151103048">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091158644.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091244361.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202091841145.png">
+<meta property="article:published_time" content="2023-11-08T06:47:20.000Z">
+<meta property="article:modified_time" content="2023-11-08T07:29:21.425Z">
+<meta property="article:author" content="Reinhart">
+<meta property="article:tag" content="个人">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203151051218">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>操作系统知识点</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/08/c++%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&text=操作系统知识点"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&is_video=false&description=操作系统知识点"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=操作系统知识点&body=Check out this article: http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&name=操作系统知识点&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&t=操作系统知识点"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">操作系统面试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">进程和线程有什么区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E8%BF%9B%E7%A8%8B%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%8F%AF%E4%BB%A5%E5%85%B1%E4%BA%AB%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">同一进程中的线程可以共享哪些数据？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%8B%AC%E5%8D%A0%E5%93%AA%E4%BA%9B%E8%B5%84%E6%BA%90%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">线程独占哪些资源？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">进程间的通信方式有哪些？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%EF%BC%9A%E4%BC%A0%E7%BB%9F%E7%9A%84Unix%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">第一类：传统的Unix通信机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%AE%A1%E9%81%93-%E5%8C%BF%E5%90%8D%E7%AE%A1%E9%81%93-pipe"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">1. 管道&#x2F;匿名管道(pipe)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93-FIFO"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">2.有名管道(FIFO)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BF%A1%E5%8F%B7-Signal"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">3.信号(Signal)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%B6%88%E6%81%AF-Message-%E9%98%9F%E5%88%97"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">4.消息(Message)队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98-share-memory"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">5. 共享内存(share memory)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E4%BF%A1%E5%8F%B7%E9%87%8F-semaphore"><span class="toc-number">1.1.3.7.</span> <span class="toc-text">6.信号量(semaphore)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E5%A5%97%E6%8E%A5%E5%AD%97-socket"><span class="toc-number">1.1.3.8.</span> <span class="toc-text">7. 套接字(socket)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">线程之间的通信方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%81%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.</span> <span class="toc-text">锁机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E9%94%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">读写锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">互斥锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%8F%AB%E4%BC%98%E5%85%88%E7%BA%A7%E5%8F%8D%E8%BD%AC%EF%BC%9F%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">什么叫优先级反转？如何解决？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">什么是僵尸进程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.5.1.</span> <span class="toc-text">什么是孤儿进程？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">线程同步有哪些方式？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%87%8F%E5%92%8C%E4%B8%B4%E7%95%8C%E5%8C%BA%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">互斥量和临界区有什么区别？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%8F%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.7.</span> <span class="toc-text">什么是协程？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8B%E5%A4%9A%E4%B8%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E8%A1%8C%E6%AF%94%E8%BE%83%EF%BC%9F"><span class="toc-number">1.7.0.0.1.</span> <span class="toc-text">协程多与线程进行比较？</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%88%E7%A0%B4%E5%9D%8F%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E6%9D%A1%E4%BB%B6%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">产生死锁的四个必要条件（破坏死锁的四个条件）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.1.</span> <span class="toc-text">互斥条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%92%8C%E4%BF%9D%E6%8C%81%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.2.</span> <span class="toc-text">请求和保持条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%89%A5%E5%A4%BA%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.3.</span> <span class="toc-text">非剥夺条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%AD%89%E5%BE%85%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.4.</span> <span class="toc-text">循环等待条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5"><span class="toc-number">1.9.</span> <span class="toc-text">分段和分页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">缓冲区溢出问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E8%8C%83%E6%96%B9%E5%BC%8F"><span class="toc-number">1.10.1.</span> <span class="toc-text">防范方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6"><span class="toc-number">1.10.2.</span> <span class="toc-text">磁盘调度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%92%8C%E4%B8%AD%E6%96%AD"><span class="toc-number">1.11.</span> <span class="toc-text">异常和中断</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        操作系统知识点
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-08T06:47:20.000Z" itemprop="datePublished">2023-11-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="操作系统面试"><a href="#操作系统面试" class="headerlink" title="操作系统面试"></a>操作系统面试</h1><h2 id="进程和线程有什么区别？"><a href="#进程和线程有什么区别？" class="headerlink" title="进程和线程有什么区别？"></a>进程和线程有什么区别？</h2><ul>
+<li>进程（Process）是系统进行<strong>资源分配和调度</strong>的基本单位，线程（Thread）是CPU调度的最小单位；</li>
+<li>线程依赖于进程而存在，一个进程至少有一个线程；</li>
+<li>进程有自己的==独立地址空间==，线程==共享所属进程的地址空间==；</li>
+<li>进程是拥有系统资源的一个独立单位，而线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器s,一组寄存器和栈)，和其他线程共享本进程的相关资源如内存、I/O、cpu等；</li>
+<li>在进程切换时，涉及到整个当前进程CPU环境的保存环境的设置以及新被调度运行的CPU环境的设置，而线程切换只需保存和设置少量的<strong>寄存器</strong>的内容，并不涉及存储器管理方面的操作，可见，<strong>进程切换的开销远大于线程切换的开销</strong>；</li>
+<li>线程之间的通信更方便，同一进程下的线程共享全局变量等数据，而进程之间的通信需要以进程间通信(IPC)的方式进行；</li>
+<li>多线程程序只要有一个线程崩溃，整个程序就崩溃了，但多进程程序中一个进程崩溃并不会对其它进程造成影响，因为进程有自己的独立地址空间，因此多进程更加健壮。</li>
+</ul>
+<h3 id="同一进程中的线程可以共享哪些数据？"><a href="#同一进程中的线程可以共享哪些数据？" class="headerlink" title="同一进程中的线程可以共享哪些数据？"></a>同一进程中的线程可以共享哪些数据？</h3><ul>
+<li>进程代码段</li>
+<li>进程的公有数据（全局变量、静态变量…）</li>
+<li>进程打开的文件描述符</li>
+<li>进程的当前目录</li>
+<li>信号处理器/信号处理函数：对收到的信号的处理方式</li>
+<li>进程ID与进程组ID</li>
+</ul>
+<h3 id="线程独占哪些资源？"><a href="#线程独占哪些资源？" class="headerlink" title="线程独占哪些资源？"></a>线程独占哪些资源？</h3><ul>
+<li>线程ID</li>
+<li>一组寄存器的值</li>
+<li>线程自身的栈（堆是共享的）</li>
+<li>错误返回码：线程可能会产生不同的错误返回码，一个线程的错误返回码不应该被其它线程修改；</li>
+<li>信号掩码/信号屏蔽字(Signal mask)：表示是否屏蔽/阻塞相应的信号（SIGKILL,SIGSTOP除外）</li>
+</ul>
+<h3 id="进程间的通信方式有哪些？"><a href="#进程间的通信方式有哪些？" class="headerlink" title="进程间的通信方式有哪些？"></a>进程间的通信方式有哪些？</h3><p>每个进程各自有不同的用户地址空间，任何一个进程的全局变量在另一个进程中都看不到，所以进程之间要交换数据必须通过内核，在内核中开辟一块缓冲区，进程1把数据从用户空间拷到内核缓冲区，进程2再从内核缓冲区把数据读走，内核提供的这种机制称为<strong>进程间通信</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203151051218" alt="img"></p>
+<h4 id="第一类：传统的Unix通信机制"><a href="#第一类：传统的Unix通信机制" class="headerlink" title="第一类：传统的Unix通信机制"></a>第一类：传统的Unix通信机制</h4><h4 id="1-管道-匿名管道-pipe"><a href="#1-管道-匿名管道-pipe" class="headerlink" title="1. 管道/匿名管道(pipe)"></a>1. 管道/匿名管道(pipe)</h4><ul>
+<li>管道是<strong>半双工</strong>的，数据只能向一个方向流动；需要双方通信时，需要建立起两个管道。</li>
+<li>只能用于父子进程或者兄弟进程之间(具有<strong>亲缘关系</strong>的进程);</li>
+<li>单独构成一种独立的文件系统：管道对于管道两端的进程而言，就是一个文件，但它不是普通的文件，它不属于某种文件系统，而是自立门户，单独构成一种文件系统，并且只存在与内存中。</li>
+<li>数据的读出和写入：一个进程向管道中写的内容被管道另一端的进程读出。写入的内容每次都添加在管道缓冲区的末尾，并且每次都是从缓冲区的头部读出数据。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203151103048" alt="img"></p>
+<p><strong>管道的实质：</strong><br> 管道的实质是一个内核缓冲区，进程以先进先出的方式从缓冲区存取数据，管道一端的进程顺序的将数据写入缓冲区，另一端的进程则顺序的读出数据。<br> 该缓冲区可以看做是一个循环队列，读和写的位置都是自动增长的，不能随意改变，一个数据只能被读一次，读出来以后在缓冲区就不复存在了。<br> 当缓冲区读空或者写满时，有一定的规则控制相应的读进程或者写进程进入等待队列，当空的缓冲区有新数据写入或者满的缓冲区有数据读出来时，就唤醒等待队列中的进程继续读写。</p>
+<p><strong>无名管道的优点：</strong></p>
+<ul>
+<li>简单易用</li>
+</ul>
+<p><strong>无名管道的缺点：</strong></p>
+<ul>
+<li>只支持单向数据流；</li>
+<li>只能用于具有亲缘关系的进程之间；</li>
+<li>管道的缓冲区是有限的。</li>
+</ul>
+<h4 id="2-有名管道-FIFO"><a href="#2-有名管道-FIFO" class="headerlink" title="2.有名管道(FIFO)"></a>2.有名管道(FIFO)</h4><p><strong>有名管道的优点：</strong></p>
+<p>允许无亲缘关系进程间的通信</p>
+<p><strong>有名管道的缺点：</strong></p>
+<ul>
+<li>由于有名管道的名字存在于文件系统中，内容存放在内存中，所以它长期存于系统中，使用不当容易出错。</li>
+<li>管道的缓冲区是有限的。</li>
+</ul>
+<h4 id="3-信号-Signal"><a href="#3-信号-Signal" class="headerlink" title="3.信号(Signal)"></a>3.信号(Signal)</h4><ul>
+<li>信号可以在<strong>任何时候</strong>发给某一进程，而无需知道该进程的状态。</li>
+<li>如果该进程当前并未处于执行状态，则该信号就由内核保存起来，直到该进程回复执行并传递给它为止。</li>
+<li>如果一个信号被进程设置为阻塞，则该信号的传递被延迟，直到其阻塞被取消是才被传递给进程。</li>
+<li>目的进程接收到此信号后，将根据当前进程对此信号设置的预处理方式，暂时终止当前代码的执行，<strong>保护上下文</strong>（主要包括临时寄存器数据，当前程序位置以及当前CPU的状态）、转而执行中断服务程序，执行完成后在回复到中断的位置。</li>
+</ul>
+<p><strong>Linux系统中常用信号：</strong></p>
+<ul>
+<li><strong>SIGINT：</strong>程序终止信号。程序运行过程中，按<code>Ctrl+C</code>键将产生该信号。</li>
+<li><strong>SIGINT：</strong>程序终止信号。程序运行过程中，按<code>Ctrl+C</code>键将产生该信号。（强制终止不能被无视）</li>
+<li><strong>SIGTERM：</strong>结束进程信号。shell下执行<code>kill 进程pid</code>发送该信号。</li>
+</ul>
+<h4 id="4-消息-Message-队列"><a href="#4-消息-Message-队列" class="headerlink" title="4.消息(Message)队列"></a>4.消息(Message)队列</h4><ul>
+<li><p>消息队列是存放在内核中的消息链表，每个消息队列由消息队列标识符表示。</p>
+</li>
+<li><p>与管道（<strong>无名管道</strong>：只存在于内存中的文件；<strong>命名管道</strong>：存在于实际的磁盘介质或者文件系统）不同的是消息队列是随内核持续的，只有在内核重启(即，操作系统重启)或者显示地删除一个消息队列时，该消息队列才会被真正的删除。</p>
+</li>
+<li><p>另外与管道不同的是，消息队列在某个进程往一个队列写入消息之前，并不需要另外某个进程在该队列上等待消息的到达。</p>
+</li>
+<li><p><strong>优点</strong>：可以实现任意进程间的通信，并通过系统调用函数来实现消息发送和接收之间的同步，无需考虑同步问题，方便</p>
+</li>
+<li><p><strong>缺点</strong>：信息的复制需要额外消耗 CPU 的时间，不适宜于信息量大或操作频繁的场合</p>
+</li>
+</ul>
+<h4 id="5-共享内存-share-memory"><a href="#5-共享内存-share-memory" class="headerlink" title="5. 共享内存(share memory)"></a>5. 共享内存(share memory)</h4><ul>
+<li>使得多个进程可以可以直接读写同一块内存空间，是<strong>最快的</strong>可用IPC形式。是针对其他通信机制运行效率较低而设计的。</li>
+<li>为了在多个进程间交换信息，内核专门留出了一块内存区，可以由需要访问的进程将其映射到自己的私有地址空间。进程就可以直接读写这一块内存而不需要进行数据的拷贝，从而大大提高效率。</li>
+<li>由于多个进程共享一段内存，因此需要依靠某种同步机制（如信号量）来达到进程间的同步及互斥。</li>
+<li><strong>优点</strong>：无须复制，快捷，信息量大</li>
+<li>缺点：<ul>
+<li>通信是通过将共享空间缓冲区直接附加到进程的虚拟地址空间中来实现的，因此要考虑进程间的读写操作的同步问题</li>
+<li>问题利用内存缓冲区直接交换信息，内存的实体存在于计算机中，只能同一个计算机系统中的诸多进程共享，不方便网络通信</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-信号量-semaphore"><a href="#6-信号量-semaphore" class="headerlink" title="6.信号量(semaphore)"></a>6.信号量(semaphore)</h4><ul>
+<li>PV操作</li>
+</ul>
+<h4 id="7-套接字-socket"><a href="#7-套接字-socket" class="headerlink" title="7. 套接字(socket)"></a>7. 套接字(socket)</h4><p> 套接字是一种通信机制，凭借这种机制，客户/服务器（即要进行通信的进程）系统的开发工作既可以在本地单机上进行，也可以跨网络进行。也就是说它可以让不在同一台计算机但通过网络连接计算机上的进程进行通信。</p>
+<p><strong>套接字是支持TCP/IP的网络通信的基本操作单元</strong>，可以看做是不同主机之间的进程进行双向通信的端点，简单的说就是通信的两方的一种约定，用套接字中的相关函数来完成通信过程。</p>
+<p><strong>套接字特性</strong><br> 套接字的特性由3个属性确定，它们分别是：域、端口号、协议类型。</p>
+<h2 id="线程之间的通信方式"><a href="#线程之间的通信方式" class="headerlink" title="线程之间的通信方式"></a>线程之间的通信方式</h2><ul>
+<li>锁机制：包括互斥锁/量（mutex）、读写锁（reader-writer lock）、自旋锁（spin lock）、条件变量（condition）<ul>
+<li>互斥锁/量（mutex）：提供了以排他方式防止数据结构被并发修改的方法。</li>
+<li>读写锁（reader-writer lock）：允许多个线程同时读共享数据，而对写操作是互斥的。</li>
+<li>自旋锁（spin lock）与互斥锁类似，都是为了保护共享资源。互斥锁是当资源被占用，申请者进入睡眠状态；而自旋锁则循环检测保持者是否已经释放锁。</li>
+<li>条件变量（condition）：可以以原子的方式阻塞进程，直到某个特定条件为真为止。对条件的测试是在互斥锁的保护下进行的。条件变量始终与互斥锁一起使用。</li>
+</ul>
+</li>
+<li>信号量机制(Semaphore)<ul>
+<li>无名线程信号量</li>
+<li>命名线程信号量</li>
+</ul>
+</li>
+<li>信号机制(Signal)：类似进程间的信号处理</li>
+<li>屏障（barrier）：屏障允许每个线程等待，直到所有的合作线程都达到某一点，然后从该点继续执行。</li>
+</ul>
+<h2 id="锁机制"><a href="#锁机制" class="headerlink" title="锁机制"></a>锁机制</h2><h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>也称之为 共享-独占锁，一般用在读和写的次数有很大不同的场合。即对某些资源的访问会出现两种情况，一种是访问的排他性，需要独占，称之为写操作；还有就是访问可以共享，称之为读操作。</p>
+<h3 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h3><p>是最常见的线程同步方式，它是一种特殊的变量，它有 lock 和 unlock 两种状态，一旦获取，就会上锁，且只能由该线程解锁，期间，其他线程无法获取</p>
+<h2 id="什么叫优先级反转？如何解决？"><a href="#什么叫优先级反转？如何解决？" class="headerlink" title="什么叫优先级反转？如何解决？"></a>什么叫优先级反转？如何解决？</h2><p>高优先级的进程等待被一个低优先级进程占用的资源时，就会出现优先级反转，即优先级较低的进程比优先级较高的进程先执行。此处详细解释优先级反转带来的问题：如果有一个中等优先级的进程将低优先级的进程抢占，那么此时低优先级的进程无法正常进行并在后续释放被占用的资源，导致高优先级的任务一直被挂起，直到中等优先级的进程完成后，低优先级的进程才可以继续并在后续释放占用的资源，最后高优先级的进程才可以执行。导致的问题就是高优先级的进程在中等优先级的进程调度之后。</p>
+<p>解决方法：</p>
+<ul>
+<li>优先级天花板(priority ceiling)：当任务申请某资源时，把该任务的优先级提升到可访问这个资源的所有任务中的最高优先级，这个优先级称为该资源的优先级天花板。简单易行。</li>
+<li>优先级继承(priority inheritance)：当任务A申请共享资源S时，如果S正在被任务C使用，通过比较任务C与自身的优先级，如发现任务C的优先级小于自身的优先级，则将任务C的优先级提升到自身的优先级，任务C释放资源S后，再恢复任务C的原优先级。（<strong>让低优先级暂时变高，赶紧释放占着的资源</strong>）</li>
+</ul>
+<h2 id="什么是僵尸进程？"><a href="#什么是僵尸进程？" class="headerlink" title="什么是僵尸进程？"></a>什么是僵尸进程？</h2><p>一个子进程结束后，它的父进程并没有等待它（调用wait或者waitpid），那么这个子进程将成为一个僵尸进程。僵尸进程是一个已经死亡的进程，但是并没有真正被销毁。它已经放弃了几乎所有内存空间，没有任何可执行代码，也不能被调度，仅仅在进程表中保留一个位置，记载该进程的进程ID、终止状态以及资源利用信息(CPU时间，内存使用量等等)供父进程收集，除此之外，僵尸进程不再占有任何内存空间。这个僵尸进程可能会一直留在系统中直到系统重启。</p>
+<p>危害：占用进程号，而系统所能使用的进程号是有限的；占用内存。</p>
+<p>以下情况不会产生僵尸进程：</p>
+<ul>
+<li>该进程的父进程先结束了。每个进程结束的时候，系统都会扫描是否存在子进程，如果有则用Init进程接管，成为该进程的父进程，并且会调用wait等待其结束。</li>
+<li>父进程调用wait或者waitpid等待子进程结束（需要每隔一段时间查询子进程是否结束）。wait系统调用会使父进程暂停执行，直到它的一个子进程结束为止。waitpid则可以加入<code>WNOHANG</code>(wait-no-hang)选项，如果没有发现结束的子进程，就会立即返回，不会将调用waitpid的进程阻塞。同时，waitpid还可以选择是等待任一子进程（同wait），还是等待指定pid的子进程，还是等待同一进程组下的任一子进程，还是等待组ID等于pid的任一子进程；</li>
+<li>子进程结束时，系统会产生<code>SIGCHLD</code>(signal-child)信号，可以注册一个<strong>信号处理函数</strong>，在该函数中调用waitpid，等待所有结束的子进程（注意：一般都需要循环调用waitpid，因为在<strong>信号处理函数</strong>开始执行之前，可能已经有多个子进程结束了，而信号处理函数只执行一次，所以要循环调用将所有结束的子进程回收）；</li>
+<li>也可以用<code>signal(SIGCLD, SIG_IGN)</code>(signal-ignore)通知内核，表示忽略<code>SIGCHLD</code>信号，那么子进程结束后，内核会进行回收。</li>
+</ul>
+<h3 id="什么是孤儿进程？"><a href="#什么是孤儿进程？" class="headerlink" title="什么是孤儿进程？"></a>什么是孤儿进程？</h3><p>一个父进程已经结束了，但是它的子进程还在运行，那么这些子进程将成为孤儿进程。孤儿进程会被Init（进程ID为1）接管，当这些孤儿进程结束时由Init完成状态收集工作。</p>
+<h2 id="线程同步有哪些方式？"><a href="#线程同步有哪些方式？" class="headerlink" title="线程同步有哪些方式？"></a>线程同步有哪些方式？</h2><blockquote>
+<p>为什么需要线程同步：线程有时候会和其他线程共享一些资源，比如内存、数据库等。当多个线程同时读写同一份共享资源的时候，可能会发生冲突。因此需要线程的同步，多个线程按顺序访问资源。</p>
+</blockquote>
+<ul>
+<li><strong>互斥量</strong> Mutex：互斥量是内核对象，只有拥有互斥对象的线程才有访问互斥资源的权限。因为互斥对象只有一个，所以可以保证互斥资源不会被多个线程同时访问；当前拥有互斥对象的线程处理完任务后必须将互斥对象交出，以便其他线程访问该资源；</li>
+<li><strong>信号量</strong> Semaphore：信号量是内核对象，它允许同一时刻多个线程访问同一资源，但是需要控制同一时刻访问此资源的最大线程数量。信号量对象保存了<strong>最大资源计数</strong>和<strong>当前可用资源计数</strong>，每增加一个线程对共享资源的访问，当前可用资源计数就减1，只要当前可用资源计数大于0，就可以发出信号量信号，如果为0，则将线程放入一个队列中等待。线程处理完共享资源后，应在离开的同时通过<code>ReleaseSemaphore</code>函数将当前可用资源数加1。如果信号量的取值只能为0或1，那么信号量就成为了互斥量；</li>
+<li><strong>事件</strong>  Event：允许一个线程在处理完一个任务后，主动唤醒另外一个线程执行任务。事件分为手动重置事件和自动重置事件。手动重置事件被设置为激发状态后，会唤醒所有等待的线程，而且一直保持为激发状态，直到程序重新把它设置为未激发状态。自动重置事件被设置为激发状态后，会唤醒<strong>一个</strong>等待中的线程，然后自动恢复为未激发状态。</li>
+<li><strong>临界区</strong> Critical Section：任意时刻只允许一个线程对临界资源进行访问。拥有临界区对象的线程可以访问该临界资源，其它试图访问该资源的线程将被挂起，直到临界区对象被释放。</li>
+</ul>
+<h3 id="互斥量和临界区有什么区别？"><a href="#互斥量和临界区有什么区别？" class="headerlink" title="互斥量和临界区有什么区别？"></a>互斥量和临界区有什么区别？</h3><p>互斥量是可以命名的，可以用于不同进程之间的同步；而临界区只能用于同一进程中线程的同步。创建互斥量需要的资源更多，因此临界区的优势是速度快，节省资源。</p>
+<h2 id="什么是协程？"><a href="#什么是协程？" class="headerlink" title="什么是协程？"></a>什么是协程？</h2><p>协程是一种用户态的轻量级线程，协程的调度完全由用户控制。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，直接操作栈则基本没有内核切换的开销，可以不加锁    的访问全局变量，所以上下文的切换非常快。</p>
+<h5 id="协程多与线程进行比较？"><a href="#协程多与线程进行比较？" class="headerlink" title="协程多与线程进行比较？"></a>协程多与线程进行比较？</h5><ol>
+<li>一个线程可以拥有多个协程，一个进程也可以单独拥有多个协程。</li>
+<li>线程进程都是同步机制，而协程则是异步</li>
+<li>协程能保留上一次调用时的状态，每次过程重入时，就相当于进入上一次调用的状态</li>
+</ol>
+<h2 id="产生死锁的四个必要条件（破坏死锁的四个条件）"><a href="#产生死锁的四个必要条件（破坏死锁的四个条件）" class="headerlink" title="产生死锁的四个必要条件（破坏死锁的四个条件）"></a>产生死锁的四个必要条件（破坏死锁的四个条件）</h2><h3 id="互斥条件"><a href="#互斥条件" class="headerlink" title="互斥条件"></a>互斥条件</h3><p>一个资源只能由进程独占使用，若别的进程也要求该资源，则需等待直至其占用者释放。</p>
+<h3 id="请求和保持条件"><a href="#请求和保持条件" class="headerlink" title="请求和保持条件"></a>请求和保持条件</h3><p>进程已经保持了至少一个资源，但又提出新的资源请求，而该资源又被其他进程占有。此时请求进程阻塞，但又不释放自己获得的资源。</p>
+<h3 id="非剥夺条件"><a href="#非剥夺条件" class="headerlink" title="非剥夺条件"></a>非剥夺条件</h3><p>进程所获得的资源在未使用完之前，不能被其他进程夺走，而只能由自身释放。</p>
+<h3 id="循环等待条件"><a href="#循环等待条件" class="headerlink" title="循环等待条件"></a>循环等待条件</h3><p>存在一个等待进程集合${p_0,p_1,…,p_n}$，$p_0$在等待$p_1$占用的资源，$p_1$在等待$p_2$占用的资源，$p_n$在等待$p_0$占用的资源。</p>
+<h2 id="分段和分页"><a href="#分段和分页" class="headerlink" title="分段和分页"></a>分段和分页</h2><ul>
+<li>页式存储：用户空间划分为大小相等的部分称为页，内存空间划分为同样大小的区域称</li>
+</ul>
+<p>为页框，分配时以页为单位按进程需要的页数分配，<strong>逻辑上相邻的页物理上不一定相邻</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091158644.png" alt="截屏2022-05-09 11.57.43"></p>
+<ul>
+<li>段式存储：用户进程地址空间按照自身逻辑关系划分为若干个段（如代码段，数据段，</li>
+</ul>
+<p>堆栈段），内存空间被动态划分为长度不同的区域，分配时以段为单位，<strong>逻辑上相邻的页物理上也相邻</strong></p>
+<p>占据连续空间，各段可以不相邻。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091244361.png" alt="image-20220509124451301"></p>
+<ul>
+<li>段页式存储：用户进程先按段划分，段内再按页划分，内存划分和分配按页。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202091841145.png" alt="image-20220209184143923"></p>
+<h2 id="缓冲区溢出问题"><a href="#缓冲区溢出问题" class="headerlink" title="缓冲区溢出问题"></a>缓冲区溢出问题</h2><p>C 语言使用运行时栈来存储过程信息。每个函数的信息存储在一个栈帧中，包括寄存器、局部变量、参数、返回地址等。C  对于数组引用不进行任何边界检查，因此<strong>对越界的数组元素的写操作会破坏存储在栈中的状态信息</strong>，这种现象称为缓冲区溢出。缓冲区溢出会破坏程序运行，也可以被用来进行攻击计算机，如使用一个指向攻击代码的指针覆盖返回地址。</p>
+<h3 id="防范方式"><a href="#防范方式" class="headerlink" title="防范方式"></a>防范方式</h3><p>防范缓冲区溢出攻击的机制有三种：随机化、栈保护和限制可执行代码区域。</p>
+<ul>
+<li>随机化：包括栈随机化（程序开始时在栈上分配一段随机大小的空间）和地址空间布局随机化（Address-Space Layout  Randomization，ASLR，即每次运行时程序的不同部分，包括代码段、数据段、栈、堆等都会被加载到内存空间的不同区域），但只能增加攻击一个系统的难度，不能完全保证安全。</li>
+<li>栈保护：在每个函数的栈帧的局部变量和栈状态之间存储一个<strong>随机产生的</strong>特殊的值，称为金丝雀值（canary）。在恢复寄存器状态和函数返回之前，程序检测这个金丝雀值是否被改变了，如果是，那么程序异常终止。</li>
+<li>限制可执行代码区域：内存页的访问形式有三种：可读、可写、可执行，只有编译器产生的那部分代码所处的内存才是可执行的，其他页限制为只允许读和写。</li>
+</ul>
+<h3 id="磁盘调度"><a href="#磁盘调度" class="headerlink" title="磁盘调度"></a>磁盘调度</h3><p>过程：磁头（找到对应的盘面）；磁道（一个盘面上的同心圆环，寻道时间）；扇区（旋转时间）。为减小寻道时间的调度算法：</p>
+<ul>
+<li>先来先服务</li>
+<li>最短寻道时间优先</li>
+<li>电梯算法：电梯总是保持一个方向运行，直到该方向没有请求为止，然后改变运行方向。</li>
+</ul>
+<h2 id="异常和中断"><a href="#异常和中断" class="headerlink" title="异常和中断"></a>异常和中断</h2><p>中断是指 <strong>CPU</strong> 对系统发生某事件时的这样一种响应: CPU 暂停正在执行的程序，在保留现场后自动地转去执行该事件的中断处理程序；执行完后，再返回到原程序的断点处继续执行。</p>
+<ul>
+<li>中断——外部事件引起<strong>，</strong>正在运行的程序所不期望的</li>
+<li>异常——内部执行指令引起</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">操作系统面试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">进程和线程有什么区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E8%BF%9B%E7%A8%8B%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%8F%AF%E4%BB%A5%E5%85%B1%E4%BA%AB%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%EF%BC%9F"><span class="toc-number">1.1.1.</span> <span class="toc-text">同一进程中的线程可以共享哪些数据？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%8B%AC%E5%8D%A0%E5%93%AA%E4%BA%9B%E8%B5%84%E6%BA%90%EF%BC%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">线程独占哪些资源？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">进程间的通信方式有哪些？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%B1%BB%EF%BC%9A%E4%BC%A0%E7%BB%9F%E7%9A%84Unix%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">第一类：传统的Unix通信机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%AE%A1%E9%81%93-%E5%8C%BF%E5%90%8D%E7%AE%A1%E9%81%93-pipe"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">1. 管道&#x2F;匿名管道(pipe)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93-FIFO"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">2.有名管道(FIFO)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BF%A1%E5%8F%B7-Signal"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">3.信号(Signal)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%B6%88%E6%81%AF-Message-%E9%98%9F%E5%88%97"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">4.消息(Message)队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98-share-memory"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">5. 共享内存(share memory)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E4%BF%A1%E5%8F%B7%E9%87%8F-semaphore"><span class="toc-number">1.1.3.7.</span> <span class="toc-text">6.信号量(semaphore)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E5%A5%97%E6%8E%A5%E5%AD%97-socket"><span class="toc-number">1.1.3.8.</span> <span class="toc-text">7. 套接字(socket)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">线程之间的通信方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%81%E6%9C%BA%E5%88%B6"><span class="toc-number">1.3.</span> <span class="toc-text">锁机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E9%94%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">读写锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-number">1.3.2.</span> <span class="toc-text">互斥锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%8F%AB%E4%BC%98%E5%85%88%E7%BA%A7%E5%8F%8D%E8%BD%AC%EF%BC%9F%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">什么叫优先级反转？如何解决？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">什么是僵尸进程？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.5.1.</span> <span class="toc-text">什么是孤儿进程？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">线程同步有哪些方式？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%87%8F%E5%92%8C%E4%B8%B4%E7%95%8C%E5%8C%BA%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">互斥量和临界区有什么区别？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%8F%E7%A8%8B%EF%BC%9F"><span class="toc-number">1.7.</span> <span class="toc-text">什么是协程？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%8F%E7%A8%8B%E5%A4%9A%E4%B8%8E%E7%BA%BF%E7%A8%8B%E8%BF%9B%E8%A1%8C%E6%AF%94%E8%BE%83%EF%BC%9F"><span class="toc-number">1.7.0.0.1.</span> <span class="toc-text">协程多与线程进行比较？</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%88%E7%A0%B4%E5%9D%8F%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E6%9D%A1%E4%BB%B6%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">产生死锁的四个必要条件（破坏死锁的四个条件）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.1.</span> <span class="toc-text">互斥条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%92%8C%E4%BF%9D%E6%8C%81%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.2.</span> <span class="toc-text">请求和保持条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%89%A5%E5%A4%BA%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.3.</span> <span class="toc-text">非剥夺条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E7%AD%89%E5%BE%85%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.8.4.</span> <span class="toc-text">循环等待条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5"><span class="toc-number">1.9.</span> <span class="toc-text">分段和分页</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BA%E9%97%AE%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">缓冲区溢出问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E8%8C%83%E6%96%B9%E5%BC%8F"><span class="toc-number">1.10.1.</span> <span class="toc-text">防范方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6"><span class="toc-number">1.10.2.</span> <span class="toc-text">磁盘调度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%92%8C%E4%B8%AD%E6%96%AD"><span class="toc-number">1.11.</span> <span class="toc-text">异常和中断</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&text=操作系统知识点"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&is_video=false&description=操作系统知识点"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=操作系统知识点&body=Check out this article: http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&title=操作系统知识点"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&name=操作系统知识点&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86%E7%82%B9/&t=操作系统知识点"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2023
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
