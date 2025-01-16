@@ -18,8 +18,9 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091158644.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091244361.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202091841145.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/reinhart-l/FigureBed2/master/image-20240328131938684.png">
 <meta property="article:published_time" content="2023-11-08T06:47:20.000Z">
-<meta property="article:modified_time" content="2023-11-08T07:29:21.425Z">
+<meta property="article:modified_time" content="2024-03-28T05:19:42.611Z">
 <meta property="article:author" content="Reinhart">
 <meta property="article:tag" content="个人">
 <meta name="twitter:card" content="summary">
@@ -197,11 +198,11 @@
 <h4 id="第一类：传统的Unix通信机制"><a href="#第一类：传统的Unix通信机制" class="headerlink" title="第一类：传统的Unix通信机制"></a>第一类：传统的Unix通信机制</h4><h4 id="1-管道-匿名管道-pipe"><a href="#1-管道-匿名管道-pipe" class="headerlink" title="1. 管道/匿名管道(pipe)"></a>1. 管道/匿名管道(pipe)</h4><ul>
 <li>管道是<strong>半双工</strong>的，数据只能向一个方向流动；需要双方通信时，需要建立起两个管道。</li>
 <li>只能用于父子进程或者兄弟进程之间(具有<strong>亲缘关系</strong>的进程);</li>
-<li>单独构成一种独立的文件系统：管道对于管道两端的进程而言，就是一个文件，但它不是普通的文件，它不属于某种文件系统，而是自立门户，单独构成一种文件系统，并且只存在与内存中。</li>
+<li>单独构成一种独立的文件系统：管道对于管道两端的进程而言，就是一个文件，但它不是普通的文件，它不属于某种文件系统，而是自立门户，单独构成一种文件系统，并且只存在于内存中。</li>
 <li>数据的读出和写入：一个进程向管道中写的内容被管道另一端的进程读出。写入的内容每次都添加在管道缓冲区的末尾，并且每次都是从缓冲区的头部读出数据。</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203151103048" alt="img"></p>
-<p><strong>管道的实质：</strong><br> 管道的实质是一个内核缓冲区，进程以先进先出的方式从缓冲区存取数据，管道一端的进程顺序的将数据写入缓冲区，另一端的进程则顺序的读出数据。<br> 该缓冲区可以看做是一个循环队列，读和写的位置都是自动增长的，不能随意改变，一个数据只能被读一次，读出来以后在缓冲区就不复存在了。<br> 当缓冲区读空或者写满时，有一定的规则控制相应的读进程或者写进程进入等待队列，当空的缓冲区有新数据写入或者满的缓冲区有数据读出来时，就唤醒等待队列中的进程继续读写。</p>
+<p><strong>管道的实质：</strong><br>管道的实质是一个内核缓冲区，进程以先进先出的方式从缓冲区存取数据，管道一端的进程顺序的将数据写入缓冲区，另一端的进程则顺序的读出数据。<br> 该缓冲区可以看做是一个循环队列，读和写的位置都是自动增长的，不能随意改变，一个数据只能被读一次，读出来以后在缓冲区就不复存在了。<br> 当缓冲区读空或者写满时，有一定的规则控制相应的读进程或者写进程进入等待队列，当空的缓冲区有新数据写入或者满的缓冲区有数据读出来时，就唤醒等待队列中的进程继续读写。</p>
 <p><strong>无名管道的优点：</strong></p>
 <ul>
 <li>简单易用</li>
@@ -227,7 +228,6 @@
 </ul>
 <p><strong>Linux系统中常用信号：</strong></p>
 <ul>
-<li><strong>SIGINT：</strong>程序终止信号。程序运行过程中，按<code>Ctrl+C</code>键将产生该信号。</li>
 <li><strong>SIGINT：</strong>程序终止信号。程序运行过程中，按<code>Ctrl+C</code>键将产生该信号。（强制终止不能被无视）</li>
 <li><strong>SIGTERM：</strong>结束进程信号。shell下执行<code>kill 进程pid</code>发送该信号。</li>
 </ul>
@@ -315,20 +315,19 @@
 <h3 id="非剥夺条件"><a href="#非剥夺条件" class="headerlink" title="非剥夺条件"></a>非剥夺条件</h3><p>进程所获得的资源在未使用完之前，不能被其他进程夺走，而只能由自身释放。</p>
 <h3 id="循环等待条件"><a href="#循环等待条件" class="headerlink" title="循环等待条件"></a>循环等待条件</h3><p>存在一个等待进程集合${p_0,p_1,…,p_n}$，$p_0$在等待$p_1$占用的资源，$p_1$在等待$p_2$占用的资源，$p_n$在等待$p_0$占用的资源。</p>
 <h2 id="分段和分页"><a href="#分段和分页" class="headerlink" title="分段和分页"></a>分段和分页</h2><ul>
-<li>页式存储：用户空间划分为大小相等的部分称为页，内存空间划分为同样大小的区域称</li>
+<li>页式存储：用户空间划分为大小相等的部分称为页，内存空间划分为同样大小的区域称为页框，分配时以页为单位按进程需要的页数分配，<strong>逻辑上相邻的页物理上不一定相邻</strong></li>
 </ul>
-<p>为页框，分配时以页为单位按进程需要的页数分配，<strong>逻辑上相邻的页物理上不一定相邻</strong></p>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091158644.png" alt="截屏2022-05-09 11.57.43"></p>
 <ul>
-<li>段式存储：用户进程地址空间按照自身逻辑关系划分为若干个段（如代码段，数据段，</li>
+<li>段式存储：用户进程地址空间按照自身逻辑关系划分为若干个段（如代码段，数据段，堆栈段），内存空间被动态划分为长度不同的区域，分配时以段为单位，<strong>逻辑上相邻的段物理上也相邻</strong>占据连续空间，各段可以不相邻。</li>
 </ul>
-<p>堆栈段），内存空间被动态划分为长度不同的区域，分配时以段为单位，<strong>逻辑上相邻的页物理上也相邻</strong></p>
-<p>占据连续空间，各段可以不相邻。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202205091244361.png" alt="image-20220509124451301"></p>
 <ul>
 <li>段页式存储：用户进程先按段划分，段内再按页划分，内存划分和分配按页。</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202091841145.png" alt="image-20220209184143923"></p>
+<p><strong>外碎片</strong>：外部碎片指的是还没有被分配出去（不属于任何进程），但由于太小了无法分配给申请内存空间的新进程的内存空闲区域。 <strong>内碎片</strong>：内部碎片就是已经被分配出去（能明确指出属于哪个进程）却不能被利用的内存空间； 频繁的分配与回收物理页面会导致大量的、连续且小的页面块夹杂在已分配的页面中间，就会产生外部<strong>碎片</strong>。</p>
+<p><img src="https://raw.githubusercontent.com/reinhart-l/FigureBed2/master/image-20240328131938684.png" alt="image-20240328131938684"></p>
 <h2 id="缓冲区溢出问题"><a href="#缓冲区溢出问题" class="headerlink" title="缓冲区溢出问题"></a>缓冲区溢出问题</h2><p>C 语言使用运行时栈来存储过程信息。每个函数的信息存储在一个栈帧中，包括寄存器、局部变量、参数、返回地址等。C  对于数组引用不进行任何边界检查，因此<strong>对越界的数组元素的写操作会破坏存储在栈中的状态信息</strong>，这种现象称为缓冲区溢出。缓冲区溢出会破坏程序运行，也可以被用来进行攻击计算机，如使用一个指向攻击代码的指针覆盖返回地址。</p>
 <h3 id="防范方式"><a href="#防范方式" class="headerlink" title="防范方式"></a>防范方式</h3><p>防范缓冲区溢出攻击的机制有三种：随机化、栈保护和限制可执行代码区域。</p>
 <ul>
@@ -414,7 +413,7 @@
         Copyright &copy;
         
         
-        2022-2024
+        2022-2025
         Reinhart
       </div>
       <div class="footer-right">
