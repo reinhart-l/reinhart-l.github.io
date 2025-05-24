@@ -219,7 +219,7 @@
 </ul>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">/about/</span></span><br><span class="line">  <span class="attr">articles:</span> <span class="string">/archives/</span></span><br><span class="line">  <span class="attr">projects:</span> <span class="string">http://github.com/probberechts</span></span><br><span class="line">  <span class="attr">LINK_NAME:</span> <span class="string">URL</span></span><br></pre></td></tr></table></figure>
 
-<p>​    直接在nav下面添加就行，添加完这一项之后可以让它指向一个链接（例如projcets），也可以让它指向站内的一个页面。新建一个页面执行<code>hexo new page xxx</code>，然后这个页面的路径就是<code>/xxx/</code></p>
+<p>​	直接在nav下面添加就行，添加完这一项之后可以让它指向一个链接（例如projcets），也可以让它指向站内的一个页面。新建一个页面执行<code>hexo new page xxx</code>，然后这个页面的路径就是<code>/xxx/</code></p>
 <ul>
 <li>更新后会在<code>./themes/cactus/source</code>中发现一个和page名称一样的文件夹</li>
 </ul>
@@ -232,7 +232,7 @@
 
 
 <h4 id="在导航栏添加搜索功能"><a href="#在导航栏添加搜索功能" class="headerlink" title="在导航栏添加搜索功能"></a>在导航栏添加搜索功能</h4><ul>
-<li>在<code>./themes/cactus/_config.yml</code>中找到<code>nav</code>    新建search标签</li>
+<li>在<code>./themes/cactus/_config.yml</code>中找到<code>nav</code>	新建search标签</li>
 </ul>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">/search/</span></span><br></pre></td></tr></table></figure>
 
@@ -254,7 +254,7 @@
 <li><p>只需要在每篇文章的头部添加</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">title: Tags and Categories</span><br><span class="line">date: 2017-12-24 23:29:53</span><br><span class="line">tags:</span><br><span class="line"><span class="bullet">-</span> Foo</span><br><span class="line"><span class="bullet">-</span> Bar</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>​        就可以在首页看到</p>
+<p>​		就可以在首页看到</p>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201191913263.png" alt="image-20220119173507249"></p>
 <ul>
 <li>每篇文章可以有两个tag，tag的顺序影响其重要程度</li>
@@ -305,7 +305,7 @@
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201191913736.png" alt="image-20220119182832891"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201191913062.png" alt="image-20220119182858428"></p>
-<h3 id="自定义字体-颜色和网站logo-icon"><a href="#自定义字体-颜色和网站logo-icon" class="headerlink" title="自定义字体/颜色和网站logo/icon"></a>自定义字体/颜色和网站logo/icon</h3><h4 id="自定义颜色"><a href="#自定义颜色" class="headerlink" title="自定义颜色"></a>自定义颜色</h4><ul>
+<h3 id="自定义字体-颜色和网站logo-icon"><a href="#自定义字体-颜色和网站logo-icon" class="headerlink" title="自定义字体&#x2F;颜色和网站logo&#x2F;icon"></a>自定义字体&#x2F;颜色和网站logo&#x2F;icon</h3><h4 id="自定义颜色"><a href="#自定义颜色" class="headerlink" title="自定义颜色"></a>自定义颜色</h4><ul>
 <li>进入<code>./themes/cactus/source/css/colors</code>中有四个文件，对应不同风格的样式</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201191913264.png" alt="image-20220119183134175"></p>
@@ -322,7 +322,7 @@
 <ul>
 <li>可用的字体在<code>./themes/cactus/source/lib/</code>中，cactus自带的只有<code>meslo-LG</code> <code>vazir-font</code>两种，有需要可以自己下载。</li>
 </ul>
-<h4 id="自定义网站logo-icon"><a href="#自定义网站logo-icon" class="headerlink" title="自定义网站logo/icon"></a>自定义网站logo/icon</h4><ul>
+<h4 id="自定义网站logo-icon"><a href="#自定义网站logo-icon" class="headerlink" title="自定义网站logo&#x2F;icon"></a>自定义网站logo&#x2F;icon</h4><ul>
 <li>在<code>./themes/cactus/source/images/</code>下有四张图片</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201191913511.png" alt="image-20220119184002386"></p>

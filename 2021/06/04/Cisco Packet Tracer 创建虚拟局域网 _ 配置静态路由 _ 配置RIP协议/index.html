@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="虚拟局域网 PC0配置 PC1配置 PC2配置 Switch0配置 switch1配置 最终结果PC0和PC2同属vlan2，PC1属于vlan1，所以PC0和2可以互相ping通，而PC0和PC1ping不通 静态路由配置 PC1 PC2 PC1 Fa0&#x2F;0 接口 $\to$ router1 Fa1&#x2F;0 接口 PC2 Fa0&#x2F;0 接口 $\to$ router2 Fa1&#x2F;0 接口 Router1">
+    <meta name="description" content="虚拟局域网 PC0配置 PC1配置 PC2配置 Switch0配置 switch1配置 最终结果PC0和PC2同属vlan2，PC1属于vlan1，所以PC0和2可以互相ping通，而PC0和PC1ping不通 静态路由配置 PC1 PC2 PC1 Fa0&#x2F;0 接口 $\to$ router1 Fa1&#x2F;0 接口 PC2 Fa0&#x2F;0 接口 $\to$ router2 F">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cisco Packet Tracer 创建虚拟局域网 | 配置静态路由 | 配置RIP协议">
 <meta property="og:url" content="http://example.com/2021/06/04/Cisco%20Packet%20Tracer%20%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91%20_%20%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%20_%20%E9%85%8D%E7%BD%AERIP%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Across the Cosmos">
-<meta property="og:description" content="虚拟局域网 PC0配置 PC1配置 PC2配置 Switch0配置 switch1配置 最终结果PC0和PC2同属vlan2，PC1属于vlan1，所以PC0和2可以互相ping通，而PC0和PC1ping不通 静态路由配置 PC1 PC2 PC1 Fa0&#x2F;0 接口 $\to$ router1 Fa1&#x2F;0 接口 PC2 Fa0&#x2F;0 接口 $\to$ router2 Fa1&#x2F;0 接口 Router1">
+<meta property="og:description" content="虚拟局域网 PC0配置 PC1配置 PC2配置 Switch0配置 switch1配置 最终结果PC0和PC2同属vlan2，PC1属于vlan1，所以PC0和2可以互相ping通，而PC0和PC1ping不通 静态路由配置 PC1 PC2 PC1 Fa0&#x2F;0 接口 $\to$ router1 Fa1&#x2F;0 接口 PC2 Fa0&#x2F;0 接口 $\to$ router2 F">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819966.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20210604201955803.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1JlaW5oYXJ0X0w=,size_16,color_FFFFFF,t_70">
@@ -19,6 +19,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819015.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820475.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820031.png">
+<meta property="og:image" content="http://example.com/">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819469.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820467.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819667.png">
@@ -183,14 +184,14 @@
 <h3 id="PC1配置"><a href="#PC1配置" class="headerlink" title="PC1配置"></a><strong>PC1配置</strong></h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819542.png" alt="image-20220118181959497"></p>
 <h3 id="PC2配置"><a href="#PC2配置" class="headerlink" title="PC2配置"></a><strong>PC2配置</strong></h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819015.png" alt="在这里插入图片描述"></p>
 <h3 id="Switch0配置"><a href="#Switch0配置" class="headerlink" title="Switch0配置"></a><strong>Switch0配置</strong></h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820475.png" alt="image-20220118182016420"></p>
-<h3 id="switch1配置"><a href="#switch1配置" class="headerlink" title="switch1配置"></a><strong>switch1配置</strong></h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820031.png" alt="image-20220118182032959"><img src="" alt="在这里插入图片描述"></p>
+<h3 id="switch1配置"><a href="#switch1配置" class="headerlink" title="switch1配置"></a><strong>switch1配置</strong></h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820031.png" alt="image-20220118182032959"><img src="/" alt="在这里插入图片描述"></p>
 <h3 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h3><p><strong>PC0和PC2同属vlan2，PC1属于vlan1，所以PC0和2可以互相ping通，而PC0和PC1ping不通</strong><br><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819469.png" alt="在这里插入图片描述"></p>
 <h2 id="静态路由配置"><a href="#静态路由配置" class="headerlink" title="静态路由配置"></a>静态路由配置</h2><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820467.png" alt="image-20220118182048424"></p>
 <h3 id="PC1"><a href="#PC1" class="headerlink" title="PC1"></a>PC1</h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819667.png" alt="在这里插入图片描述"></p>
 <h3 id="PC2"><a href="#PC2" class="headerlink" title="PC2"></a>PC2</h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181820250.png"></p>
-<p>PC1 Fa0/0 接口 $\to$ router1 Fa1/0 接口</p>
-<p>PC2 Fa0/0 接口 $\to$ router2 Fa1/0 接口</p>
-<p>Router1 serial 2/0 $\to$  router2 serial 2/0</p>
+<p>PC1 Fa0&#x2F;0 接口 $\to$ router1 Fa1&#x2F;0 接口</p>
+<p>PC2 Fa0&#x2F;0 接口 $\to$ router2 Fa1&#x2F;0 接口</p>
+<p>Router1 serial 2&#x2F;0 $\to$  router2 serial 2&#x2F;0</p>
 <h3 id="Router1"><a href="#Router1" class="headerlink" title="Router1"></a>Router1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">         --- System Configuration Dialog ---</span><br><span class="line"></span><br><span class="line">Would you like to enter the initial configuration dialog? [yes/no]: no # 选择no</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Press RETURN to get started!</span><br><span class="line"></span><br><span class="line">r1&gt;enable # 进入admin模式</span><br><span class="line">r1#</span><br><span class="line">r1#configure terminal # 进入管理终端</span><br><span class="line">Enter configuration commands, one per line.  End with CNTL/Z.</span><br><span class="line">r1(config)#interface FastEthernet1/0 # 进入端口1/0</span><br><span class="line">r1(config-if)#ip address 192.168.1.1 255.255.255.0 # 配置端口的ip地址</span><br><span class="line">r1(config-if)#no shutdown # 开启此端口,使它转发数据</span><br><span class="line">%LINK-5-CHANGED: Interface FastEthernet1/0, changed state to up</span><br><span class="line"></span><br><span class="line">%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to up</span><br><span class="line"></span><br><span class="line">r1(config-if)#exit # 退出</span><br><span class="line"></span><br><span class="line">r1(config)#interface serial 2/0 # 进入S2/0端口模式</span><br><span class="line">r1(config-if)#no shutdown # 开启此端口</span><br><span class="line"></span><br><span class="line">%LINK-5-CHANGED: Interface Serial2/0, changed state to down</span><br><span class="line">r1(config-if)#ip address 192.168.2.1 255.255.255.0 # 配置此端口的ip地址</span><br><span class="line">r1(config-if)#clock rate 9600 # 配置此端口的时钟速率</span><br><span class="line">r1(config-if)#exit # 退出</span><br><span class="line"></span><br><span class="line">r1(config)#ip route 192.168.3.0 255.255.255.0 192.168.2.2 # 配置静态路由</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
@@ -204,8 +205,9 @@
 </ul>
 <h3 id="静态路由配置实验参考博客："><a href="#静态路由配置实验参考博客：" class="headerlink" title="静态路由配置实验参考博客："></a>静态路由配置实验参考博客：</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Muyunuu/article/details/117045655">https://blog.csdn.net/Muyunuu/article/details/117045655</a></p>
 <h2 id="rip配置"><a href="#rip配置" class="headerlink" title="rip配置"></a>rip配置</h2><ul>
-<li>只需删除静态路由实验中创建的路由表，再将其修改成RIP协议即可<h3 id="Router1-1"><a href="#Router1-1" class="headerlink" title="Router1"></a>Router1</h3><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819967.png" alt="在这里插入图片描述"></li>
+<li>只需删除静态路由实验中创建的路由表，再将其修改成RIP协议即可</li>
 </ul>
+<h3 id="Router1-1"><a href="#Router1-1" class="headerlink" title="Router1"></a>Router1</h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819967.png" alt="在这里插入图片描述"></p>
 <h3 id="Router2"><a href="#Router2" class="headerlink" title="Router2"></a>Router2</h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819988.png" alt="在这里插入图片描述"></p>
 <h3 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h3><p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202201181819000.png" alt="在这里插入图片描述"></p>
 

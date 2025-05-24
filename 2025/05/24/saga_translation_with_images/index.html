@@ -280,7 +280,7 @@
 <p>Currently, SAGA doesn’t generate a whole action plan of small steps, instead it generates a list of candidate next-step-actions that are very high-level and parameterizable. This allows the Model to focus on a smaller set of high-level tools that it can apply in a multitude of ways instead of using lower-level or very specific steps to construct an action plan. This has benefits that fine-tuning isn’t necessary and allows the simulation to take on more of the burden of providing and executing the actions, saving time and money for those using a model like GPT-4.</p>
 <h2 id="Generative-Human-like-Agents"><a href="#Generative-Human-like-Agents" class="headerlink" title="Generative Human-like Agents"></a>Generative Human-like Agents</h2><p>In 2023, a lot of additional work has been done in this space, but we will highlight two for now that were also inspirational for how SAGA is architected, the terminology, and getting SAGA released. How SAGA may take a different approach than these projects is also highlighted.</p>
 <p>Diagram from Generative Agents Paper</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.03442">Generative Agents: Interactive Simulacra of Human Behavior</a>, Park, et al Apr 2023. Here, Joon created a simple simulation in the browser using a 2D-grid game engine backed by a Python webserver. It also has another Python server running the code that drives the agents. The two communicate by saving a series of specially named files containing either the simulation data (locations of the agents in space), or what actions the agents should take in this step. All agents are evaluated each step and there is interesting work that explores observations, daily planning, and vector database storage/retrieval of memories.</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.03442">Generative Agents: Interactive Simulacra of Human Behavior</a>, Park, et al Apr 2023. Here, Joon created a simple simulation in the browser using a 2D-grid game engine backed by a Python webserver. It also has another Python server running the code that drives the agents. The two communicate by saving a series of specially named files containing either the simulation data (locations of the agents in space), or what actions the agents should take in this step. All agents are evaluated each step and there is interesting work that explores observations, daily planning, and vector database storage&#x2F;retrieval of memories.</p>
 <p>Outside of research, that architecture makes it difficult to make use of in practice. The lock-step approach also takes a long time between steps and with the complex LLM re-processing overhead <a target="_blank" rel="noopener" href="https://twitter.com/goodside/status/1645129328681115648">it can be very expensive to run</a> for someone just looking to experiment.</p>
 <h2 id="中文翻译-Chinese-Translation-8"><a href="#中文翻译-Chinese-Translation-8" class="headerlink" title="中文翻译 (Chinese Translation)"></a>中文翻译 (Chinese Translation)</h2><h2 id="作为零样本规划器的语言模型"><a href="#作为零样本规划器的语言模型" class="headerlink" title="作为零样本规划器的语言模型"></a>作为零样本规划器的语言模型</h2><p>这项工作最接近的类比可能是这篇论文，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2201.07207">“Language Models as Zero-Shot Planners: Extracting Actionable Knowledge for Embodied Agents”</a>，由Huang和Abbeel于2022年1月发表，该论文为”刷牙”等任务生成行动计划。在那里，他们对LLM进行了微调，使其能够识别”可接受的行动”，即VirtualHome模拟器可以实际识别的行动，而不是模拟器无法识别的自由形式指令。</p>
 <p>来自《作为零样本规划器的语言模型》的图表</p>
@@ -289,7 +289,7 @@
 <h2 id="生成式类人代理"><a href="#生成式类人代理" class="headerlink" title="生成式类人代理"></a>生成式类人代理</h2><p>2023年，在这个领域已经完成了大量额外的工作，但我们现在将重点介绍两个对SAGA的架构、术语和发布有启发作用的项目。SAGA可能采取与这些项目不同的方法，这一点也被强调。</p>
 <p>来自生成式代理论文的图表</p>
 <p><img src="https://raw.githubusercontent.com/reinhart-l/FigureBed3/master/image-20250523120256805.png" alt="image-20250523120256805"></p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.03442">Generative Agents: Interactive Simulacra of Human Behavior</a>，Park等人，2023年4月。在这里，Joon创建了一个在浏览器中使用2D网格游戏引擎的简单模拟，由Python网络服务器支持。它还有另一个运行驱动代理代码的Python服务器。两者通过保存包含模拟数据（代理在空间中的位置）或代理在此步骤中应采取的行动的特殊命名文件进行通信。所有代理在每一步都被评估，有一些有趣的工作探索观察、日常规划和向量数据库存储/检索记忆。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2304.03442">Generative Agents: Interactive Simulacra of Human Behavior</a>，Park等人，2023年4月。在这里，Joon创建了一个在浏览器中使用2D网格游戏引擎的简单模拟，由Python网络服务器支持。它还有另一个运行驱动代理代码的Python服务器。两者通过保存包含模拟数据（代理在空间中的位置）或代理在此步骤中应采取的行动的特殊命名文件进行通信。所有代理在每一步都被评估，有一些有趣的工作探索观察、日常规划和向量数据库存储&#x2F;检索记忆。</p>
 <p>在研究之外，这种架构使其难以实际使用。锁步方法也需要在步骤之间花费很长时间，并且由于复杂的LLM重新处理开销，<a target="_blank" rel="noopener" href="https://twitter.com/goodside/status/1645129328681115648">运行可能非常昂贵</a>，对于只想实验的人来说。</p>
 <hr>
 <h2 id="英文原文-Original-Text-9"><a href="#英文原文-Original-Text-9" class="headerlink" title="英文原文 (Original Text)"></a>英文原文 (Original Text)</h2><p>SAGA takes a different approach. It’s available via socket.io so it communicates asynchronously over the web or on a local network. That means Agents and the Simulation don’t need to pause the world while waiting for Actions to be generated, though you can still do that if you like. It also provides a cleaner abstraction between the simulation and what is generating actions. SAGA does the generation based on requests for Actions, and the simulation is free to interpret those actions as it needs.</p>
@@ -332,13 +332,61 @@
 <h1 id="SAGA项目代码流程详细解析"><a href="#SAGA项目代码流程详细解析" class="headerlink" title="SAGA项目代码流程详细解析"></a>SAGA项目代码流程详细解析</h1><h2 id="1-SAGA核心架构与组件"><a href="#1-SAGA核心架构与组件" class="headerlink" title="1. SAGA核心架构与组件"></a>1. SAGA核心架构与组件</h2><p>SAGA框架的核心组件构成了一个层次化的架构，以实现AI代理行动生成的功能。</p>
 <h3 id="1-1-主要组件概述"><a href="#1-1-主要组件概述" class="headerlink" title="1.1 主要组件概述"></a>1.1 主要组件概述</h3><p>SAGA的核心架构由以下几个主要组件构成：</p>
 <ol>
-<li> <strong>BaseSagaAgent</strong>: 所有代理的基类，提供了与语言模型交互的基础设施。</li>
-<li> <strong>ActionsAgent</strong>: 负责根据上下文和技能生成行动选项。</li>
-<li> <strong>ConversationAgent</strong>: 负责生成角色之间的对话。</li>
-<li> <strong>EmbeddingAgent</strong>: 负责生成文本嵌入，用于记忆检索和相似度匹配。</li>
+<li><strong>BaseSagaAgent</strong>: 所有代理的基类，提供了与语言模型交互的基础设施。</li>
+<li><strong>ActionsAgent</strong>: 负责根据上下文和技能生成行动选项。</li>
+<li><strong>ConversationAgent</strong>: 负责生成角色之间的对话。</li>
+<li><strong>EmbeddingAgent</strong>: 负责生成文本嵌入，用于记忆检索和相似度匹配。</li>
 </ol>
 <h3 id="1-2-核心组件详解"><a href="#1-2-核心组件详解" class="headerlink" title="1.2 核心组件详解"></a>1.2 核心组件详解</h3><p>下面是主要组件的关系图：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">    class BaseSagaAgent &#123;</span><br><span class="line">        +prompt_template</span><br><span class="line">        +callback_handler</span><br><span class="line">        +_llm</span><br><span class="line">        +generate_chain()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class ActionsAgent &#123;</span><br><span class="line">        +guidance</span><br><span class="line">        +generate_actions()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class ConversationAgent &#123;</span><br><span class="line">        +generate_conversation()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class EmbeddingAgent &#123;</span><br><span class="line">        +embed_documents()</span><br><span class="line">        +embed_query()</span><br><span class="line">        +store_documents()</span><br><span class="line">        +find_similar()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class Skill &#123;</span><br><span class="line">        +name</span><br><span class="line">        +description</span><br><span class="line">        +parameters</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class Action &#123;</span><br><span class="line">        +skill</span><br><span class="line">        +parameters</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    class GeneratedActions &#123;</span><br><span class="line">        +options</span><br><span class="line">        +scores</span><br><span class="line">        +raw_prompt</span><br><span class="line">        +raw_response</span><br><span class="line">        +llm_info</span><br><span class="line">        +sort()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    BaseSagaAgent &lt;|-- ActionsAgent</span><br><span class="line">    BaseSagaAgent &lt;|-- ConversationAgent</span><br><span class="line">    ActionsAgent ..&gt; Skill</span><br><span class="line">    ActionsAgent ..&gt; GeneratedActions</span><br><span class="line">    GeneratedActions o-- Action</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">classDiagram
+    class BaseSagaAgent {
+        +prompt_template
+        +callback_handler
+        +_llm
+        +generate_chain()
+    }
+    
+    class ActionsAgent {
+        +guidance
+        +generate_actions()
+    }
+    
+    class ConversationAgent {
+        +generate_conversation()
+    }
+    
+    class EmbeddingAgent {
+        +embed_documents()
+        +embed_query()
+        +store_documents()
+        +find_similar()
+    }
+    
+    class Skill {
+        +name
+        +description
+        +parameters
+    }
+    
+    class Action {
+        +skill
+        +parameters
+    }
+    
+    class GeneratedActions {
+        +options
+        +scores
+        +raw_prompt
+        +raw_response
+        +llm_info
+        +sort()
+    }
+    
+    BaseSagaAgent <|-- ActionsAgent
+    BaseSagaAgent <|-- ConversationAgent
+    ActionsAgent ..> Skill
+    ActionsAgent ..> GeneratedActions
+    GeneratedActions o-- Action</pre>
 
 <h4 id="1-2-1-BaseSagaAgent"><a href="#1-2-1-BaseSagaAgent" class="headerlink" title="1.2.1 BaseSagaAgent"></a>1.2.1 BaseSagaAgent</h4><p><code>BaseSagaAgent</code>是所有SAGA代理的基类，它提供了与语言模型交互的基础设施：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, prompt_template: BasePromptTemplate, llm: <span class="type">Optional</span>[BaseLanguageModel] = <span class="literal">None</span></span>):</span><br><span class="line">    <span class="comment"># 设置回调处理器</span></span><br><span class="line">    self.callback_handler = SagaCallbackHandler(...)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 如果没有提供语言模型，使用默认的OpenAI模型</span></span><br><span class="line">    <span class="keyword">if</span> llm <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        self._llm = llm</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self._llm = ChatOpenAI(...)</span><br><span class="line">    </span><br><span class="line">    self.prompt_template = prompt_template</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_chain</span>(<span class="params">self</span>) -&gt; LLMChain:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成用于代理的LLMChain&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> LLMChain(llm=self._llm, prompt=self.prompt_template)</span><br></pre></td></tr></table></figure>
@@ -355,76 +403,158 @@
 <h3 id="1-3-关键数据结构"><a href="#1-3-关键数据结构" class="headerlink" title="1.3 关键数据结构"></a>1.3 关键数据结构</h3><p>SAGA框架中使用的一些关键数据结构：</p>
 <ul>
 <li><p><strong>Skill</strong>: 代表代理可以执行的技能。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># class Skill:</span></span><br><span class="line"><span class="comment">#     +name</span></span><br><span class="line"><span class="comment">#     +description</span></span><br><span class="line"><span class="comment">#     +parameters</span></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># class Skill:</span></span><br><span class="line"><span class="comment">#     +name</span></span><br><span class="line"><span class="comment">#     +description</span></span><br><span class="line"><span class="comment">#     +parameters</span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Action</strong>: 代表一个被选定执行的具体技能和其参数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># class Action:</span></span><br><span class="line"><span class="comment">#     +skill</span></span><br><span class="line"><span class="comment">#     +parameters</span></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># class Action:</span></span><br><span class="line"><span class="comment">#     +skill</span></span><br><span class="line"><span class="comment">#     +parameters</span></span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>GeneratedActions</strong>: 包含由<code>ActionsAgent</code>生成的行动选项列表及其相关信息。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@define(<span class="params">slots=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GeneratedActions</span>:</span><br><span class="line">    options: <span class="type">List</span>[Action]</span><br><span class="line">    scores: <span class="type">List</span>[<span class="built_in">float</span>]</span><br><span class="line">    raw_prompt: <span class="type">Optional</span>[<span class="built_in">str</span>] = <span class="literal">None</span></span><br><span class="line">    raw_response: <span class="type">Optional</span>[<span class="built_in">str</span>] = <span class="literal">None</span></span><br><span class="line">    llm_info: <span class="type">Optional</span>[<span class="type">Dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>]] = <span class="literal">None</span></span><br><span class="line">    retries: <span class="built_in">int</span> = <span class="number">0</span></span><br><span class="line">    error: <span class="type">Optional</span>[<span class="built_in">str</span>] = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sort</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;按分数排序行动选项&quot;&quot;&quot;</span></span><br><span class="line">        self.options = [</span><br><span class="line">            x</span><br><span class="line">            <span class="keyword">for</span> _, x <span class="keyword">in</span> <span class="built_in">sorted</span>(</span><br><span class="line">                <span class="built_in">zip</span>(self.scores, self.options), key=<span class="keyword">lambda</span> pair: pair[<span class="number">0</span>], reverse=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line">        ]</span><br><span class="line">        self.scores = <span class="built_in">sorted</span>(self.scores, reverse=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="2-核心工作流程"><a href="#2-核心工作流程" class="headerlink" title="2. 核心工作流程"></a>2. 核心工作流程</h2><p>SAGA的主要工作流程涉及环境交互、行动生成、行动执行、对话生成和记忆管理。</p>
 <h3 id="2-1-总体流程"><a href="#2-1-总体流程" class="headerlink" title="2.1 总体流程"></a>2.1 总体流程</h3><p>SAGA的主要工作流程可以用以下流程图表示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[模拟环境] --&gt;|提供上下文和技能| B[ActionsAgent]</span><br><span class="line">    B --&gt;|生成行动选项| C[行动选项]</span><br><span class="line">    C --&gt;|选择执行| D[SimAction]</span><br><span class="line">    D --&gt;|更新环境和记忆| A</span><br><span class="line">    A --&gt;|提供对话角色和上下文| E[ConversationAgent]</span><br><span class="line">    E --&gt;|生成对话| F[对话内容]</span><br><span class="line">    F --&gt;|更新记忆| A</span><br><span class="line">    A --&gt;|提供记忆查询| G[EmbeddingAgent]</span><br><span class="line">    G --&gt;|检索相关记忆| A</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+    A[模拟环境] -->|提供上下文和技能| B[ActionsAgent]
+    B -->|生成行动选项| C[行动选项]
+    C -->|选择执行| D[SimAction]
+    D -->|更新环境和记忆| A
+    A -->|提供对话角色和上下文| E[ConversationAgent]
+    E -->|生成对话| F[对话内容]
+    F -->|更新记忆| A
+    A -->|提供记忆查询| G[EmbeddingAgent]
+    G -->|检索相关记忆| A</pre>
 
 <h3 id="2-2-详细执行流程概述"><a href="#2-2-详细执行流程概述" class="headerlink" title="2.2 详细执行流程概述"></a>2.2 详细执行流程概述</h3><ol>
 <li><strong>初始化阶段</strong>:<ul>
-<li>  加载模拟环境（如Space Colony示例）。</li>
-<li>  初始化各种代理（<code>ActionsAgent</code>, <code>ConversationAgent</code>等）。</li>
-<li>  加载技能定义、角色、位置等元数据。</li>
+<li>加载模拟环境（如Space Colony示例）。</li>
+<li>初始化各种代理（<code>ActionsAgent</code>, <code>ConversationAgent</code>等）。</li>
+<li>加载技能定义、角色、位置等元数据。</li>
 </ul>
 </li>
 <li><strong>行动生成流程</strong>:<ul>
-<li>  模拟环境调用<code>ActionsAgent.generate_actions()</code>。</li>
-<li>  该方法接收上下文（包含角色信息、记忆等）和可用技能列表。</li>
-<li>  构建提示(prompt)，发送给LLM。</li>
-<li>  LLM返回JSON格式的行动选项，每个选项包含一个技能名和参数。</li>
-<li>  将选项解析为<code>GeneratedActions</code>对象并按分数排序。</li>
-<li>  返回排序后的行动选项供模拟环境使用。</li>
+<li>模拟环境调用<code>ActionsAgent.generate_actions()</code>。</li>
+<li>该方法接收上下文（包含角色信息、记忆等）和可用技能列表。</li>
+<li>构建提示(prompt)，发送给LLM。</li>
+<li>LLM返回JSON格式的行动选项，每个选项包含一个技能名和参数。</li>
+<li>将选项解析为<code>GeneratedActions</code>对象并按分数排序。</li>
+<li>返回排序后的行动选项供模拟环境使用。</li>
 </ul>
 </li>
 <li><strong>行动执行流程</strong>:<ul>
-<li>  模拟环境选择一个行动选项。</li>
-<li>  创建对应的<code>SimAction</code>子类实例。</li>
-<li>  调用该实例的<code>tick()</code>方法随时间推进行动。</li>
-<li>  行动完成时，更新角色的记忆和状态。</li>
+<li>模拟环境选择一个行动选项。</li>
+<li>创建对应的<code>SimAction</code>子类实例。</li>
+<li>调用该实例的<code>tick()</code>方法随时间推进行动。</li>
+<li>行动完成时，更新角色的记忆和状态。</li>
 </ul>
 </li>
 <li><strong>对话生成流程</strong>:<ul>
-<li>  当角色需要交谈时，调用<code>ConversationAgent.generate_conversation()</code>。</li>
-<li>  该方法接收参与对话的角色ID和上下文。</li>
-<li>  构建提示，发送给LLM。</li>
-<li>  LLM返回JSON格式的对话内容。</li>
-<li>  将对话内容保存为角色的记忆。</li>
+<li>当角色需要交谈时，调用<code>ConversationAgent.generate_conversation()</code>。</li>
+<li>该方法接收参与对话的角色ID和上下文。</li>
+<li>构建提示，发送给LLM。</li>
+<li>LLM返回JSON格式的对话内容。</li>
+<li>将对话内容保存为角色的记忆。</li>
 </ul>
 </li>
 <li><strong>记忆检索流程</strong>:<ul>
-<li>  使用<code>EmbeddingAgent</code>将文本转换为向量嵌入。</li>
-<li>  存储记忆文档及其嵌入到向量数据库。</li>
-<li>  当需要相关记忆时，执行相似度搜索找出最相关的记忆。</li>
+<li>使用<code>EmbeddingAgent</code>将文本转换为向量嵌入。</li>
+<li>存储记忆文档及其嵌入到向量数据库。</li>
+<li>当需要相关记忆时，执行相似度搜索找出最相关的记忆。</li>
 </ul>
 </li>
 </ol>
 <h3 id="2-3-行动生成流程详解"><a href="#2-3-行动生成流程详解" class="headerlink" title="2.3 行动生成流程详解"></a>2.3 行动生成流程详解</h3><p>SAGA的核心功能是生成行动选项。</p>
 <h4 id="2-3-1-详细流程图"><a href="#2-3-1-详细流程图" class="headerlink" title="2.3.1 详细流程图"></a>2.3.1 详细流程图</h4><p>下面是详细的行动生成流程：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Client as 客户端/模拟环境</span><br><span class="line">    participant Agent as ActionsAgent</span><br><span class="line">    participant LLM as 语言模型</span><br><span class="line">    participant Parser as JSON解析器</span><br><span class="line">    </span><br><span class="line">    Client-&gt;&gt;Agent: 调用generate_actions(context, skills)</span><br><span class="line">    Agent-&gt;&gt;Agent: 验证输入</span><br><span class="line">    Agent-&gt;&gt;Agent: 构建Chain</span><br><span class="line">    Agent-&gt;&gt;Agent: 将skills转换为JSON</span><br><span class="line">    Agent-&gt;&gt;LLM: 发送提示和上下文</span><br><span class="line">    LLM-&gt;&gt;Agent: 返回原始响应</span><br><span class="line">    Agent-&gt;&gt;Parser: 解析JSON响应</span><br><span class="line">    Parser-&gt;&gt;Agent: 返回解析后的结构</span><br><span class="line">    Agent-&gt;&gt;Agent: 创建GeneratedActions对象</span><br><span class="line">    Agent-&gt;&gt;Agent: 按分数排序行动选项</span><br><span class="line">    Agent-&gt;&gt;Client: 返回GeneratedActions</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">sequenceDiagram
+    participant Client as 客户端/模拟环境
+    participant Agent as ActionsAgent
+    participant LLM as 语言模型
+    participant Parser as JSON解析器
+    
+    Client->>Agent: 调用generate_actions(context, skills)
+    Agent->>Agent: 验证输入
+    Agent->>Agent: 构建Chain
+    Agent->>Agent: 将skills转换为JSON
+    Agent->>LLM: 发送提示和上下文
+    LLM->>Agent: 返回原始响应
+    Agent->>Parser: 解析JSON响应
+    Parser->>Agent: 返回解析后的结构
+    Agent->>Agent: 创建GeneratedActions对象
+    Agent->>Agent: 按分数排序行动选项
+    Agent->>Client: 返回GeneratedActions</pre>
 
 <h4 id="2-3-2-提示模板设计"><a href="#2-3-2-提示模板设计" class="headerlink" title="2.3.2 提示模板设计"></a>2.3.2 提示模板设计</h4><p>SAGA使用YAML格式的提示模板来构建发送给语言模型的提示。以下是行动生成的模板：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">_type:</span> <span class="string">prompt</span></span><br><span class="line"><span class="attr">input_variables:</span></span><br><span class="line">    [<span class="string">&quot;context&quot;</span>, <span class="string">&quot;skills&quot;</span>]</span><br><span class="line"><span class="attr">template:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    Generate a list of different action options that your character should take next using the following skills:</span></span><br><span class="line"><span class="string">    &#123;skills&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">    &#123;<span class="string">context</span>&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="string">Generate</span> <span class="string">a</span> <span class="string">list</span> <span class="string">of</span> <span class="string">different</span> <span class="string">action</span> <span class="string">options</span> <span class="string">that</span> <span class="string">your</span> <span class="string">character</span> <span class="string">should</span> <span class="string">take.</span> <span class="string">Then</span> <span class="string">score</span> <span class="string">each</span> <span class="string">option.</span> <span class="string">Only</span> <span class="string">generate</span> <span class="string">valid</span> <span class="string">JSON.</span></span><br><span class="line">    <span class="attr">Use the following JSON format to specify the parameters:</span></span><br><span class="line">            &#123;&#123;<span class="attr">&quot;options&quot;:</span> [</span><br><span class="line">                &#123;&#123;<span class="attr">&quot;skill&quot;:</span> <span class="string">&lt;choice</span> <span class="string">of</span> <span class="string">skill&gt;</span>, <span class="attr">&quot;parameters&quot;:</span> &#123;&#123;<span class="string">&lt;skill</span> <span class="string">parameters</span> <span class="string">as</span> <span class="string">json&gt;</span>&#125;&#125;&#125;&#125;</span><br><span class="line">            ],<span class="attr">&quot;scores&quot;:</span> [<span class="string">&lt;list</span>[<span class="string">float</span>]<span class="string">:</span> <span class="string">scores</span> <span class="string">for</span> <span class="string">each</span> <span class="string">action</span> <span class="string">in</span> <span class="string">the</span> <span class="string">order</span> <span class="string">listed.</span> <span class="number">-1.0</span> <span class="string">is</span> <span class="string">terrible</span>, <span class="number">0</span> <span class="string">is</span> <span class="string">neutral</span>, <span class="string">and</span> <span class="number">1.0</span> <span class="string">the</span> <span class="string">best</span> <span class="string">action</span> <span class="string">ever.&gt;</span>]</span><br><span class="line">            ]&#125;&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-3-3-行动解析和排序"><a href="#2-3-3-行动解析和排序" class="headerlink" title="2.3.3 行动解析和排序"></a>2.3.3 行动解析和排序</h4><p>行动选项从LLM返回后，由<code>ActionsAgent</code>解析JSON响应，并使用<code>GeneratedActions</code>对象的<code>sort()</code>方法（如1.3节所示）按分数对行动选项进行排序。</p>
 <h3 id="2-4-对话生成流程详解"><a href="#2-4-对话生成流程详解" class="headerlink" title="2.4 对话生成流程详解"></a>2.4 对话生成流程详解</h3><p>当角色需要进行对话时，模拟环境会调用<code>ConversationAgent</code>的<code>generate_conversation()</code>方法。此方法（如1.2.3节代码所示）接收参与对话的角色ID列表和当前上下文。它会构建一个专门的提示发送给语言模型，LLM随后返回JSON格式的对话内容。这些对话内容被构造成<code>GeneratedConversation</code>对象，并可以被保存为角色的记忆。</p>
-<h3 id="2-5-完整的模拟执行流程"><a href="#2-5-完整的模拟执行流程" class="headerlink" title="2.5 完整的模拟执行流程"></a>2.5 完整的模拟执行流程</h3><h4 id="2-5-1-模拟环境中的用户交互驱动流程（以Space-Colony示例）"><a href="#2-5-1-模拟环境中的用户交互驱动流程（以Space-Colony示例）" class="headerlink" title="2.5.1 模拟环境中的用户交互驱动流程（以Space Colony示例）"></a>2.5.1 模拟环境中的用户交互驱动流程（以Space Colony示例）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant User</span><br><span class="line">    participant Simulation</span><br><span class="line">    participant ActionsAgent</span><br><span class="line">    participant LLM</span><br><span class="line">    participant SimAction</span><br><span class="line">    </span><br><span class="line">    User-&gt;&gt;Simulation: 运行示例</span><br><span class="line">    Simulation-&gt;&gt;Simulation: 加载元数据</span><br><span class="line">    loop 每个角色</span><br><span class="line">        Simulation-&gt;&gt;ActionsAgent: generate_action_options(agent)</span><br><span class="line">        ActionsAgent-&gt;&gt;LLM: 发送上下文和技能</span><br><span class="line">        LLM-&gt;&gt;ActionsAgent: 返回行动选项</span><br><span class="line">        ActionsAgent-&gt;&gt;Simulation: 返回排序后的行动选项</span><br><span class="line">        Simulation-&gt;&gt;User: 显示行动选项列表</span><br><span class="line">        User-&gt;&gt;Simulation: 选择一个行动</span><br><span class="line">        Simulation-&gt;&gt;SimAction: 创建行动实例</span><br><span class="line">        SimAction-&gt;&gt;Simulation: 更新角色状态和记忆</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-完整的模拟执行流程"><a href="#2-5-完整的模拟执行流程" class="headerlink" title="2.5 完整的模拟执行流程"></a>2.5 完整的模拟执行流程</h3><h4 id="2-5-1-模拟环境中的用户交互驱动流程（以Space-Colony示例）"><a href="#2-5-1-模拟环境中的用户交互驱动流程（以Space-Colony示例）" class="headerlink" title="2.5.1 模拟环境中的用户交互驱动流程（以Space Colony示例）"></a>2.5.1 模拟环境中的用户交互驱动流程（以Space Colony示例）</h4><pre class="mermaid">sequenceDiagram
+    participant User
+    participant Simulation
+    participant ActionsAgent
+    participant LLM
+    participant SimAction
+    
+    User->>Simulation: 运行示例
+    Simulation->>Simulation: 加载元数据
+    loop 每个角色
+        Simulation->>ActionsAgent: generate_action_options(agent)
+        ActionsAgent->>LLM: 发送上下文和技能
+        LLM->>ActionsAgent: 返回行动选项
+        ActionsAgent->>Simulation: 返回排序后的行动选项
+        Simulation->>User: 显示行动选项列表
+        User->>Simulation: 选择一个行动
+        Simulation->>SimAction: 创建行动实例
+        SimAction->>Simulation: 更新角色状态和记忆
+    end</pre>
 
-<h4 id="2-5-2-SAGA内部行动生成到执行的详细流程"><a href="#2-5-2-SAGA内部行动生成到执行的详细流程" class="headerlink" title="2.5.2 SAGA内部行动生成到执行的详细流程"></a>2.5.2 SAGA内部行动生成到执行的详细流程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Sim as 模拟系统</span><br><span class="line">    participant Agent as 模拟代理</span><br><span class="line">    participant Context as 上下文生成器</span><br><span class="line">    participant SAGA as SAGA框架 (ActionsAgent)</span><br><span class="line">    participant LLM as 语言模型</span><br><span class="line">    participant ActionFactory as 行动工厂</span><br><span class="line">    </span><br><span class="line">    Sim-&gt;&gt;Agent: tick(delta_time)</span><br><span class="line">    Alt 需要新行动</span><br><span class="line">        Agent-&gt;&gt;Context: 请求生成上下文</span><br><span class="line">        Context-&gt;&gt;Context: 收集代理信息、环境信息、记忆等</span><br><span class="line">        Context--&gt;&gt;Agent: 返回格式化上下文</span><br><span class="line">        Agent-&gt;&gt;SAGA: generate_actions(context, skills)</span><br><span class="line">        SAGA-&gt;&gt;LLM: 发送提示(context + skills)</span><br><span class="line">        LLM--&gt;&gt;SAGA: 返回JSON格式行动选项和评分</span><br><span class="line">        SAGA--&gt;&gt;Agent: 返回GeneratedActions对象</span><br><span class="line">        Agent-&gt;&gt;Agent: 选择行动(通常是最高评分)</span><br><span class="line">        Agent-&gt;&gt;ActionFactory: 创建行动实例 (e.g., sim_action_factory)</span><br><span class="line">        ActionFactory--&gt;&gt;Agent: 返回具体SimAction子类实例</span><br><span class="line">        Agent-&gt;&gt;Agent: 设置当前action</span><br><span class="line">    End</span><br><span class="line">    </span><br><span class="line">    Agent-&gt;&gt;Agent: tick_action(delta_time) // 调用 SimAction.tick()</span><br><span class="line">    Agent-&gt;&gt;Agent: 更新行动状态和运行时间</span><br><span class="line">    </span><br><span class="line">    Alt 行动完成</span><br><span class="line">        Agent-&gt;&gt;Agent: 添加记忆 (e.g., MemoryStore.append)</span><br><span class="line">        Agent-&gt;&gt;Agent: action.complete()</span><br><span class="line">        Agent-&gt;&gt;Agent: action = None</span><br><span class="line">    End</span><br><span class="line">    </span><br><span class="line">    Agent--&gt;&gt;Sim: 返回控制</span><br></pre></td></tr></table></figure>
+<h4 id="2-5-2-SAGA内部行动生成到执行的详细流程"><a href="#2-5-2-SAGA内部行动生成到执行的详细流程" class="headerlink" title="2.5.2 SAGA内部行动生成到执行的详细流程"></a>2.5.2 SAGA内部行动生成到执行的详细流程</h4><pre class="mermaid">sequenceDiagram
+    participant Sim as 模拟系统
+    participant Agent as 模拟代理
+    participant Context as 上下文生成器
+    participant SAGA as SAGA框架 (ActionsAgent)
+    participant LLM as 语言模型
+    participant ActionFactory as 行动工厂
+    
+    Sim->>Agent: tick(delta_time)
+    Alt 需要新行动
+        Agent->>Context: 请求生成上下文
+        Context->>Context: 收集代理信息、环境信息、记忆等
+        Context-->>Agent: 返回格式化上下文
+        Agent->>SAGA: generate_actions(context, skills)
+        SAGA->>LLM: 发送提示(context + skills)
+        LLM-->>SAGA: 返回JSON格式行动选项和评分
+        SAGA-->>Agent: 返回GeneratedActions对象
+        Agent->>Agent: 选择行动(通常是最高评分)
+        Agent->>ActionFactory: 创建行动实例 (e.g., sim_action_factory)
+        ActionFactory-->>Agent: 返回具体SimAction子类实例
+        Agent->>Agent: 设置当前action
+    End
+    
+    Agent->>Agent: tick_action(delta_time) // 调用 SimAction.tick()
+    Agent->>Agent: 更新行动状态和运行时间
+    
+    Alt 行动完成
+        Agent->>Agent: 添加记忆 (e.g., MemoryStore.append)
+        Agent->>Agent: action.complete()
+        Agent->>Agent: action = None
+    End
+    
+    Agent-->>Sim: 返回控制</pre>
 
 <h2 id="3-记忆与嵌入机制"><a href="#3-记忆与嵌入机制" class="headerlink" title="3. 记忆与嵌入机制"></a>3. 记忆与嵌入机制</h2><p>SAGA的记忆系统利用向量嵌入来存储和检索记忆，从而使代理能够根据过去的经验做出更明智的决策。</p>
 <h3 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h3><p>SAGA的记忆和嵌入机制工作流程如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[文本记忆] --&gt;|嵌入生成| B[向量嵌入]</span><br><span class="line">    B --&gt;|存储| C[向量数据库]</span><br><span class="line">    D[查询] --&gt;|嵌入生成| E[查询向量]</span><br><span class="line">    E --&gt;|相似度搜索| C</span><br><span class="line">    C --&gt;|相关记忆| F[检索结果]</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+    A[文本记忆] -->|嵌入生成| B[向量嵌入]
+    B -->|存储| C[向量数据库]
+    D[查询] -->|嵌入生成| E[查询向量]
+    E -->|相似度搜索| C
+    C -->|相关记忆| F[检索结果]</pre>
 
 <h3 id="3-2-EmbeddingAgent-的作用"><a href="#3-2-EmbeddingAgent-的作用" class="headerlink" title="3.2 EmbeddingAgent 的作用"></a>3.2 <code>EmbeddingAgent</code> 的作用</h3><p><code>EmbeddingAgent</code> (详见1.2.4节) 在此机制中扮演核心角色。它负责：</p>
 <ol>
-<li> 将文本（如观察、对话、思考）转换为向量嵌入。</li>
-<li> 将这些嵌入及其原始文本（和元数据）存储到向量存储中。</li>
-<li> 当需要检索相关记忆时，将查询文本转换为查询向量，并在向量存储中执行相似度搜索。</li>
+<li>将文本（如观察、对话、思考）转换为向量嵌入。</li>
+<li>将这些嵌入及其原始文本（和元数据）存储到向量存储中。</li>
+<li>当需要检索相关记忆时，将查询文本转换为查询向量，并在向量存储中执行相似度搜索。</li>
 </ol>
 <h3 id="3-3-SimpleVectorStore-实现"><a href="#3-3-SimpleVectorStore-实现" class="headerlink" title="3.3 SimpleVectorStore 实现"></a>3.3 <code>SimpleVectorStore</code> 实现</h3><p><code>SimpleVectorStore</code>是一个简单的内存向量存储实现，使用numpy进行相似度搜索。它是SAGA中用于演示和快速启动的默认向量存储。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleVectorStore</span>(<span class="title class_ inherited__">VectorStore</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, embedding_model: Embeddings</span>):</span><br><span class="line">        self.embedding_model = embedding_model</span><br><span class="line">        self.vectors = []</span><br><span class="line">        self.ids = []</span><br><span class="line">        self.docstore = InMemoryDocstore()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add_texts</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        texts: Iterable[<span class="built_in">str</span>],</span></span><br><span class="line"><span class="params">        metadatas: <span class="type">Optional</span>[<span class="type">List</span>[<span class="type">Dict</span>]] = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">        ids: <span class="type">Optional</span>[<span class="type">List</span>[<span class="built_in">str</span>]] = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">        **kwargs: <span class="type">Any</span>,</span></span><br><span class="line"><span class="params">    </span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;添加文本到向量存储&quot;&quot;&quot;</span></span><br><span class="line">        embedding_values = self.embedding_model.embed_documents(<span class="built_in">list</span>(texts))</span><br><span class="line">        <span class="keyword">if</span> ids <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            ids = [uuid.uuid4().<span class="built_in">hex</span> <span class="keyword">for</span> _ <span class="keyword">in</span> texts]</span><br><span class="line">        self.ids.extend(ids)</span><br><span class="line">        self.vectors.extend(np.array(embedding_values))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 创建文档并存储</span></span><br><span class="line">        <span class="keyword">if</span> metadatas <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            docs = [</span><br><span class="line">                LangchainDocument(page_content=text, metadata=metadata)</span><br><span class="line">                <span class="keyword">for</span> text, metadata <span class="keyword">in</span> <span class="built_in">zip</span>(texts, metadatas)</span><br><span class="line">            ]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            docs = [LangchainDocument(text) <span class="keyword">for</span> text <span class="keyword">in</span> texts]</span><br><span class="line">        </span><br><span class="line">        self.docstore.add(<span class="built_in">dict</span>(<span class="built_in">zip</span>(ids, docs)))</span><br><span class="line">        <span class="keyword">return</span> ids</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">similarity_search_with_score</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self, query: <span class="built_in">str</span>, k: <span class="built_in">int</span> = <span class="number">5</span>, **kwargs</span></span><br><span class="line"><span class="params">    </span>) -&gt; <span class="type">List</span>[<span class="type">Tuple</span>[LangchainDocument, <span class="built_in">float</span>]]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;查找相似向量并返回相关性分数&quot;&quot;&quot;</span></span><br><span class="line">        query_embedding = self.embedding_model.embed_query(query)</span><br><span class="line">        cos_sim = np.array(</span><br><span class="line">            [</span><br><span class="line">                self.cosine_similarity_numpy(np.array(query_embedding, ndmin=<span class="number">2</span>), vector)</span><br><span class="line">                <span class="keyword">for</span> vector <span class="keyword">in</span> self.vectors</span><br><span class="line">            ]</span><br><span class="line">        )</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 余弦相似度范围从-1到1，归一化到0-1</span></span><br><span class="line">        scores = (cos_sim.flatten() + <span class="number">1</span>) / <span class="number">2</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 按分数排序，取前k个</span></span><br><span class="line">        indices = np.argsort(scores, axis=<span class="number">0</span>)[::-<span class="number">1</span>][:k]</span><br><span class="line">        results = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> indices:</span><br><span class="line">            doc = self.docstore.search(self.ids[i])</span><br><span class="line">            results.append((doc, scores[i]))</span><br><span class="line">        <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
@@ -435,11 +565,11 @@
 
 <p><strong>记忆处理流程：</strong></p>
 <ol>
-<li> 模拟系统维护每个代理的记忆库（例如使用<code>MemoryStore</code>，它可能内部使用<code>EmbeddingAgent</code>和<code>VectorStore</code>）。</li>
-<li> 新的行动结果、观察和对话被添加为记忆条目到记忆库中。</li>
-<li> 在为<code>ActionsAgent</code>或<code>ConversationAgent</code>构建上下文时，系统会从记忆库中检索相关记忆。这通常涉及将当前情况或查询嵌入化，然后通过向量相似度搜索找到语义相关的记忆。</li>
-<li> 检索到的记忆被格式化并包含在提供给LLM的上下文中，以指导其生成行动或对话。</li>
-<li> 一些记忆系统可能会实现记忆的淡忘特性，使得较旧或较少访问的记忆随时间变得不那么突出或检索权重降低。</li>
+<li>模拟系统维护每个代理的记忆库（例如使用<code>MemoryStore</code>，它可能内部使用<code>EmbeddingAgent</code>和<code>VectorStore</code>）。</li>
+<li>新的行动结果、观察和对话被添加为记忆条目到记忆库中。</li>
+<li>在为<code>ActionsAgent</code>或<code>ConversationAgent</code>构建上下文时，系统会从记忆库中检索相关记忆。这通常涉及将当前情况或查询嵌入化，然后通过向量相似度搜索找到语义相关的记忆。</li>
+<li>检索到的记忆被格式化并包含在提供给LLM的上下文中，以指导其生成行动或对话。</li>
+<li>一些记忆系统可能会实现记忆的淡忘特性，使得较旧或较少访问的记忆随时间变得不那么突出或检索权重降低。</li>
 </ol>
 <h2 id="4-模拟环境集成"><a href="#4-模拟环境集成" class="headerlink" title="4. 模拟环境集成"></a>4. 模拟环境集成</h2><p>SAGA提供了一个Space Colony示例，展示了如何将框架集成到模拟环境中。集成的关键在于将SAGA的代理（如<code>ActionsAgent</code>）与模拟世界中的代理（<code>SimAgent</code>）连接起来，并通过模拟行动（<code>SimAction</code>）来执行SAGA生成的决策。</p>
 <h3 id="4-1-模拟代理-SimAgent"><a href="#4-1-模拟代理-SimAgent" class="headerlink" title="4.1 模拟代理 (SimAgent)"></a>4.1 模拟代理 (<code>SimAgent</code>)</h3><p><code>SimAgent</code>是模拟环境中的代理，它持有一个角色（persona）、位置、技能列表和当前正在执行的行动。它还拥有一个<code>MemoryStore</code>来存储其记忆。</p>
@@ -453,7 +583,26 @@
 
 <h2 id="5-服务器实现"><a href="#5-服务器实现" class="headerlink" title="5. 服务器实现"></a>5. 服务器实现</h2><p>SAGA可以作为服务器运行，通过HTTP、WebSocket或SocketIO等协议提供接口，使得非Python或其他外部模拟环境也能利用SAGA的AI代理能力。</p>
 <h3 id="5-1-架构概述"><a href="#5-1-架构概述" class="headerlink" title="5.1 架构概述"></a>5.1 架构概述</h3><p>SAGA服务器架构允许外部客户端与核心SAGA代理进行交互：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[客户端] --&gt;|请求| B&#123;服务器类型&#125;</span><br><span class="line">    B --&gt;|HTTP| C[HTTP处理器]</span><br><span class="line">    B --&gt;|WebSocket| D[WebSocket处理器]</span><br><span class="line">    B --&gt;|SocketIO| E[SocketIO处理器]</span><br><span class="line">    C --&gt;|处理请求| F[端点]</span><br><span class="line">    D --&gt;|处理请求| F</span><br><span class="line">    E --&gt;|处理请求| F</span><br><span class="line">    F --&gt;|ActionsEndpoint| G[ActionsAgent]</span><br><span class="line">    F --&gt;|ConversationEndpoint| H[ConversationAgent]</span><br><span class="line">    F --&gt;|EmbeddingsEndpoint| I[EmbeddingAgent]</span><br><span class="line">    G --&gt;|返回行动| F</span><br><span class="line">    H --&gt;|返回对话| F</span><br><span class="line">    I --&gt;|返回嵌入| F</span><br><span class="line">    F --&gt;|构建响应| C</span><br><span class="line">    F --&gt;|构建响应| D</span><br><span class="line">    F --&gt;|构建响应| E</span><br><span class="line">    C --&gt;|响应| A</span><br><span class="line">    D --&gt;|响应| A</span><br><span class="line">    E --&gt;|响应| A</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+    A[客户端] -->|请求| B{服务器类型}
+    B -->|HTTP| C[HTTP处理器]
+    B -->|WebSocket| D[WebSocket处理器]
+    B -->|SocketIO| E[SocketIO处理器]
+    C -->|处理请求| F[端点]
+    D -->|处理请求| F
+    E -->|处理请求| F
+    F -->|ActionsEndpoint| G[ActionsAgent]
+    F -->|ConversationEndpoint| H[ConversationAgent]
+    F -->|EmbeddingsEndpoint| I[EmbeddingAgent]
+    G -->|返回行动| F
+    H -->|返回对话| F
+    I -->|返回嵌入| F
+    F -->|构建响应| C
+    F -->|构建响应| D
+    F -->|构建响应| E
+    C -->|响应| A
+    D -->|响应| A
+    E -->|响应| A</pre>
 
 <h3 id="5-2-端点设计"><a href="#5-2-端点设计" class="headerlink" title="5.2 端点设计"></a>5.2 端点设计</h3><p>SAGA的服务器使用统一的端点设计模式，每个端点负责处理特定类型的请求并与相应的SAGA代理交互。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BaseEndpoint</span>(<span class="type">Generic</span>[TReq, TResp]):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;所有端点的基类&quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_request</span>(<span class="params">self, request: TReq</span>) -&gt; TResp:</span><br><span class="line">        <span class="keyword">raise</span> NotImplementedError</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActionsEndpoint</span>(BaseEndpoint[ActionsRequest, ActionsResponse]):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;从ActionsRequest生成ActionsResponse&quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, agent: ActionsAgent</span>):</span><br><span class="line">        self.agent = agent</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_request</span>(<span class="params">self, req: ActionsRequest</span>) -&gt; ActionsResponse:</span><br><span class="line">        actions = <span class="keyword">await</span> self.agent.generate_actions(</span><br><span class="line">            req.context, req.skills, req.retries, req.verbose</span><br><span class="line">        )</span><br><span class="line">        response = ActionsResponse(actions=actions, reference=req.reference)</span><br><span class="line">        <span class="keyword">if</span> actions.error <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            response.error = <span class="string">f&quot;Generation Error: <span class="subst">&#123;actions.error&#125;</span>&quot;</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="数据库面试事务事务的概念 事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction 开始，以 rollback&#x2F;commit 结束。  Rollback在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚rollback后，自增id依然自增，因为innodb的auto_inc">
+    <meta name="description" content="数据库面试事务事务的概念 事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction 开始，以 rollback&#x2F;commit 结束。  Rollback在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚rollback后，自增id依然自增，因为innod">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库知识点">
 <meta property="og:url" content="http://example.com/2023/11/08/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
 <meta property="og:site_name" content="Across the Cosmos">
-<meta property="og:description" content="数据库面试事务事务的概念 事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction 开始，以 rollback&#x2F;commit 结束。  Rollback在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚rollback后，自增id依然自增，因为innodb的auto_inc">
+<meta property="og:description" content="数据库面试事务事务的概念 事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction 开始，以 rollback&#x2F;commit 结束。  Rollback在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚rollback后，自增id依然自增，因为innod">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051431216.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051624136.png">
@@ -177,8 +177,8 @@
 
   <div class="content" itemprop="articleBody">
     <h1 id="数据库面试"><a href="#数据库面试" class="headerlink" title="数据库面试"></a>数据库面试</h1><h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="事务的概念"><a href="#事务的概念" class="headerlink" title="事务的概念"></a>事务的概念</h3><ul>
-<li><p>事务（Transaction）是一个操作序列，不可分割的工作单位，以begin/start transaction</p>
-<p>开始，以 rollback/commit 结束。</p>
+<li><p>事务（Transaction）是一个操作序列，不可分割的工作单位，以begin&#x2F;start transaction</p>
+<p>开始，以 rollback&#x2F;commit 结束。</p>
 </li>
 <li><p><strong>Rollback</strong>在事务提交成功后不会修改数据库的内容。但对create drop select无效（没有意义）。值得注意的是，事务回滚<strong>rollback</strong>后，自增id依然自增，因为innodb的auto_increament的计数器记录的当前值是保存在内存中的，并不是存在于磁盘上，当mysql server处于运行的时候，这个计数值只会随着insert增长，不会随着delete而减少。而当mysql server启动时，当我们需要去查询auto_increment计数值时，mysql便会自动执行：SELECT MAX(id) FROM 表名 FOR UPDATE;语句来获得当前auto_increment列的最大值，然后将这个值放到auto_increment计数器中。所以就算Rollback MySQL的auto_increament计数器也不会作负运算。</p>
 </li>
@@ -198,13 +198,13 @@
 </li>
 </ul>
 <h2 id="并发一致性的问题"><a href="#并发一致性的问题" class="headerlink" title="并发一致性的问题"></a>并发一致性的问题</h2><ul>
-<li><p><strong>丢失修改（脏写）：</strong>一个事务对数据进行了修改，在事务提交之前，另一个事务对同一个数据进行了修改，覆盖了之前的修改。</p>
+<li><p>**丢失修改（脏写）：**一个事务对数据进行了修改，在事务提交之前，另一个事务对同一个数据进行了修改，覆盖了之前的修改。</p>
 </li>
-<li><p><strong>脏读：</strong>多个事务操作时。一个事务A读取了被另一个事务B修改、但未提交的数据，然后用这个数据做了业务处理后B突然回滚了这个数据。</p>
+<li><p>**脏读：**多个事务操作时。一个事务A读取了被另一个事务B修改、但未提交的数据，然后用这个数据做了业务处理后B突然回滚了这个数据。</p>
 </li>
-<li><p><strong>不可重复读：</strong>在同一个事务中（还没提交），某查询操作在一个时间读取一行数据和之后一个时间读取该行数据，发现数据已经发生修改。</p>
+<li><p>**不可重复读：**在同一个事务中（还没提交），某查询操作在一个时间读取一行数据和之后一个时间读取该行数据，发现数据已经发生修改。</p>
 </li>
-<li><p><strong>幻读：</strong>当事务在查询多次执行时，由于其他事务在这个数据范围内执行了插入操作，会导致每次返回不同的结果集。（数据条数不同）</p>
+<li><p>**幻读：**当事务在查询多次执行时，由于其他事务在这个数据范围内执行了插入操作，会导致每次返回不同的结果集。（数据条数不同）</p>
 </li>
 <li><p><strong>产生并发不一致问题的主要原因是破坏了事务的隔离性，解决方法是通过并发控制（事务隔离机制、MVCC 多版本隔离机制、锁机制）来保证隔离性。</strong></p>
 </li>
@@ -219,36 +219,35 @@
 <p>据一致性。</p>
 <h3 id="乐观锁和悲观锁"><a href="#乐观锁和悲观锁" class="headerlink" title="乐观锁和悲观锁"></a>乐观锁和悲观锁</h3><h4 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a><strong>悲观锁</strong></h4><p>认为数据随时会被修改，因此每次读取数据之前都会上锁，防止其它事务读取或修</p>
 <p>改数据；应用于数据更新比较频繁的场景。</p>
-<p><strong>悲观锁的实现方式：</strong>select … for update</p>
+<p>**悲观锁的实现方式：**select … for update</p>
 <h4 id="悲观锁的拓展内容"><a href="#悲观锁的拓展内容" class="headerlink" title="悲观锁的拓展内容"></a>悲观锁的拓展内容</h4><ul>
-<li>需要注意的是，在事务中，只有SELECT … FOR UPDATE 或LOCK IN SHARE MODE 同一笔数据时会等待其它事务结束后才执行，一般SELECT … 则不受此影响。拿上面的实例来说，当我执行select status from t_goods where id=1 for update;后。我在另外的事务中如果再次执行select status from t_goods where id=1 for  update;则第二个事务会一直等待第一个事务的提交，此时第二个查询处于阻塞的状态，但是如果我是在第二个事务中执行select status  from t_goods where id=1;则能正常查询出数据，不会受第一个事务的影响。</li>
-</ul>
-<ul>
+<li><p>需要注意的是，在事务中，只有SELECT … FOR UPDATE 或LOCK IN SHARE MODE 同一笔数据时会等待其它事务结束后才执行，一般SELECT … 则不受此影响。拿上面的实例来说，当我执行select status from t_goods where id&#x3D;1 for update;后。我在另外的事务中如果再次执行select status from t_goods where id&#x3D;1 for  update;则第二个事务会一直等待第一个事务的提交，此时第二个查询处于阻塞的状态，但是如果我是在第二个事务中执行select status  from t_goods where id&#x3D;1;则能正常查询出数据，不会受第一个事务的影响。</p>
+</li>
 <li><p><strong>MySQL select…for update的Row Lock与Table Lock</strong></p>
 <p>上面我们提到，使用select…for  update会把数据给锁住，不过我们需要注意一些锁的级别，MySQL InnoDB默认Row-Level  Lock，所以只有「明确」地指定主键，MySQL 才会执行Row lock (只锁住被选取的数据) ，否则MySQL 将会执行Table  Lock (将整个数据表单给锁住)。</p>
 </li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wxgblogs/p/6849064.html">https://www.cnblogs.com/wxgblogs/p/6849064.html</a></p>
-<h4 id="常见的悲观锁类型"><a href="#常见的悲观锁类型" class="headerlink" title="常见的悲观锁类型"></a>常见的悲观锁类型</h4><p><strong>排它锁 / X 锁：</strong>事务对数据加上 X 锁时，只允许此事务读取和修改此数据，其他事务不能对该数据加任何锁（select…for update）</p>
-<p><strong>共享锁 / S 锁：</strong>加了 S 锁后，该事务只能对数据进行读取而不能修改，其他事务只能加 S 锁，不能加 X 锁（select…lock in share mode）</p>
+<h4 id="常见的悲观锁类型"><a href="#常见的悲观锁类型" class="headerlink" title="常见的悲观锁类型"></a>常见的悲观锁类型</h4><p>**排它锁 &#x2F; X 锁：**事务对数据加上 X 锁时，只允许此事务读取和修改此数据，其他事务不能对该数据加任何锁（select…for update）</p>
+<p>**共享锁 &#x2F; S 锁：**加了 S 锁后，该事务只能对数据进行读取而不能修改，其他事务只能加 S 锁，不能加 X 锁（select…lock in share mode）</p>
 <p><strong>意向锁：（表级锁）</strong></p>
 <p>一个事务在获得某个数据行对象的 S 锁之前，必须先获得整个表的 IS 锁或更强的锁；</p>
 <p>一个事务在获得某个数据行对象的 X 锁之前，必须先获得整个表的 IX 锁；</p>
-<p><strong>IS/IX 锁之间都是兼容的</strong></p>
-<p><strong>好处：</strong>如果一个事务想要对整个表加 X 锁，就需要先检测是否有其它事务对该表或者该表中的某一行加了锁，这种检测非常耗时。有了意向锁之后，只需要检测整个表是否存在 IX/IS/X/S锁就行了。</p>
+<p><strong>IS&#x2F;IX 锁之间都是兼容的</strong></p>
+<p>**好处：**如果一个事务想要对整个表加 X 锁，就需要先检测是否有其它事务对该表或者该表中的某一行加了锁，这种检测非常耗时。有了意向锁之后，只需要检测整个表是否存在 IX&#x2F;IS&#x2F;X&#x2F;S锁就行了。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202051624136.png" alt="image-20220205162448077"></p>
 <h4 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h4><p>操作数据时不会上锁，但是更新时会判断在此期间有没有别的事务更新这个数据，若被更新过，则失败重试；适用于读多写少的场景。</p>
-<p><strong>乐观锁的实现方式：</strong>加一个版本号或者时间戳字段，每次数据更新时同时更新这个字段；先读取想要更新的字段或者所有字段，更新的时候比较一下，只有字段没有变化才进行更新。</p>
-<h3 id="三级封锁协议"><a href="#三级封锁协议" class="headerlink" title="三级封锁协议"></a>三级封锁协议</h3><p><strong>一级封锁协议：</strong>事务在修改数据之前必须先对其加 X 锁，直到<strong>事务结束</strong>才释放。可以解决<strong>丢失修改</strong>问题（两个事务不能同时对一个数据加 X 锁，避免了修改被覆盖）；</p>
-<p><strong>二级封锁协议：</strong>在一级的基础上，事务在读取数据之前必须先加 S 锁，<strong>读完后释放</strong>。可以</p>
+<p>**乐观锁的实现方式：**加一个版本号或者时间戳字段，每次数据更新时同时更新这个字段；先读取想要更新的字段或者所有字段，更新的时候比较一下，只有字段没有变化才进行更新。</p>
+<h3 id="三级封锁协议"><a href="#三级封锁协议" class="headerlink" title="三级封锁协议"></a>三级封锁协议</h3><p><strong>一级封锁协议：<strong>事务在修改数据之前必须先对其加 X 锁，直到</strong>事务结束</strong>才释放。可以解决<strong>丢失修改</strong>问题（两个事务不能同时对一个数据加 X 锁，避免了修改被覆盖）；</p>
+<p>**二级封锁协议：**在一级的基础上，事务在读取数据之前必须先加 S 锁，<strong>读完后释放</strong>。可以</p>
 <p>解决<strong>脏读</strong>问题（如果已经有事务在修改数据，就意味着已经加了 X 锁，此时想要读取数据的</p>
 <p>事务并不能加 S 锁，也就无法进行读取，避免了读取脏数据）；</p>
-<p><strong>三级封锁协议：</strong>在二级的基础上，事务在读取数据之前必须先加 S 锁，直到<strong>事务结束</strong>才能</p>
+<p><strong>三级封锁协议：<strong>在二级的基础上，事务在读取数据之前必须先加 S 锁，直到</strong>事务结束</strong>才能</p>
 <p>释放。可以解决<strong>不可重复读</strong>问题（避免了在事务结束前其它事务对数据加 X 锁进行修改，保</p>
 <p>证了事务期间数据不会被其它事务更新）</p>
 <h3 id="MVCC（多版本并发控制）"><a href="#MVCC（多版本并发控制）" class="headerlink" title="MVCC（多版本并发控制）"></a>MVCC（多版本并发控制）</h3><p>MVCC 在每行记录后面都保存有两个隐藏的列，用来存储创建版本号和删除版本号。</p>
-<p><strong>创建版本号：</strong>创建一个数据行时的事务版本号（<strong>事务版本号：</strong>事务开始时的系统版本号；</p>
-<p><strong>系统版本号：</strong>每开始一个新的事务，系统版本号就会自动递增）；<strong>删除版本号：</strong>删除操作时</p>
+<p>**创建版本号：**创建一个数据行时的事务版本号（**事务版本号：**事务开始时的系统版本号；</p>
+<p>**系统版本号：**每开始一个新的事务，系统版本号就会自动递增）；**删除版本号：**删除操作时</p>
 <p>的事务版本号；</p>
 <p>各种操作：</p>
 <p><strong>插入</strong>操作时，记录创建版本号；</p>
@@ -270,7 +269,7 @@
 <p>第二范式需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主</p>
 <p>要针对联合主键而言）。也就是说在一个数据库表中，一个表中只能保存一种数据，不可以</p>
 <p>把多种数据保存在同一张数据库表中。</p>
-<p><strong>主属性集/候选码集：</strong>某一组属性能够唯一确定其它的属性（主键就是从候选键集中选</p>
+<p>**主属性集&#x2F;候选码集：**某一组属性能够唯一确定其它的属性（主键就是从候选键集中选</p>
 <p>的一个键），而其子集不能，这样的属性组中的属性就是主属性；不在候选码集中的属</p>
 <p>性成为非主属性；</p>
 <p>eg：</p>
@@ -291,7 +290,7 @@
 <p>学生：(学号, 姓名, 年龄, 所在学院)； </p>
 <p>学院：(学院, 电话)。</p>
 <h3 id="反范式化"><a href="#反范式化" class="headerlink" title="反范式化"></a>反范式化</h3><p><strong>一般说来，数据库只需满足第三范式（<code>3NF</code>）就行了。</strong></p>
-<p>没有冗余的数据库设计可以做到。但是，没有冗余的数据库未必是最好的数据库，有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据。具体做法是：在概念数据模型设计时遵守第三范式，降低范式标准的工作放到物理数据模型设计时考虑。降低范式就是增加字段，允许冗余，**<code>达到以空间换时间的目的</code>**。</p>
+<p>没有冗余的数据库设计可以做到。但是，没有冗余的数据库未必是最好的数据库，有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据。具体做法是：在概念数据模型设计时遵守第三范式，降低范式标准的工作放到物理数据模型设计时考虑。降低范式就是增加字段，允许冗余，<strong><code>达到以空间换时间的目的</code></strong>。</p>
 <p>〖例〗：如订单表，“金额”这个字段的存在，表明该表的设计不满足第三范式，因为“金额”可以由“单价”乘以“数量”得到，说明“金额”是冗余字段。但是，增加“金额”这个冗余字段，可以提高查询统计的速度，这就是以空间换时间的作法。</p>
 <h2 id="UNION和UNION-ALL"><a href="#UNION和UNION-ALL" class="headerlink" title="UNION和UNION ALL"></a>UNION和UNION ALL</h2><p>Union：对两个结果集进行并集操作，不包括重复行，同时进行默认规则的排序；</p>
 <p>Union All：对两个结果集进行并集操作，包括重复行，不进行排序；</p>
@@ -323,20 +322,20 @@
 
 
 <h3 id="存储过程的优缺点"><a href="#存储过程的优缺点" class="headerlink" title="存储过程的优缺点"></a>存储过程的优缺点</h3><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a><strong>优点</strong></h4><ul>
-<li><strong>预先编译，</strong>而不需要每次运行时编译，<strong>提高了数据库执行效率；</strong></li>
+<li>**预先编译，**而不需要每次运行时编译，<strong>提高了数据库执行效率；</strong></li>
 </ul>
 <p>封装了一系列操作，对于一些数据交互比较多的操作，相比于单独执行 SQL 语句，可以<strong>减少网络通信量；</strong></p>
 <ul>
-<li><p><strong>具有可复用性，</strong>减少了数据库开发的工作量；</p>
+<li><p>**具有可复用性，**减少了数据库开发的工作量；</p>
 </li>
-<li><p><strong>安全性高，</strong>可以让没有权限的用户通过存储过程间接操作数据库；</p>
+<li><p>**安全性高，**可以让没有权限的用户通过存储过程间接操作数据库；</p>
 </li>
 <li><p><strong>更易于维护</strong></p>
 </li>
 </ul>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a><strong>缺点</strong></h4><p><strong>可移植性差，</strong>存储过程将应用程序绑定到了数据库上；（本来应该由程序做的事情交给数据库去做）</p>
-<p><strong>开发调试复杂，</strong>没有好的 IDE；</p>
-<p><strong>修改复杂，</strong>需要重新编译，有时还需要更新程序中的代码以更新调用</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a><strong>缺点</strong></h4><p>**可移植性差，**存储过程将应用程序绑定到了数据库上；（本来应该由程序做的事情交给数据库去做）</p>
+<p>**开发调试复杂，**没有好的 IDE；</p>
+<p>**修改复杂，**需要重新编译，有时还需要更新程序中的代码以更新调用</p>
 <p>小型程序完全无用。对于小型web应用来说，它的使用价值就更小了，反而会拖累开发进度。</p>
 <h2 id="like：模糊查询"><a href="#like：模糊查询" class="headerlink" title="like：模糊查询"></a>like：模糊查询</h2><ul>
 <li><p>%：表示任意 0 个或多个字符</p>
@@ -353,7 +352,7 @@
 <li><p>如果查询内容中包含通配符，可以使用“\”转义符</p>
 </li>
 </ul>
-<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><p>触发器（TRIGGER）是由事件（比如INSERT/UPDATE/DELETE）来触发运行的操作（不能被直接调用，不能接收参数）。在数据库里以独立的对象存储，用于<strong>保证数据完整性</strong>（比如可以检验或转换数据）。</p>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><p>触发器（TRIGGER）是由事件（比如INSERT&#x2F;UPDATE&#x2F;DELETE）来触发运行的操作（不能被直接调用，不能接收参数）。在数据库里以独立的对象存储，用于<strong>保证数据完整性</strong>（比如可以检验或转换数据）。</p>
 <h2 id="索引失效的情况？"><a href="#索引失效的情况？" class="headerlink" title="索引失效的情况？"></a>索引失效的情况？</h2><ul>
 <li><p>以“%”开头的 LIKE 语句； </p>
 </li>
@@ -361,11 +360,11 @@
 </li>
 <li><p>数据类型出现隐式转化（如 varchar 不加单引号的话可能会自动转换为 int 型）；</p>
 </li>
-<li><p>对于组合索引，必须满足 最左匹配原则/最左前缀原则 (最左优先，eg：多列索引 col1、col2 和 col3，则 索引生效的情形包括 col1 或 col1，col2 或 col1，col2，col3)；</p>
+<li><p>对于组合索引，必须满足 最左匹配原则&#x2F;最左前缀原则 (最左优先，eg：多列索引 col1、col2 和 col3，则 索引生效的情形包括 col1 或 col1，col2 或 col1，col2，col3)；</p>
 </li>
 <li><p>如果 MySQL 估计全表扫描比索引快，则不使用索引（比如非常小的表）</p>
 </li>
-<li><p>在索引字段上使用not，&lt;&gt;，!=。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</p>
+<li><p>在索引字段上使用not，&lt;&gt;，!&#x3D;。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key&lt;&gt;0 改为 key&gt;0 or key&lt;0。</p>
 </li>
 </ul>
 <h2 id="在哪些地方适合创建索引？"><a href="#在哪些地方适合创建索引？" class="headerlink" title="在哪些地方适合创建索引？"></a>在哪些地方适合创建索引？</h2><ul>
@@ -375,7 +374,7 @@
 </li>
 <li><p>经常被查询的字段；</p>
 </li>
-<li><p>经常出现在 ORDER BY/GROUP BY/DISDINCT 后面的字段</p>
+<li><p>经常出现在 ORDER BY&#x2F;GROUP BY&#x2F;DISDINCT 后面的字段</p>
 </li>
 </ul>
 <h2 id="创建索引时需要注意什么？"><a href="#创建索引时需要注意什么？" class="headerlink" title="创建索引时需要注意什么？"></a>创建索引时需要注意什么？</h2><ul>
@@ -470,7 +469,7 @@
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061506221.png" alt="image-20220206150600066"></p>
 <ul>
-<li>B树：多叉的平衡树，节点大小也是左小右大，并且从左到右递增。假设$$N$$($N&gt;=2$)叉的B树，非叶子结点的字节点数$&gt;1且&lt;=N$ 枝节点的关键字数量大于等于$ceil(m/2)-1$个且小于等于$M-1$个</li>
+<li>B树：多叉的平衡树，节点大小也是左小右大，并且从左到右递增。假设$$N$$($N&gt;&#x3D;2$)叉的B树，非叶子结点的字节点数$&gt;1且&lt;&#x3D;N$ 枝节点的关键字数量大于等于$ceil(m&#x2F;2)-1$个且小于等于$M-1$个</li>
 </ul>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202202061513430.png" alt="image-20220206151309322"></p>
 <h2 id="数据库索引的实现原理（B-树）"><a href="#数据库索引的实现原理（B-树）" class="headerlink" title="数据库索引的实现原理（B+树）"></a>数据库索引的实现原理（B+树）</h2><ul>
@@ -499,13 +498,13 @@
 <h2 id="什么是视图？什么是游标？"><a href="#什么是视图？什么是游标？" class="headerlink" title="什么是视图？什么是游标？"></a>什么是视图？什么是游标？</h2><ul>
 <li><p>视图：从数据库的基本表中通过查询选取出来的数据组成的</p>
 <p>虚拟表</p>
-<p>（数据库中存放视图的定义）。可以对其进行增/删/改/查等操作。视图是对若干张基本表的引用，一张虚表，查询语句执行的结果，不存储具体的数据（基本表数据发生了改变，视图也会跟着改变）；可以跟基本表一样，进行增删改查操作(ps:增删改操作有条件限制)；如连表查询产生的视图无法进行，对视图的增删改会影响原表的数据。好处：</p>
+<p>（数据库中存放视图的定义）。可以对其进行增&#x2F;删&#x2F;改&#x2F;查等操作。视图是对若干张基本表的引用，一张虚表，查询语句执行的结果，不存储具体的数据（基本表数据发生了改变，视图也会跟着改变）；可以跟基本表一样，进行增删改查操作(ps:增删改操作有条件限制)；如连表查询产生的视图无法进行，对视图的增删改会影响原表的数据。好处：</p>
 <ul>
 <li>通过只给用户访问视图的权限，保证数据的<strong>安全性</strong>；</li>
 <li><strong>简化</strong>复杂的SQL操作，隐藏数据的复杂性（比如复杂的连接）；</li>
 </ul>
 </li>
-<li><p>游标（Cursor）：用于定位在查询返回的<strong>结果集的特定行</strong>，以对特定行进行操作。使用游标可以方便地对结果集进行移动遍历，根据需要滚动或对浏览/修改任意行中的数据。主要用于交互式应用。</p>
+<li><p>游标（Cursor）：用于定位在查询返回的<strong>结果集的特定行</strong>，以对特定行进行操作。使用游标可以方便地对结果集进行移动遍历，根据需要滚动或对浏览&#x2F;修改任意行中的数据。主要用于交互式应用。</p>
 </li>
 </ul>
 <h2 id="关于having"><a href="#关于having" class="headerlink" title="关于having"></a>关于having</h2><p>where、聚合函数、having 在from后面的执行顺序：where&gt;聚合函数(sum,min,max,avg,count)&gt;having</p>
@@ -523,12 +522,12 @@
 <p><strong>(4) where</strong> </p>
 <p><strong>(5)group by</strong></p>
 <p><strong>(6) avg,sum…. （组函数）</strong></p>
-<p><strong>(7)with rollup/cube</strong>（rollup和cube的区别：若group by x,y，rollup会算每个x的total和总的total，cube则会算出每个x的total，每个y的total和总的total，如果group by中有n列，rollup会计算n种组合，那cube就会计算$2^{n}-1$种组合。<a target="_blank" rel="noopener" href="https://blog.csdn.net/shenqingkeji/article/details/52860843">详细说明</a>）</p>
+<p><strong>(7)with rollup&#x2F;cube</strong>（rollup和cube的区别：若group by x,y，rollup会算每个x的total和总的total，cube则会算出每个x的total，每个y的total和总的total，如果group by中有n列，rollup会计算n种组合，那cube就会计算$2^{n}-1$种组合。<a target="_blank" rel="noopener" href="https://blog.csdn.net/shenqingkeji/article/details/52860843">详细说明</a>）</p>
 <p><strong>(8)having</strong> </p>
 <p><strong>(9) select</strong> </p>
 <p><strong>(10) distinct</strong> </p>
 <p><strong>(11) order by</strong></p>
-<p><strong>(12) LIMIT/OFFSET</strong> </p>
+<p><strong>(12) LIMIT&#x2F;OFFSET</strong> </p>
 <p>每一步生成一个虚拟表然后将这个虚拟表交给下一步去操作。（order by生成的是游标，所以order by子句的查询不能用于表达式）</p>
 <h2 id="MySQL-的两种存储引擎-InnoDB-和-MyISAM-的区别"><a href="#MySQL-的两种存储引擎-InnoDB-和-MyISAM-的区别" class="headerlink" title="MySQL 的两种存储引擎 InnoDB 和 MyISAM 的区别"></a>MySQL 的两种存储引擎 InnoDB 和 MyISAM 的区别</h2><ul>
 <li><p>InnoDB 支持事务，可以进行 Commit 和 Rollback；</p>
@@ -553,8 +552,8 @@
 <li>若不满足以上条件，innodb内部会生成一个隐藏主键（密集索引）</li>
 <li>非主键索引（稀疏索引）存储相关键位和它对应的主键值，包含两次查找</li>
 </ul>
-<h3 id="热备份和冷备份"><a href="#热备份和冷备份" class="headerlink" title="热备份和冷备份"></a>热备份和冷备份</h3><p><strong>热备份：</strong>在数据库运行的情况下备份的方法。优点：可按表或用户备份，备份时数据库仍可使用，可恢复至任一时间点。但是不能出错</p>
-<p><strong>冷备份：</strong>数据库正常关闭后，将关键性文件复制到另一位置的备份方式。优点：操作简单快速，恢复简单</p>
+<h3 id="热备份和冷备份"><a href="#热备份和冷备份" class="headerlink" title="热备份和冷备份"></a>热备份和冷备份</h3><p>**热备份：**在数据库运行的情况下备份的方法。优点：可按表或用户备份，备份时数据库仍可使用，可恢复至任一时间点。但是不能出错</p>
+<p>**冷备份：**数据库正常关闭后，将关键性文件复制到另一位置的备份方式。优点：操作简单快速，恢复简单</p>
 <h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
 <li>MyISAM 管理非事务表。它提供高速存储和检索（MyISAM 强调的是性能，每次查询具有原子性，其执行速度比 InnoDB 更快），以及全文搜索能力。如果表比较小，或者是只读数据（有大量的 SELECT），还是可以使用 MyISAM；</li>
 <li>InnoDB 支持事务，并发情况下有很好的性能，基本可以替代 MyISAM</li>

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="4. 寻找两个正序数组的中位数思路二分查找 把问题转换为找两个数组中第k大的数，当n+m为奇数，中位数是两个数组中第$(m+n+1)&#x2F;2$个元素，当n+m为偶数，中位数是第$(m+n)&#x2F;2$和$(m+n)&#x2F;2+1$个数的平均数。  实现比较恶心，每个数组分别定义一个偏移量offs1和offs2，令mid1&#x3D;offs1+k&#x2F;2-1,mid2&#x3D;offs2+k&#x2F;2-1每次比较a[mid1]和b[mid2">
+    <meta name="description" content="4. 寻找两个正序数组的中位数思路二分查找 把问题转换为找两个数组中第k大的数，当n+m为奇数，中位数是两个数组中第$(m+n+1)&#x2F;2$个元素，当n+m为偶数，中位数是第$(m+n)&#x2F;2$和$(m+n)&#x2F;2+1$个数的平均数。  实现比较恶心，每个数组分别定义一个偏移量offs1和offs2，令mid1&#x3D;offs1+k&#x2F;2-1,mid2&#x3D;offs2+k&#x2F;2-1每次比">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LEETCODE问题集">
 <meta property="og:url" content="http://example.com/2022/02/25/LEETCODE%E9%97%AE%E9%A2%98%E9%9B%86/index.html">
 <meta property="og:site_name" content="Across the Cosmos">
-<meta property="og:description" content="4. 寻找两个正序数组的中位数思路二分查找 把问题转换为找两个数组中第k大的数，当n+m为奇数，中位数是两个数组中第$(m+n+1)&#x2F;2$个元素，当n+m为偶数，中位数是第$(m+n)&#x2F;2$和$(m+n)&#x2F;2+1$个数的平均数。  实现比较恶心，每个数组分别定义一个偏移量offs1和offs2，令mid1&#x3D;offs1+k&#x2F;2-1,mid2&#x3D;offs2+k&#x2F;2-1每次比较a[mid1]和b[mid2">
+<meta property="og:description" content="4. 寻找两个正序数组的中位数思路二分查找 把问题转换为找两个数组中第k大的数，当n+m为奇数，中位数是两个数组中第$(m+n+1)&#x2F;2$个元素，当n+m为偶数，中位数是第$(m+n)&#x2F;2$和$(m+n)&#x2F;2+1$个数的平均数。  实现比较恶心，每个数组分别定义一个偏移量offs1和offs2，令mid1&#x3D;offs1+k&#x2F;2-1,mid2&#x3D;offs2+k&#x2F;2-1每次比">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203012113696.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203100958658.png">
@@ -189,7 +189,7 @@
 
   <div class="content" itemprop="articleBody">
     <h2 id="4-寻找两个正序数组的中位数"><a href="#4-寻找两个正序数组的中位数" class="headerlink" title="4. 寻找两个正序数组的中位数"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/">4. 寻找两个正序数组的中位数</a></h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>二分查找</p>
-<p>把问题转换为找两个数组中第k大的数，当n+m为奇数，中位数是两个数组中第$(m+n+1)/2$个元素，当n+m为偶数，中位数是第$(m+n)/2$和$(m+n)/2+1$个数的平均数。</p>
+<p>把问题转换为找两个数组中第k大的数，当n+m为奇数，中位数是两个数组中第$(m+n+1)&#x2F;2$个元素，当n+m为偶数，中位数是第$(m+n)&#x2F;2$和$(m+n)&#x2F;2+1$个数的平均数。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202203012113696.png"></p>
 <p>实现比较恶心，每个数组分别定义一个偏移量offs1和offs2，令<code>mid1=offs1+k/2-1,mid2=offs2+k/2-1</code>每次比较<code>a[mid1]</code>和<code>b[mid2]</code>，根据上面的思路，<code>a[mid1]&gt;=b[mid2]</code>那<code>mid1及以前的数字</code>都可被排除了，<code>偏移量offset1+=k/2</code>(因为包括<code>a[mid1]</code>所以是<code>k/2-1+1</code>)。因为现在已经排除了<code>k/2</code>个数字，<code>k-=k/2</code>。反之亦然。</p>
 <p>现在还有一个需要考虑的就是边界情况，有可能<code>offs1+k/2-1</code>已经超过数组范围，所以要和数组长度<code>n</code>取一个<code>min</code>，同理在更新<code>offs1</code>和<code>k</code>的时候也要取<code>min</code>，因为如果<code>mid1</code>超过数组范围的话可以排除的数的个数就不是<code>k/2</code>个，而是<code>n</code>个。我们知道当<code>k==1</code>时答案就是此时<code>a[offs1],b[offs2]</code>的最小值。因为到这一步意味着我们已经排除了<code>k-1</code>个数字，只差最后一个就能找到第k大的元素。但如果k还没到1就有一边数组超出边界了呢？如果a数组二分到头了，那就直接返回<code>b[offs2+k-1]</code>就是答案了。考虑a数组为空的情况，<code>offs2=0</code>，就相当于直接找<code>b[k-1]</code>（下标从0开始）</p>
@@ -198,23 +198,23 @@
 <h2 id="10-正则表达式匹配"><a href="#10-正则表达式匹配" class="headerlink" title="10. 正则表达式匹配"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/regular-expression-matching/">10. 正则表达式匹配</a></h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ul>
 <li><p>$f[i][j]$表示s的前i个字符和p的前j个字符匹配情况。</p>
 </li>
-<li><p>$p[j]!=’*’$</p>
+<li><p>$p[j]!&#x3D;’*’$</p>
 <ul>
-<li>$f[i][j]=f[i-1][j-1]&amp;&amp;(s[i]==p[j]||p[j]==’.’)$</li>
-<li>当$i,j$前面的都相等，并且当前$s[i]=p[j]$或者$p[j]$为’.’说明$f[i][j]=true$</li>
+<li>$f[i][j]&#x3D;f[i-1][j-1]&amp;&amp;(s[i]&#x3D;&#x3D;p[j]||p[j]&#x3D;&#x3D;’.’)$</li>
+<li>当$i,j$前面的都相等，并且当前$s[i]&#x3D;p[j]$或者$p[j]$为’.’说明$f[i][j]&#x3D;true$</li>
 </ul>
 </li>
-<li><p>$p[j]==’*’$</p>
+<li><p>$p[j]&#x3D;&#x3D;’*’$</p>
 <ul>
-<li>$f[i][j]=f[i][j-2]||f[i-1][j-2]&amp;&amp;s[i]==p[j]||f[i-2][j-2]&amp;&amp;s[i]==p[j]&amp;&amp;s[i-1]==p[j]$</li>
+<li>$f[i][j]&#x3D;f[i][j-2]||f[i-1][j-2]&amp;&amp;s[i]&#x3D;&#x3D;p[j]||f[i-2][j-2]&amp;&amp;s[i]&#x3D;&#x3D;p[j]&amp;&amp;s[i-1]&#x3D;&#x3D;p[j]$</li>
 <li>‘*’可以代表多个字符，第一项意味着*前面的字符有0个(相当于*和前面的字符共两个字符一起消去了所以是$f[i][j-2]$)，第二项是*可以代表一个它前面的字符，以此类推。</li>
 </ul>
 </li>
 <li><p>但遍历一遍*的可能情况是$O(n)$的，考虑优化。</p>
 <ul>
-<li>$f[i][j]=f[i][j-2]||f[i-1][j-2]&amp;&amp;s[i]==p[j-1]||f[i-2][j-2]&amp;&amp;s[i]==p[j-1]&amp;&amp;s[i-1]==p[j-1]$</li>
-<li>$f[i-1][j]=f[i-1][j-2]||f[i-2][j-2]&amp;&amp;s[i-1]==p[j-1]||f[i-3][j-2]&amp;&amp;s[i-1]==p[j-1]&amp;&amp;s[i-2]==p[j-1]$</li>
-<li>综上可得$f[i][j]=f[i][j-2]||f[i-1][j]&amp;&amp;(s[i]==p[j-1])$,只需要保留上一层循环的结果即可。时间复杂度$O(1)$,(这里为什么是$p[j-1]$是因为$p[j]$是’*’)</li>
+<li>$f[i][j]&#x3D;f[i][j-2]||f[i-1][j-2]&amp;&amp;s[i]&#x3D;&#x3D;p[j-1]||f[i-2][j-2]&amp;&amp;s[i]&#x3D;&#x3D;p[j-1]&amp;&amp;s[i-1]&#x3D;&#x3D;p[j-1]$</li>
+<li>$f[i-1][j]&#x3D;f[i-1][j-2]||f[i-2][j-2]&amp;&amp;s[i-1]&#x3D;&#x3D;p[j-1]||f[i-3][j-2]&amp;&amp;s[i-1]&#x3D;&#x3D;p[j-1]&amp;&amp;s[i-2]&#x3D;&#x3D;p[j-1]$</li>
+<li>综上可得$f[i][j]&#x3D;f[i][j-2]||f[i-1][j]&amp;&amp;(s[i]&#x3D;&#x3D;p[j-1])$,只需要保留上一层循环的结果即可。时间复杂度$O(1)$,(这里为什么是$p[j-1]$是因为$p[j]$是’*’)</li>
 <li>类似于完全背包的优化方案</li>
 </ul>
 </li>
@@ -403,7 +403,7 @@
 
 
 <h2 id="169-多数元素"><a href="#169-多数元素" class="headerlink" title="169.多数元素"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/majority-element/description">169.多数元素</a></h2><h3 id="思路-23"><a href="#思路-23" class="headerlink" title="思路"></a>思路</h3><p>候选人(<code>cand_num</code>)初始化为 <code>nums[0]</code>，票数 <code>count</code> 初始化为 1。<br>当遇到与 <code>cand_num</code> 相同的数，则票数 <code>count = count + 1</code>，否则票数 <code>count = count - 1</code>。<br>当票数 <code>count</code> 为 0 时，更换候选人，并将票数 <code>count</code> 重置为 1。<br>遍历完数组后，<code>cand_num</code> 即为最终答案。</p>
-<p>为何这行得通呢？<br>投票法是遇到相同的则 <code>票数 + 1</code>，遇到不同的则 <code>票数 - 1</code>。<br>且“多数元素”的个数 &gt; ⌊ n/2 ⌋，其余元素的个数总和 &lt;= ⌊ n/2 ⌋。<br>因此“多数元素”的个数 - 其余元素的个数总和 的结果 肯定 &gt;= 1。<br>这就相当于每个 “多数元素” 和其他元素 两两相互抵消，抵消到最后肯定还剩余 至少1个 “多数元素“。</p>
+<p>为何这行得通呢？<br>投票法是遇到相同的则 <code>票数 + 1</code>，遇到不同的则 <code>票数 - 1</code>。<br>且“多数元素”的个数 &gt; ⌊ n&#x2F;2 ⌋，其余元素的个数总和 &lt;&#x3D; ⌊ n&#x2F;2 ⌋。<br>因此“多数元素”的个数 - 其余元素的个数总和 的结果 肯定 &gt;&#x3D; 1。<br>这就相当于每个 “多数元素” 和其他元素 两两相互抵消，抵消到最后肯定还剩余 至少1个 “多数元素“。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">majorityElement</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> cand_num=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> cnt=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:nums)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==cand_num)cnt++;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                cnt--;</span><br><span class="line">                <span class="keyword">if</span>(cnt==<span class="number">0</span>)cand_num=i,cnt=<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cand_num;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <h2 id="189-轮转数组"><a href="#189-轮转数组" class="headerlink" title="189.轮转数组"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/rotate-array/description/">189.轮转数组</a></h2><ul>
