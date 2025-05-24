@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2025/05/24/LARP%20LANGUAGE-AGENT%20ROLE%20PLAY%20FOR%20OPEN-WORLD%20GAMES/</loc>
+    
+    <lastmod>2025-05-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2025/05/24/saga_translation_with_images/</loc>
+    
+    <lastmod>2025-05-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/2025/01/16/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%B0%8F%E9%95%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2025-05-24</lastmod>
@@ -273,7 +291,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/hexo/</loc>
+    <loc>http://example.com/tags/AI/</loc>
+    <lastmod>2025-05-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/NPC/</loc>
     <lastmod>2025-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -287,14 +312,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/AI/</loc>
-    <lastmod>2025-05-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/NPC/</loc>
+    <loc>http://example.com/tags/hexo/</loc>
     <lastmod>2025-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
