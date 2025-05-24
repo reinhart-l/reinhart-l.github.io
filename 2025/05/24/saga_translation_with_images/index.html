@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>SAGA 面向代理的技能到行动生成框架 | Across the Cosmos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="英文原文 (Original Text)Announcing SAGA: Skill to Action Generation for Agents.Demo Video of SAGA in Action IntroductionToday, we are announcing SAGA: Skill to Action Generation for Agents, a generative A">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="英文原文 (Original Text)Announcing SAGA: Skill to Action Generation for Agents.Demo Video of SAGA in Action IntroductionToday, we are announcing SAGA: Skill to Action Generation for Agents, a generative A">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SAGA 面向代理的技能到行动生成框架">
 <meta property="og:url" content="http://example.com/2025/05/24/saga_translation_with_images/index.html">
@@ -32,85 +32,151 @@
 <meta property="article:tag" content="NPC">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/reinhart-l/FigureBed3/master/image-20250523115938242.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
-
-  
-  
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SAGA 面向代理的技能到行动生成框架</title>
+    <!-- styles -->
+    
 <link rel="stylesheet" href="/css/style.css">
 
-  
+    <!-- persian styles -->
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
 <meta name="generator" content="Hexo 6.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Across the Cosmos</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-          <a class="main-nav-link" href="/">Home</a>
+        <li><a class="icon" aria-label="Previous post" href="/2025/05/24/LARP%20LANGUAGE-AGENT%20ROLE%20PLAY%20FOR%20OPEN-WORLD%20GAMES/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </nav>
-      <nav id="sub-nav">
+        <li><a class="icon" aria-label="Next post" href="/2025/01/16/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%B0%8F%E9%95%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/24/saga_translation_with_images/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://example.com/2025/05/24/saga_translation_with_images/&text=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/24/saga_translation_with_images/&is_video=false&description=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SAGA 面向代理的技能到行动生成框架&body=Check out this article: http://example.com/2025/05/24/saga_translation_with_images/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/24/saga_translation_with_images/&name=SAGA 面向代理的技能到行动生成框架&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/24/saga_translation_with_images/&t=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
 
-      <div class="outer">
-        <section id="main"><article id="post-saga_translation_with_images" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2025/05/24/saga_translation_with_images/" class="article-date">
-  <time class="dt-published" datetime="2025-05-24T05:41:25.000Z" itemprop="datePublished">2025-05-24</time>
-</a>
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text"><span class="toc-number">1.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Announcing-SAGA-Skill-to-Action-Generation-for-Agents"><span class="toc-number"></span> <span class="toc-text">Announcing SAGA: Skill to Action Generation for Agents.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation"><span class="toc-number">2.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%A3%E5%B8%83SAGA%EF%BC%9A%E9%9D%A2%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E6%8A%80%E8%83%BD%E5%88%B0%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6"><span class="toc-number"></span> <span class="toc-text">宣布SAGA：面向代理的技能到行动生成框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-1"><span class="toc-number">2.</span> <span class="toc-text">英文原文 (Original Text)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Skills-in-Action"><span class="toc-number">2.1.</span> <span class="toc-text">Skills in Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">2.2.</span> <span class="toc-text">Examples</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-1"><span class="toc-number">3.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E8%83%BD%E4%BB%98%E8%AF%B8%E8%A1%8C%E5%8A%A8"><span class="toc-number">3.1.</span> <span class="toc-text">技能付诸行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.2.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-2"><span class="toc-number">4.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pairing-With-a-Simulation"><span class="toc-number">5.</span> <span class="toc-text">Pairing With a Simulation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-2"><span class="toc-number">6.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E6%A8%A1%E6%8B%9F%E7%B3%BB%E7%BB%9F%E9%85%8D%E5%AF%B9"><span class="toc-number">7.</span> <span class="toc-text">与模拟系统配对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-3"><span class="toc-number">8.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Murder-in-Thistle-Gulch"><span class="toc-number">9.</span> <span class="toc-text">Murder in Thistle Gulch</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Personas"><span class="toc-number">9.1.</span> <span class="toc-text">Personas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-Memories"><span class="toc-number">9.2.</span> <span class="toc-text">Meta-Memories</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-3"><span class="toc-number">10.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%93%9F%E8%8D%89%E5%B3%A1%E8%B0%B7%E4%B8%AD%E7%9A%84%E8%B0%8B%E6%9D%80%E6%A1%88"><span class="toc-number">11.</span> <span class="toc-text">蓟草峡谷中的谋杀案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%AE%BE%E5%AE%9A"><span class="toc-number">11.1.</span> <span class="toc-text">角色设定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E8%AE%B0%E5%BF%86"><span class="toc-number">11.2.</span> <span class="toc-text">元记忆</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-4"><span class="toc-number">12.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Murder-Investigation"><span class="toc-number">13.</span> <span class="toc-text">The Murder Investigation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sheriff-Cooper"><span class="toc-number">13.1.</span> <span class="toc-text">Sheriff Cooper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Saloon-Owner"><span class="toc-number">13.2.</span> <span class="toc-text">Saloon Owner</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-4"><span class="toc-number">14.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%8B%E6%9D%80%E8%B0%83%E6%9F%A5"><span class="toc-number">15.</span> <span class="toc-text">谋杀调查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sheriff-Cooper-1"><span class="toc-number">15.1.</span> <span class="toc-text">Sheriff Cooper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%92%E9%A6%86%E8%80%81%E6%9D%BF"><span class="toc-number">15.2.</span> <span class="toc-text">酒馆老板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-5"><span class="toc-number">16.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cooperation-and-Conflict"><span class="toc-number">17.</span> <span class="toc-text">Cooperation and Conflict</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-5"><span class="toc-number">18.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E4%BD%9C%E4%B8%8E%E5%86%B2%E7%AA%81"><span class="toc-number">19.</span> <span class="toc-text">合作与冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-6"><span class="toc-number">20.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-6"><span class="toc-number">21.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-7"><span class="toc-number">22.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Related-Work"><span class="toc-number">23.</span> <span class="toc-text">Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-Planning-in-Context"><span class="toc-number">24.</span> <span class="toc-text">AI Planning in Context</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-7"><span class="toc-number">25.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">26.</span> <span class="toc-text">相关工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E8%A7%84%E5%88%92%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">27.</span> <span class="toc-text">AI规划的上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-8"><span class="toc-number">28.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Language-Models-as-Zero-Shot-Planners"><span class="toc-number">29.</span> <span class="toc-text">Language Models as Zero-Shot Planners</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generative-Human-like-Agents"><span class="toc-number">30.</span> <span class="toc-text">Generative Human-like Agents</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-8"><span class="toc-number">31.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E9%9B%B6%E6%A0%B7%E6%9C%AC%E8%A7%84%E5%88%92%E5%99%A8%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">32.</span> <span class="toc-text">作为零样本规划器的语言模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F%E7%B1%BB%E4%BA%BA%E4%BB%A3%E7%90%86"><span class="toc-number">33.</span> <span class="toc-text">生成式类人代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-9"><span class="toc-number">34.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interacting-With-and-Planning-in-a-3D-World"><span class="toc-number">35.</span> <span class="toc-text">Interacting With and Planning in a 3D World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-9"><span class="toc-number">36.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A83D%E4%B8%96%E7%95%8C%E4%B8%AD%E4%BA%A4%E4%BA%92%E5%92%8C%E8%A7%84%E5%88%92"><span class="toc-number">37.</span> <span class="toc-text">在3D世界中交互和规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-10"><span class="toc-number">38.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Next-Steps"><span class="toc-number">39.</span> <span class="toc-text">Next Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenges-for-Production-Use"><span class="toc-number">40.</span> <span class="toc-text">Challenges for Production Use</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Generation-Times"><span class="toc-number">40.1.</span> <span class="toc-text">Generation Times</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-and-Prompt-Size-Limits"><span class="toc-number">40.2.</span> <span class="toc-text">Memory and Prompt Size Limits</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-10"><span class="toc-number">41.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="toc-number">42.</span> <span class="toc-text">下一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">43.</span> <span class="toc-text">生产使用的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%97%B6%E9%97%B4"><span class="toc-number">43.1.</span> <span class="toc-text">生成时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%92%8C%E6%8F%90%E7%A4%BA%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6"><span class="toc-number">43.2.</span> <span class="toc-text">内存和提示大小限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-11"><span class="toc-number">44.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SAGA%E2%80%99s-Future-Goals"><span class="toc-number">45.</span> <span class="toc-text">SAGA’s Future Goals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-11"><span class="toc-number">46.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SAGA%E7%9A%84%E6%9C%AA%E6%9D%A5%E7%9B%AE%E6%A0%87"><span class="toc-number">47.</span> <span class="toc-text">SAGA的未来目标</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SAGA%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B%E8%AF%A6%E7%BB%86%E8%A7%A3%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">SAGA项目代码流程详细解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SAGA%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">1. SAGA核心架构与组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 主要组件概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 核心组件详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-BaseSagaAgent"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 BaseSagaAgent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-ActionsAgent"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 ActionsAgent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-ConversationAgent"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 ConversationAgent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-EmbeddingAgent"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 EmbeddingAgent</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%85%B3%E9%94%AE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 关键数据结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">2. 核心工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%80%BB%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 总体流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AF%A6%E7%BB%86%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 详细执行流程概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 行动生成流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 详细流程图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E6%8F%90%E7%A4%BA%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 提示模板设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-%E8%A1%8C%E5%8A%A8%E8%A7%A3%E6%9E%90%E5%92%8C%E6%8E%92%E5%BA%8F"><span class="toc-number">2.3.3.</span> <span class="toc-text">2.3.3 行动解析和排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%AF%B9%E8%AF%9D%E7%94%9F%E6%88%90%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 对话生成流程详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%AE%8C%E6%95%B4%E7%9A%84%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 完整的模拟执行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E9%A9%B1%E5%8A%A8%E6%B5%81%E7%A8%8B%EF%BC%88%E4%BB%A5Space-Colony%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">2.5.1.</span> <span class="toc-text">2.5.1 模拟环境中的用户交互驱动流程（以Space Colony示例）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-SAGA%E5%86%85%E9%83%A8%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E5%88%B0%E6%89%A7%E8%A1%8C%E7%9A%84%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B"><span class="toc-number">2.5.2.</span> <span class="toc-text">2.5.2 SAGA内部行动生成到执行的详细流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%B5%8C%E5%85%A5%E6%9C%BA%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">3. 记忆与嵌入机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-EmbeddingAgent-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 EmbeddingAgent 的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-SimpleVectorStore-%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 SimpleVectorStore 实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%AE%B0%E5%BF%86%E5%92%8C%E5%85%83%E8%AE%B0%E5%BF%86%E5%A4%84%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 记忆和元记忆处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%9B%86%E6%88%90"><span class="toc-number">4.</span> <span class="toc-text">4. 模拟环境集成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%A8%A1%E6%8B%9F%E4%BB%A3%E7%90%86-SimAgent"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 模拟代理 (SimAgent)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A8%A1%E6%8B%9F%E8%A1%8C%E5%8A%A8-SimAction"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 模拟行动 (SimAction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E5%99%A8-ActionGenerator"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 行动生成器 (ActionGenerator)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.</span> <span class="toc-text">5. 服务器实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 架构概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%AB%AF%E7%82%B9%E8%AE%BE%E8%AE%A1"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 端点设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 HTTP服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-WebSocket%E5%92%8CSocketIO"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 WebSocket和SocketIO</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <div class="content index py4">
         
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      SAGA 面向代理的技能到行动生成框架
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        SAGA 面向代理的技能到行动生成框架
     </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-05-24T05:41:25.000Z" itemprop="datePublished">2025-05-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AI/" rel="tag">AI</a>, <a class="tag-link-link" href="/tags/NPC/" rel="tag">NPC</a>
+    </div>
+
+
+    </div>
+  </header>
   
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="英文原文-Original-Text"><a href="#英文原文-Original-Text" class="headerlink" title="英文原文 (Original Text)"></a>英文原文 (Original Text)</h2><h1 id="Announcing-SAGA-Skill-to-Action-Generation-for-Agents"><a href="#Announcing-SAGA-Skill-to-Action-Generation-for-Agents" class="headerlink" title="Announcing SAGA: Skill to Action Generation for Agents."></a>Announcing SAGA: Skill to Action Generation for Agents.</h1><p>Demo Video of SAGA in Action</p>
+  <div class="content" itemprop="articleBody">
+    <h2 id="英文原文-Original-Text"><a href="#英文原文-Original-Text" class="headerlink" title="英文原文 (Original Text)"></a>英文原文 (Original Text)</h2><h1 id="Announcing-SAGA-Skill-to-Action-Generation-for-Agents"><a href="#Announcing-SAGA-Skill-to-Action-Generation-for-Agents" class="headerlink" title="Announcing SAGA: Skill to Action Generation for Agents."></a>Announcing SAGA: Skill to Action Generation for Agents.</h1><p>Demo Video of SAGA in Action</p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Today, we are announcing SAGA: Skill to Action Generation for Agents, a generative AI framework that steers AI Agents toward successful goals through Actions. SAGA is inspired in part by Joon Park’s Generative Agents paper where Agents inhabit the 2D simulated town of Smallville. As well as the work on Voyager from Jim Fan, et al, in which Agents have a set of predefined Skills they can choose from but can also create new skills as they perform tasks in the 3D game, MineCraft.</p>
 <p>You can <a href="https://github.com/fablestudio/fable-saga">find the code on GitHub</a>.</p>
 <p>A Day in Thistle Gulch - Blackjack and Sheriff Cooper work to thwart each other’s plans</p>
@@ -547,150 +613,186 @@
 <h3 id="5-4-WebSocket和SocketIO"><a href="#5-4-WebSocket和SocketIO" class="headerlink" title="5.4 WebSocket和SocketIO"></a>5.4 WebSocket和SocketIO</h3><p>WebSocket和SocketIO接口为需要实时、双向通信的客户端提供支持。它们允许服务器在生成结果后主动将结果推送给客户端。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@sio.on(<span class="params"><span class="string">&quot;generate-actions&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">generate_actions</span>(<span class="params">sid, message_str: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        result = <span class="keyword">await</span> generic_handler(message_str, actions_endpoint)</span><br><span class="line">        <span class="keyword">await</span> sio.emit(<span class="string">&quot;generate-actions&quot;</span>, json.dumps(result), room=sid)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">await</span> sio.emit(</span><br><span class="line">            <span class="string">&quot;generate-actions&quot;</span>,</span><br><span class="line">            json.dumps(&#123;<span class="string">&quot;error&quot;</span>: <span class="string">f&quot;Error in generate_actions: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>&#125;),</span><br><span class="line">            room=sid,</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2025/05/24/saga_translation_with_images/" data-id="cmb2ap95e001148uc1fgy3y2j" data-title="SAGA 面向代理的技能到行动生成框架" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NPC/" rel="tag">NPC</a></li></ul>
-
-    </footer>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2025/05/24/LARP%20LANGUAGE-AGENT%20ROLE%20PLAY%20FOR%20OPEN-WORLD%20GAMES/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          LARP LANGUAGE-AGENT ROLE PLAY FOR OPEN-WORLD GAMES
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2025/01/16/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%B0%8F%E9%95%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">斯坦福小镇阅读笔记</div>
-    </a>
-  
-</nav>
-
-  
 </article>
 
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
 
-</section>
+
+
         
-          <aside id="sidebar">
-  
-    
+          <div id="footer-post-container">
+  <div id="footer-post">
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPC/" rel="tag">NPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/AI/" style="font-size: 14px;">AI</a> <a href="/tags/NPC/" style="font-size: 14px;">NPC</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/%E4%B8%AA%E4%BA%BA/" style="font-size: 18px;">个人</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 16px;">教程</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14px;">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%A2%98%E8%A7%A3/" style="font-size: 20px;">题解</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">May 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
+    <div id="nav-footer" style="display: none">
       <ul>
-        
-          <li>
-            <a href="/2025/05/24/LARP%20LANGUAGE-AGENT%20ROLE%20PLAY%20FOR%20OPEN-WORLD%20GAMES/">LARP LANGUAGE-AGENT ROLE PLAY FOR OPEN-WORLD GAMES</a>
-          </li>
-        
-          <li>
-            <a href="/2025/05/24/saga_translation_with_images/">SAGA 面向代理的技能到行动生成框架</a>
-          </li>
-        
-          <li>
-            <a href="/2025/01/16/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%B0%8F%E9%95%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">斯坦福小镇阅读笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2023/11/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B9/">计算机网络知识点</a>
-          </li>
-        
-          <li>
-            <a href="/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/">游戏研发场景题</a>
-          </li>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
         
       </ul>
     </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2025 Reinhart<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text"><span class="toc-number">1.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Announcing-SAGA-Skill-to-Action-Generation-for-Agents"><span class="toc-number"></span> <span class="toc-text">Announcing SAGA: Skill to Action Generation for Agents.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation"><span class="toc-number">2.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%A3%E5%B8%83SAGA%EF%BC%9A%E9%9D%A2%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E6%8A%80%E8%83%BD%E5%88%B0%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E6%A1%86%E6%9E%B6"><span class="toc-number"></span> <span class="toc-text">宣布SAGA：面向代理的技能到行动生成框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-1"><span class="toc-number">2.</span> <span class="toc-text">英文原文 (Original Text)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Skills-in-Action"><span class="toc-number">2.1.</span> <span class="toc-text">Skills in Action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Examples"><span class="toc-number">2.2.</span> <span class="toc-text">Examples</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-1"><span class="toc-number">3.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E8%83%BD%E4%BB%98%E8%AF%B8%E8%A1%8C%E5%8A%A8"><span class="toc-number">3.1.</span> <span class="toc-text">技能付诸行动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.2.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-2"><span class="toc-number">4.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pairing-With-a-Simulation"><span class="toc-number">5.</span> <span class="toc-text">Pairing With a Simulation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-2"><span class="toc-number">6.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E6%A8%A1%E6%8B%9F%E7%B3%BB%E7%BB%9F%E9%85%8D%E5%AF%B9"><span class="toc-number">7.</span> <span class="toc-text">与模拟系统配对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-3"><span class="toc-number">8.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Murder-in-Thistle-Gulch"><span class="toc-number">9.</span> <span class="toc-text">Murder in Thistle Gulch</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Personas"><span class="toc-number">9.1.</span> <span class="toc-text">Personas</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Meta-Memories"><span class="toc-number">9.2.</span> <span class="toc-text">Meta-Memories</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-3"><span class="toc-number">10.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%93%9F%E8%8D%89%E5%B3%A1%E8%B0%B7%E4%B8%AD%E7%9A%84%E8%B0%8B%E6%9D%80%E6%A1%88"><span class="toc-number">11.</span> <span class="toc-text">蓟草峡谷中的谋杀案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E8%AE%BE%E5%AE%9A"><span class="toc-number">11.1.</span> <span class="toc-text">角色设定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E8%AE%B0%E5%BF%86"><span class="toc-number">11.2.</span> <span class="toc-text">元记忆</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-4"><span class="toc-number">12.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Murder-Investigation"><span class="toc-number">13.</span> <span class="toc-text">The Murder Investigation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sheriff-Cooper"><span class="toc-number">13.1.</span> <span class="toc-text">Sheriff Cooper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Saloon-Owner"><span class="toc-number">13.2.</span> <span class="toc-text">Saloon Owner</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-4"><span class="toc-number">14.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%8B%E6%9D%80%E8%B0%83%E6%9F%A5"><span class="toc-number">15.</span> <span class="toc-text">谋杀调查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Sheriff-Cooper-1"><span class="toc-number">15.1.</span> <span class="toc-text">Sheriff Cooper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%92%E9%A6%86%E8%80%81%E6%9D%BF"><span class="toc-number">15.2.</span> <span class="toc-text">酒馆老板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-5"><span class="toc-number">16.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cooperation-and-Conflict"><span class="toc-number">17.</span> <span class="toc-text">Cooperation and Conflict</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-5"><span class="toc-number">18.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E4%BD%9C%E4%B8%8E%E5%86%B2%E7%AA%81"><span class="toc-number">19.</span> <span class="toc-text">合作与冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-6"><span class="toc-number">20.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-6"><span class="toc-number">21.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-7"><span class="toc-number">22.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Related-Work"><span class="toc-number">23.</span> <span class="toc-text">Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-Planning-in-Context"><span class="toc-number">24.</span> <span class="toc-text">AI Planning in Context</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-7"><span class="toc-number">25.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">26.</span> <span class="toc-text">相关工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E8%A7%84%E5%88%92%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">27.</span> <span class="toc-text">AI规划的上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-8"><span class="toc-number">28.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Language-Models-as-Zero-Shot-Planners"><span class="toc-number">29.</span> <span class="toc-text">Language Models as Zero-Shot Planners</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generative-Human-like-Agents"><span class="toc-number">30.</span> <span class="toc-text">Generative Human-like Agents</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-8"><span class="toc-number">31.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E9%9B%B6%E6%A0%B7%E6%9C%AC%E8%A7%84%E5%88%92%E5%99%A8%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">32.</span> <span class="toc-text">作为零样本规划器的语言模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%BC%8F%E7%B1%BB%E4%BA%BA%E4%BB%A3%E7%90%86"><span class="toc-number">33.</span> <span class="toc-text">生成式类人代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-9"><span class="toc-number">34.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interacting-With-and-Planning-in-a-3D-World"><span class="toc-number">35.</span> <span class="toc-text">Interacting With and Planning in a 3D World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-9"><span class="toc-number">36.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A83D%E4%B8%96%E7%95%8C%E4%B8%AD%E4%BA%A4%E4%BA%92%E5%92%8C%E8%A7%84%E5%88%92"><span class="toc-number">37.</span> <span class="toc-text">在3D世界中交互和规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-10"><span class="toc-number">38.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Next-Steps"><span class="toc-number">39.</span> <span class="toc-text">Next Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenges-for-Production-Use"><span class="toc-number">40.</span> <span class="toc-text">Challenges for Production Use</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Generation-Times"><span class="toc-number">40.1.</span> <span class="toc-text">Generation Times</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-and-Prompt-Size-Limits"><span class="toc-number">40.2.</span> <span class="toc-text">Memory and Prompt Size Limits</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-10"><span class="toc-number">41.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="toc-number">42.</span> <span class="toc-text">下一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E4%BD%BF%E7%94%A8%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">43.</span> <span class="toc-text">生产使用的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%97%B6%E9%97%B4"><span class="toc-number">43.1.</span> <span class="toc-text">生成时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%92%8C%E6%8F%90%E7%A4%BA%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6"><span class="toc-number">43.2.</span> <span class="toc-text">内存和提示大小限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8B%B1%E6%96%87%E5%8E%9F%E6%96%87-Original-Text-11"><span class="toc-number">44.</span> <span class="toc-text">英文原文 (Original Text)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SAGA%E2%80%99s-Future-Goals"><span class="toc-number">45.</span> <span class="toc-text">SAGA’s Future Goals</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-Chinese-Translation-11"><span class="toc-number">46.</span> <span class="toc-text">中文翻译 (Chinese Translation)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SAGA%E7%9A%84%E6%9C%AA%E6%9D%A5%E7%9B%AE%E6%A0%87"><span class="toc-number">47.</span> <span class="toc-text">SAGA的未来目标</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SAGA%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E6%B5%81%E7%A8%8B%E8%AF%A6%E7%BB%86%E8%A7%A3%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">SAGA项目代码流程详细解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SAGA%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">1. SAGA核心架构与组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BB%E8%A6%81%E7%BB%84%E4%BB%B6%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 主要组件概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 核心组件详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-BaseSagaAgent"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.2.1 BaseSagaAgent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-ActionsAgent"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2.2 ActionsAgent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-ConversationAgent"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.2.3 ConversationAgent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-EmbeddingAgent"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.2.4 EmbeddingAgent</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%85%B3%E9%94%AE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 关键数据结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">2. 核心工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%80%BB%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 总体流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AF%A6%E7%BB%86%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 详细执行流程概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 行动生成流程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">2.3.1.</span> <span class="toc-text">2.3.1 详细流程图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E6%8F%90%E7%A4%BA%E6%A8%A1%E6%9D%BF%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.3.2.</span> <span class="toc-text">2.3.2 提示模板设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-%E8%A1%8C%E5%8A%A8%E8%A7%A3%E6%9E%90%E5%92%8C%E6%8E%92%E5%BA%8F"><span class="toc-number">2.3.3.</span> <span class="toc-text">2.3.3 行动解析和排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%AF%B9%E8%AF%9D%E7%94%9F%E6%88%90%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 对话生成流程详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%AE%8C%E6%95%B4%E7%9A%84%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">2.5.</span> <span class="toc-text">2.5 完整的模拟执行流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E9%A9%B1%E5%8A%A8%E6%B5%81%E7%A8%8B%EF%BC%88%E4%BB%A5Space-Colony%E7%A4%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">2.5.1.</span> <span class="toc-text">2.5.1 模拟环境中的用户交互驱动流程（以Space Colony示例）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-SAGA%E5%86%85%E9%83%A8%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E5%88%B0%E6%89%A7%E8%A1%8C%E7%9A%84%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B"><span class="toc-number">2.5.2.</span> <span class="toc-text">2.5.2 SAGA内部行动生成到执行的详细流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%B5%8C%E5%85%A5%E6%9C%BA%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">3. 记忆与嵌入机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-EmbeddingAgent-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 EmbeddingAgent 的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-SimpleVectorStore-%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 SimpleVectorStore 实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%AE%B0%E5%BF%86%E5%92%8C%E5%85%83%E8%AE%B0%E5%BF%86%E5%A4%84%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 记忆和元记忆处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E9%9B%86%E6%88%90"><span class="toc-number">4.</span> <span class="toc-text">4. 模拟环境集成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%A8%A1%E6%8B%9F%E4%BB%A3%E7%90%86-SimAgent"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 模拟代理 (SimAgent)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A8%A1%E6%8B%9F%E8%A1%8C%E5%8A%A8-SimAction"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 模拟行动 (SimAction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%A1%8C%E5%8A%A8%E7%94%9F%E6%88%90%E5%99%A8-ActionGenerator"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 行动生成器 (ActionGenerator)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.</span> <span class="toc-text">5. 服务器实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 架构概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%AB%AF%E7%82%B9%E8%AE%BE%E8%AE%A1"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 端点设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 HTTP服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-WebSocket%E5%92%8CSocketIO"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 WebSocket和SocketIO</span></a></li></ol></li></ol>
     </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://example.com/2025/05/24/saga_translation_with_images/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://example.com/2025/05/24/saga_translation_with_images/&text=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2025/05/24/saga_translation_with_images/&is_video=false&description=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SAGA 面向代理的技能到行动生成框架&body=Check out this article: http://example.com/2025/05/24/saga_translation_with_images/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://example.com/2025/05/24/saga_translation_with_images/&title=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://example.com/2025/05/24/saga_translation_with_images/&name=SAGA 面向代理的技能到行动生成框架&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://example.com/2025/05/24/saga_translation_with_images/&t=SAGA 面向代理的技能到行动生成框架"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
   </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2025
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
 </footer>
 
     </div>
-    <nav id="mobile-nav">
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
-<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/main.js"></script>
 
+<!-- search -->
 
+<!-- Google Analytics -->
 
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+<!-- Baidu Analytics -->
 
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
 
+<!-- Cloudflare Analytics -->
 
+<!-- Umami Analytics -->
 
-<script src="/js/script.js"></script>
+<!-- Disqus Comments -->
 
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
 
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
 
+<!-- utterances Comments -->
 
-
-  </div>
 </body>
 </html>

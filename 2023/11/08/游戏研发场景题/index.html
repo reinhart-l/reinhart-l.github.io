@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=en>
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>游戏研发场景题 | Across the Cosmos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="战争迷雾 大量移动单位和大视野不动单位  这个用个循环暴力计算显然不现实, 除非你地图很小. 所以, 优化思路就是针对移动的单位重新计算, 针对不动的单位只算一次首先, 我们可以用坐标(X,Y)和视野半径(R)三个值确定出一个唯一值K代表一个提供视野的单位U对于每帧新加入(K当前不存在)的U, 定义其生命周期L&#x3D;MAX. 其余的就对U的L进行递减移除L&lt;&#x3D;0的U. 针对于">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="战争迷雾 大量移动单位和大视野不动单位  这个用个循环暴力计算显然不现实, 除非你地图很小. 所以, 优化思路就是针对移动的单位重新计算, 针对不动的单位只算一次首先, 我们可以用坐标(X,Y)和视野半径(R)三个值确定出一个唯一值K代表一个提供视野的单位U对于每帧新加入(K当前不存在)的U, 定义其生命周期L&#x3D;MAX. 其余的就对U的L进行递减移除L&lt;&#x3D;0的U. 针对于">
 <meta property="og:type" content="article">
 <meta property="og:title" content="游戏研发场景题">
 <meta property="og:url" content="http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/index.html">
@@ -33,85 +33,151 @@
 <meta property="article:tag" content="个人">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/reinhart-l/FigureBed/2021/202204051130785.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
-
-  
-  
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>游戏研发场景题</title>
+    <!-- styles -->
+    
 <link rel="stylesheet" href="/css/style.css">
 
-  
+    <!-- persian styles -->
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/atom.xml" title="Across the Cosmos" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
 <meta name="generator" content="Hexo 6.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Across the Cosmos</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-          <a class="main-nav-link" href="/">Home</a>
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
         
-      </nav>
-      <nav id="sub-nav">
+        <li><a class="icon" aria-label="Next post" href="/2023/11/08/c++%E7%9F%A5%E8%AF%86%E7%82%B9/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&text=游戏研发场景题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&is_video=false&description=游戏研发场景题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=游戏研发场景题&body=Check out this article: http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&name=游戏研发场景题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&t=游戏研发场景题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
 
-      <div class="outer">
-        <section id="main"><article id="post-游戏研发场景题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2023-11-08T06:47:39.000Z" itemprop="datePublished">2023-11-08</time>
-</a>
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%98%E4%BA%89%E8%BF%B7%E9%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">战争迷雾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">热更新的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E8%A1%8C%E6%A6%9C"><span class="toc-number">3.</span> <span class="toc-text">排行榜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">网格法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%8F%89%E6%A0%91"><span class="toc-number">5.</span> <span class="toc-text">八叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%BD%93%E4%B8%80%E4%B8%AA%E7%89%A9%E4%BD%93%E8%B6%85%E5%87%BA%E5%88%92%E5%88%86%E8%8C%83%E5%9B%B4-%E6%AD%A3%E5%A5%BD%E5%9C%A8%E8%BE%B9%E7%95%8C%E4%B8%8A%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">问题：当一个物体超出划分范围&#x2F;正好在边界上：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E5%9C%A8%E4%BA%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0%E3%80%82"><span class="toc-number">5.2.</span> <span class="toc-text">另一个问题在于动态更新。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%9D%BE%E6%95%A3%E5%9B%9B-%E5%85%AB%E5%8F%89%E6%A0%91%EF%BC%88%E7%A8%8D%E5%BE%AE%E6%89%A9%E5%A4%A7%E6%AD%A3%E6%96%B9%E4%BD%93%EF%BC%88%E5%8C%85%E5%9B%B4%E7%9B%92%EF%BC%89%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">解决：松散四&#x2F;八叉树（稍微扩大正方体（包围盒））</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%BE%E6%95%A3%E5%9B%9B%E5%8F%89%E6%A0%91%E7%BB%93%E5%90%88%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">松散四叉树结合网格法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%9C%B0%E5%BD%A2%E7%94%9F%E6%88%90"><span class="toc-number">5.5.</span> <span class="toc-text">游戏地形生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.6.</span> <span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Minecraft%E7%94%9F%E6%88%90"><span class="toc-number">5.6.1.</span> <span class="toc-text">Minecraft生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AAchunk%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.6.2.</span> <span class="toc-text">生成一个chunk的步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chunk%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9E%E6%8E%A5%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E9%A1%BA%E6%BB%91%E7%9A%84%E4%B8%96%E7%95%8C%E7%9A%84%EF%BC%9F"><span class="toc-number">5.6.3.</span> <span class="toc-text">chunk是怎么连接成为一个顺滑的世界的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chunk%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">chunk的加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E7%AD%89%E7%BA%A7"><span class="toc-number">6.0.1.</span> <span class="toc-text">加载等级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E7%BA%A7%E4%BC%A0%E6%92%AD"><span class="toc-number">6.0.2.</span> <span class="toc-text">等级传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.0.3.</span> <span class="toc-text">标签类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8E%A9%E5%AE%B6"><span class="toc-number">6.0.3.1.</span> <span class="toc-text">玩家</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">寻路算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A7%E5%90%8C%E6%AD%A5%E4%B8%8E%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="toc-number">8.</span> <span class="toc-text">帧同步与状态同步</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <div class="content index py4">
         
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      游戏研发场景题
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        游戏研发场景题
     </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Reinhart</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-08T06:47:39.000Z" itemprop="datePublished">2023-11-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a>
+    </div>
+
+
+    </div>
+  </header>
   
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="战争迷雾"><a href="#战争迷雾" class="headerlink" title="战争迷雾"></a>战争迷雾</h2><ul>
+  <div class="content" itemprop="articleBody">
+    <h2 id="战争迷雾"><a href="#战争迷雾" class="headerlink" title="战争迷雾"></a>战争迷雾</h2><ul>
 <li>大量移动单位和大视野不动单位</li>
 </ul>
 <p>这个用个循环暴力计算显然不现实, 除非你地图很小. 所以, 优化思路就是针对移动的单位重新计算, 针对不动的单位只算一次<br>首先, 我们可以用坐标(X,Y)和视野半径(R)三个值确定出一个唯一值K代表一个提供视野的单位U<br>对于每帧新加入(K当前不存在)的U, 定义其生命周期L&#x3D;MAX. 其余的就对U的L进行递减<br>移除L&lt;&#x3D;0的U. 针对于L&#x3D;MAX的, 计算其可见的格子, 如果可见, 则格子的计数C加1<br>每个格子的可见计数C&gt;0的表示可见, 否则就是不可见, 然后更新到纹理上<br>对于0&lt;L&lt;MAX的单位U全部不用计算, 所以不动的单位就不用更新</p>
@@ -448,150 +514,186 @@
 <li>客户端给服务端直接传递数据和属性，由服务端进行计算。</li>
 </ul>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/" data-id="cmb2ap95f001848uc1at9c6gc" data-title="游戏研发场景题" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a></li></ul>
-
-    </footer>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2023/11/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B9/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          计算机网络知识点
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/11/08/c++%E7%9F%A5%E8%AF%86%E7%82%B9/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">c++知识点</div>
-    </a>
-  
-</nav>
-
-  
 </article>
 
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
 
-</section>
+
+
         
-          <aside id="sidebar">
-  
-    
+          <div id="footer-post-container">
+  <div id="footer-post">
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NPC/" rel="tag">NPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AA%E4%BA%BA/" rel="tag">个人</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%98%E8%A7%A3/" rel="tag">题解</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/AI/" style="font-size: 14px;">AI</a> <a href="/tags/NPC/" style="font-size: 14px;">NPC</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/%E4%B8%AA%E4%BA%BA/" style="font-size: 18px;">个人</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 16px;">教程</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 14px;">算法</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%A2%98%E8%A7%A3/" style="font-size: 20px;">题解</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">May 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">February 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">June 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">January 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
+    <div id="nav-footer" style="display: none">
       <ul>
-        
-          <li>
-            <a href="/2025/05/24/LARP%20LANGUAGE-AGENT%20ROLE%20PLAY%20FOR%20OPEN-WORLD%20GAMES/">LARP LANGUAGE-AGENT ROLE PLAY FOR OPEN-WORLD GAMES</a>
-          </li>
-        
-          <li>
-            <a href="/2025/05/24/saga_translation_with_images/">SAGA 面向代理的技能到行动生成框架</a>
-          </li>
-        
-          <li>
-            <a href="/2025/01/16/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%B0%8F%E9%95%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">斯坦福小镇阅读笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2023/11/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86%E7%82%B9/">计算机网络知识点</a>
-          </li>
-        
-          <li>
-            <a href="/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/">游戏研发场景题</a>
-          </li>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
         
       </ul>
     </div>
-  </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2025 Reinhart<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%98%E4%BA%89%E8%BF%B7%E9%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">战争迷雾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">热更新的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E8%A1%8C%E6%A6%9C"><span class="toc-number">3.</span> <span class="toc-text">排行榜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">网格法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%8F%89%E6%A0%91"><span class="toc-number">5.</span> <span class="toc-text">八叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%BD%93%E4%B8%80%E4%B8%AA%E7%89%A9%E4%BD%93%E8%B6%85%E5%87%BA%E5%88%92%E5%88%86%E8%8C%83%E5%9B%B4-%E6%AD%A3%E5%A5%BD%E5%9C%A8%E8%BE%B9%E7%95%8C%E4%B8%8A%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">问题：当一个物体超出划分范围&#x2F;正好在边界上：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E5%9C%A8%E4%BA%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0%E3%80%82"><span class="toc-number">5.2.</span> <span class="toc-text">另一个问题在于动态更新。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%9D%BE%E6%95%A3%E5%9B%9B-%E5%85%AB%E5%8F%89%E6%A0%91%EF%BC%88%E7%A8%8D%E5%BE%AE%E6%89%A9%E5%A4%A7%E6%AD%A3%E6%96%B9%E4%BD%93%EF%BC%88%E5%8C%85%E5%9B%B4%E7%9B%92%EF%BC%89%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">解决：松散四&#x2F;八叉树（稍微扩大正方体（包围盒））</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%BE%E6%95%A3%E5%9B%9B%E5%8F%89%E6%A0%91%E7%BB%93%E5%90%88%E7%BD%91%E6%A0%BC%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">松散四叉树结合网格法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%9C%B0%E5%BD%A2%E7%94%9F%E6%88%90"><span class="toc-number">5.5.</span> <span class="toc-text">游戏地形生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">5.6.</span> <span class="toc-text">初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Minecraft%E7%94%9F%E6%88%90"><span class="toc-number">5.6.1.</span> <span class="toc-text">Minecraft生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AAchunk%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.6.2.</span> <span class="toc-text">生成一个chunk的步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#chunk%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9E%E6%8E%A5%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E9%A1%BA%E6%BB%91%E7%9A%84%E4%B8%96%E7%95%8C%E7%9A%84%EF%BC%9F"><span class="toc-number">5.6.3.</span> <span class="toc-text">chunk是怎么连接成为一个顺滑的世界的？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chunk%E7%9A%84%E5%8A%A0%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">chunk的加载</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E7%AD%89%E7%BA%A7"><span class="toc-number">6.0.1.</span> <span class="toc-text">加载等级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E7%BA%A7%E4%BC%A0%E6%92%AD"><span class="toc-number">6.0.2.</span> <span class="toc-text">等级传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.0.3.</span> <span class="toc-text">标签类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8E%A9%E5%AE%B6"><span class="toc-number">6.0.3.1.</span> <span class="toc-text">玩家</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">寻路算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A7%E5%90%8C%E6%AD%A5%E4%B8%8E%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="toc-number">8.</span> <span class="toc-text">帧同步与状态同步</span></a></li></ol>
     </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&text=游戏研发场景题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&is_video=false&description=游戏研发场景题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=游戏研发场景题&body=Check out this article: http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&title=游戏研发场景题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&name=游戏研发场景题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/11/08/%E6%B8%B8%E6%88%8F%E7%A0%94%E5%8F%91%E5%9C%BA%E6%99%AF%E9%A2%98/&t=游戏研发场景题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
   </div>
+</div>
+
+        
+        <footer id="footer">
+      <div class="footer-left">
+        Copyright &copy;
+        
+        
+        2022-2025
+        Reinhart
+      </div>
+      <div class="footer-right">
+        <nav>
+          <ul>
+            <!--
+          --><li><a href="/">Home</a></li><!--
+        --><!--
+          --><li><a href="/search/">Search</a></li><!--
+        --><!--
+          --><li><a href="/about/">About</a></li><!--
+        --><!--
+          --><li><a href="/archives/">Writing</a></li><!--
+        -->
+          </ul>
+          <ul>
+            
+              <!-- 不蒜子统计 -->
+              <span class="site-pv">
+                <i class="fa fa-eye"></i> 
+                  <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="post-meta-divider">|</span>
+              <span class="site-uv">
+                <i class="fa fa-user"></i> 
+                  <span class="busuanzi-user" id="busuanzi_value_site_uv"></span>
+              </span>
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            
+          </ul>
+        </nav>
+      </div>
+      
 </footer>
 
     </div>
-    <nav id="mobile-nav">
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
-<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/main.js"></script>
 
+<!-- search -->
 
+<!-- Google Analytics -->
 
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+<!-- Baidu Analytics -->
 
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?8f0c35c575c71287b5578dafdd00a358";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
 
+<!-- Cloudflare Analytics -->
 
+<!-- Umami Analytics -->
 
-<script src="/js/script.js"></script>
+<!-- Disqus Comments -->
 
+    <script type="text/javascript">
+        var disqus_shortname = 'reinhart';
 
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
 
+<!-- utterances Comments -->
 
-
-  </div>
 </body>
 </html>
